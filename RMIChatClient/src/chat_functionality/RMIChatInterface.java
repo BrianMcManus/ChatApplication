@@ -6,9 +6,9 @@
 package chat_functionality;
 
 
+import business.Message;
 import business.User;
 import callback_support.RMIChatClientInterface;
-import com.sun.corba.se.impl.protocol.giopmsgheaders.Message;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 

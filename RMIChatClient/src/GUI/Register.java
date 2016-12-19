@@ -48,6 +48,11 @@ public class Register extends javax.swing.JFrame {
         jButton1.setText("Register");
 
         jButton2.setText("Go to Login");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 21)); // NOI18N
         jLabel4.setText("Please make an account");
@@ -106,6 +111,14 @@ public class Register extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        
+        this.setVisible(false);
+        new Login().setVisible(true); // Main Form to show after the Login Form..
+    
+
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments

@@ -33,12 +33,12 @@ public class RMIChatClient {
             int portNum = 55555;
             
             String registryPath = "rmi://localhost:" + portNum;
-            String objectLabel = "/messageService";
+            String objectLabel = "/chatService";
             
-            RMIChatInterface messageService = (RMIChatInterface) Naming.lookup(registryPath + objectLabel);
+            RMIChatInterface chatService = (RMIChatInterface) Naming.lookup(registryPath + objectLabel);
             
             RMIChatClientInterface thisClient = new RMIChatClientImpl();
-            messageService.registerForCallback(thisClient);
+            chatService.registerForCallback(thisClient);
             
 //            Message m = new Message("I'll be back", "Ahnawld");
 //            boolean added = messageService.addMessage(m);

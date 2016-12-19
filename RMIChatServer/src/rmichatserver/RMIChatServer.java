@@ -31,7 +31,7 @@ public class RMIChatServer {
             startRegistry(portNum);
             
             String registryPath = "rmi://localhost:" + portNum;
-            String objectLabel = "/quoteService";
+            String objectLabel = "/chatService";
             
             Naming.rebind(registryPath+objectLabel, chatObject);
         } catch (RemoteException ex) {
