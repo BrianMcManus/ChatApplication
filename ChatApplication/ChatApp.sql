@@ -5,27 +5,29 @@ USE ChatApp;
 
 CREATE TABLE ChatApp.User
 (
-	UserId INT(5) NOT NULL AUTO_INCREMENT,
-	Username VARCHAR(100) NOT NULL,
-	Password VARCHAR(100) NOT NULL,
-	PRIMARY KEY (UserId)
+	userId INT(5) NOT NULL AUTO_INCREMENT,
+	username VARCHAR(100) NOT NULL,
+	password VARCHAR(100) NOT NULL,
+	PRIMARY KEY (userId)
 );
 
 CREATE TABLE ChatApp.Message
 (
-	MessageId INT(5) NOT NULL AUTO_INCREMENT,
-	Message VARCHAR(10000) NOT NULL,
-	Sender VARCHAR(100) NOT NULL,
-	Recipient VARCHAR(100) NOT NULL,
+	messageId INT(5) NOT NULL AUTO_INCREMENT,
+	message VARCHAR(10000) NOT NULL,
+	sender VARCHAR(100) NOT NULL,
+	recipient VARCHAR(100) NOT NULL,
 	read BOOLEAN NOT NULL,
 	timeSent DATE NOT NULL,
-	PRIMARY KEY (MessageId)
+	inForum BOOLEAN NOT NULL,
+	PRIMARY KEY (messageId)
 );
 
 CREATE TABLE ChatApp.UserMessage
 (
-	UserId INT(5) NOT NULL,
-	MessageId INT(5) NOT NULL,
-	CONSTRAINT fkUser FOREIGN KEY(UserId) REFERENCES ChatApp.User(UserId),
-	CONSTRAINT fkMessage FOREIGN KEY(MessageId) REFERENCES ChatApp.Message(MessageId)
+	userId INT(5) NOT NULL,
+	messageId INT(5) NOT NULL,
+	CONSTRAINT fkUser FOREIGN KEY(userId) REFERENCES ChatApp.User(userId),
+	CONSTRAINT fkMessage FOREIGN KEY(messageId) REFERENCES ChatApp.Message(messageId)
 );
+
