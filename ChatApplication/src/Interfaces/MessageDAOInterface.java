@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public interface MessageDAOInterface {
     public ArrayList<Message> getForumMessages();
     public ArrayList<Message> getUserMessages(int userId);
-    public Message getMessageById(int userId);
+    public Message getMessageById(int messageId);
     public ArrayList<Message> getMessageByDate(Date date);
     public ArrayList<Message> getUnreadMessages(int userId);
     public boolean sendMessage (Message message);

@@ -23,14 +23,6 @@ CREATE TABLE ChatApp.Message
 	inForum BOOLEAN NOT NULL,
 	PRIMARY KEY (messageId)
 );
-CREATE TABLE ChatApp.Recipients
-(
-        messageId INT(5) NOT NULL,
-        userId INT(5) NOT NULL,
-        CONSTRAINT fkMessage FOREIGN KEY(messageId) REFERENCES ChatApp.Message(messageId),
-        CONSTRAINT fkUser FOREIGN(userId) REFERENCES ChatApp.Users(userId)
-        CONSTRAINT pkUserMessage PRIMARY KEY(messageId, userId)
-);
 CREATE TABLE ChatApp.UserMessage
 (
 	userId INT(5) NOT NULL,
