@@ -5,13 +5,14 @@
  */
 package DTO;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
  *
  * @author Megatronus
  */
-public class User {
+public class User implements Serializable{
     private int userId;
     private String userName, password, email;
     private boolean loggedIn;

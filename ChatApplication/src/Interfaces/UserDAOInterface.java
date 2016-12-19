@@ -5,10 +5,17 @@
  */
 package Interfaces;
 
+import DTO.User;
+
 /**
  *
  * @author Megatronus
  */
 public interface UserDAOInterface {
+    public User getUserById(int userId);
+    public User login (String userName, String password);
+    public void logout();
+    public boolean register(User newUser);
+    public boolean loggedIn(int userId);
     
 }

@@ -5,6 +5,7 @@
  */
 package DTO;
 
+import java.io.Serializable;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -13,7 +14,7 @@ import java.util.Objects;
  *
  * @author Megatronus
  */
-public class Message {
+public class Message implements Serializable{
     private int messageId;
     private String messageContent;
     private String sender;
