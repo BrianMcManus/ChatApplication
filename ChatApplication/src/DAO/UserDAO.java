@@ -18,52 +18,109 @@ import java.util.logging.Logger;
  *
  * @author Megatronus
  */
-public class UserDAO implements UserDAOInterface{
+public class UserDAO extends DAO implements UserDAOInterface {
+
     private User user;
+    private Connection con = null;
+    private PreparedStatement ps = null;
+    private ResultSet rs = null;
 
     @Override
-    public User getUserById(int userId) {Connection con = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
+    public User getUserById(int userId) {
         user = new User();
-
         try {
             con = getConnection();
-            String query = "Select * from classes where classId = ?";
+            String query = "SELECT * FROM user WHERE userId = ?";
             ps = con.prepareStatement(query);
-            ps.setInt(1, id);
+            ps.setInt(1, userId);
             rs = ps.executeQuery();
-            while(rs.next()){
-                cClass.setName(rs.getString("className"));
-                cClass.setDesc(rs.getString("classDesc"));
-                cClass.setRole(rs.getString("classRole"));
-                cClass.setAlignment(rs.getString("classAlignment"));
-                cClass.setHitDie(rs.getString("classHitDie"));
-                cClass.setSkills(rs.getString("classSkills"));
-                cClass.setFeatures(rs.getString("classFeatures"));
+            while (rs.next()) {
+                user.setUserId(rs.getInt("userId"));
+                user.setUserName(rs.getString("username"));
+                user.setEmail(rs.getString("email"));
+                user.setPassword(rs.getString("password"));
+                user.setLoggedIn(rs.getBoolean("loggedIn"));
             }
         } catch (SQLException ex) {
-            Logger.getLogger(CharacterClassDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }}
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return user;
+    }
 
     @Override
     public User login(String userName, String password) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        user = new User();
+        try {
+            con = getConnection();
+            String query = "SELECT * FROM user WHERE username = ? AND password = ?";
+            ps = con.prepareStatement(query);
+            ps.setString(1, userName);
+            ps.setString(2, password);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                user.setUserId(rs.getInt("userId"));
+                user.setUserName(rs.getString("username"));
+                user.setEmail(rs.getString("email"));
+                user.setPassword(rs.getString("password"));
+                user.setLoggedIn(true);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return user;
     }
 
     @Override
     public void logout() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (user != null) {
+            user = null;
+        }
     }
 
     @Override
     public boolean register(User newUser) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        boolean registered = false;
+        user = newUser;
+        try {
+            con = getConnection();
+            String query = "INSERT INTO user(username, email, password) VALUES(?,?,?)";
+            ps = con.prepareStatement(query);
+            ps.setString(1, user.getUserName());
+            ps.setString(2, user.getEmail());
+            ps.setString(3, user.getPassword());
+            rs = ps.executeQuery();
+            registered = true;
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return registered;
     }
 
     @Override
     public boolean loggedIn(int userId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        user = new User();
+        try {
+            con = getConnection();
+            String query = "SELECT * FROM user WHERE userId = ?";
+            ps = con.prepareStatement(query);
+            ps.setInt(1, userId);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                user.setUserId(rs.getInt("userId"));
+                user.setUserName(rs.getString("username"));
+                user.setEmail(rs.getString("email"));
+                user.setPassword(rs.getString("password"));
+                user.setLoggedIn(rs.getBoolean("loggedIn"));
+            }
+            if(user.isLoggedIn()==true){
+                return true;
+            } else{
+                return false;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
     }
-    
+
 }

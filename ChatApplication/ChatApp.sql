@@ -7,7 +7,9 @@ CREATE TABLE ChatApp.User
 (
 	userId INT(5) NOT NULL AUTO_INCREMENT,
 	username VARCHAR(100) NOT NULL,
+        email VARCHAR(100) NOT NULL,
 	password VARCHAR(100) NOT NULL,
+        loggedIn BOOLEAN NOT NULL Default false,
 	PRIMARY KEY (userId)
 );
 
@@ -17,7 +19,7 @@ CREATE TABLE ChatApp.Message
 	message VARCHAR(10000) NOT NULL,
 	sender VARCHAR(100) NOT NULL,
 	recipient VARCHAR(100) NOT NULL,
-	read BOOLEAN NOT NULL,
+	messageRead BOOLEAN NOT NULL,
 	timeSent DATE NOT NULL,
 	inForum BOOLEAN NOT NULL,
 	PRIMARY KEY (messageId)
