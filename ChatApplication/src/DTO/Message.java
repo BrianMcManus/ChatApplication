@@ -6,6 +6,7 @@
 package DTO;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Objects;
 
 /**
@@ -16,20 +17,23 @@ public class Message {
     private int messageId;
     private String messageContent;
     private String sender;
-    private String recipient;
+    private ArrayList<String> recipient;
     private boolean read;
     private Date timeSent;
+    private boolean inForum;
 
     public Message() {
+        recipient = new ArrayList<String>();
     }
 
-    public Message(int messageId, String messageContent, String sender, String recipient, boolean read, Date timeSent) {
+    public Message(int messageId, String messageContent, String sender, ArrayList<String> recipient, boolean read, Date timeSent, boolean inForum) {
         this.messageId = messageId;
         this.messageContent = messageContent;
         this.sender = sender;
         this.recipient = recipient;
         this.read = read;
         this.timeSent = timeSent;
+        this.inForum = inForum;
     }
 
     public int getMessageId() {
@@ -56,11 +60,11 @@ public class Message {
         this.sender = sender;
     }
 
-    public String getRecipient() {
+    public ArrayList<String> getRecipient() {
         return recipient;
     }
 
-    public void setRecipient(String recipient) {
+    public void setRecipient(ArrayList<String> recipient) {
         this.recipient = recipient;
     }
 
@@ -80,15 +84,24 @@ public class Message {
         this.timeSent = timeSent;
     }
 
+    public boolean isInForum() {
+        return inForum;
+    }
+
+    public void setInForum(boolean inForum) {
+        this.inForum = inForum;
+    }
+
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 37 * hash + this.messageId;
-        hash = 37 * hash + Objects.hashCode(this.messageContent);
-        hash = 37 * hash + Objects.hashCode(this.sender);
-        hash = 37 * hash + Objects.hashCode(this.recipient);
-        hash = 37 * hash + (this.read ? 1 : 0);
-        hash = 37 * hash + Objects.hashCode(this.timeSent);
+        hash = 59 * hash + this.messageId;
+        hash = 59 * hash + Objects.hashCode(this.messageContent);
+        hash = 59 * hash + Objects.hashCode(this.sender);
+        hash = 59 * hash + Objects.hashCode(this.recipient);
+        hash = 59 * hash + (this.read ? 1 : 0);
+        hash = 59 * hash + Objects.hashCode(this.timeSent);
+        hash = 59 * hash + (this.inForum ? 1 : 0);
         return hash;
     }
 
@@ -110,6 +123,9 @@ public class Message {
         if (this.read != other.read) {
             return false;
         }
+        if (this.inForum != other.inForum) {
+            return false;
+        }
         if (!Objects.equals(this.messageContent, other.messageContent)) {
             return false;
         }
@@ -127,8 +143,12 @@ public class Message {
 
     @Override
     public String toString() {
-        return "Message{" + "messageId=" + messageId + ", messageContent=" + messageContent + ", sender=" + sender + ", recipient=" + recipient + ", read=" + read + ", timeSent=" + timeSent + '}';
+        return "Message{" + "messageId=" + messageId + ", messageContent=" + messageContent + ", sender=" + sender + ", recipient=" + recipient + ", read=" + read + ", timeSent=" + timeSent + ", inForum=" + inForum + '}';
     }
+    
+    
+
+    
     
     
 }

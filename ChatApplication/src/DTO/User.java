@@ -13,16 +13,17 @@ import java.util.Objects;
  */
 public class User {
     private int userId;
-    private String userName, password;
+    private String userName, password, email;
     private boolean loggedIn;
 
     public User() {
     }
 
-    public User(int userId, String userName, String password, boolean loggedIn) {
+    public User(int userId, String userName, String password, String email, boolean loggedIn) {
         this.userId = userId;
         this.userName = userName;
         this.password = password;
+        this.email = email;
         this.loggedIn = loggedIn;
     }
 
@@ -32,6 +33,47 @@ public class User {
 
     public void setUserId(int userId) {
         this.userId = userId;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 97 * hash + this.userId;
+        hash = 97 * hash + Objects.hashCode(this.userName);
+        hash = 97 * hash + Objects.hashCode(this.password);
+        hash = 97 * hash + Objects.hashCode(this.email);
+        hash = 97 * hash + (this.loggedIn ? 1 : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final User other = (User) obj;
+        if (this.userId != other.userId) {
+            return false;
+        }
+        if (this.loggedIn != other.loggedIn) {
+            return false;
+        }
+        if (!Objects.equals(this.userName, other.userName)) {
+            return false;
+        }
+        if (!Objects.equals(this.password, other.password)) {
+            return false;
+        }
+        if (!Objects.equals(this.email, other.email)) {
+            return false;
+        }
+        return true;
     }
 
     public String getUserName() {
@@ -50,6 +92,14 @@ public class User {
         this.password = password;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public boolean isLoggedIn() {
         return loggedIn;
     }
@@ -59,42 +109,10 @@ public class User {
     }
 
     @Override
-    public int hashCode() {
-        int hash = 3;
-        hash = 73 * hash + this.userId;
-        hash = 73 * hash + Objects.hashCode(this.userName);
-        hash = 73 * hash + Objects.hashCode(this.password);
-        hash = 73 * hash + (this.loggedIn ? 1 : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final User other = (User) obj;
-        if (this.userId != other.userId) {
-            return false;
-        }
-        if (!Objects.equals(this.userName, other.userName)) {
-            return false;
-        }
-        if (!Objects.equals(this.password, other.password)) {
-            return false;
-        }
-        if (this.loggedIn != other.loggedIn) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
     public String toString() {
-        return "User{" + "userId=" + userId + ", userName=" + userName + ", password=" + password + ", loggedIn=" + loggedIn + '}';
+        return "User{" + "userId=" + userId + ", userName=" + userName + ", password=" + password + ", email=" + email + ", loggedIn=" + loggedIn + '}';
     }
+
+    
     
 }
