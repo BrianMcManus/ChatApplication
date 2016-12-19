@@ -7,6 +7,7 @@ package RMIChatServer.Chat_Functionality;
 
 import DTO.Message;
 import DTO.User;
+import RMIChatClient.CallbackSupport.RMIChatClientInterface;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 

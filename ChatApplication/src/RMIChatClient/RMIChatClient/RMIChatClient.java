@@ -10,7 +10,7 @@ import DTO.Message;
 import DTO.User;
 import RMIChatClient.CallbackSupport.RMIChatClientImpl;
 import RMIChatClient.CallbackSupport.RMIChatClientInterface;
-import RMIChatClient.ChatFunctionality.RMIChatInterface;
+import RMIChatServer.Chat_Functionality.RMIChatInterface;
 import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
