@@ -3,7 +3,7 @@ DROP DATABASE IF EXISTS ChatApp;
 CREATE DATABASE IF NOT EXISTS ChatApp;
 USE ChatApp;
 
-CREATE TABLE ChatApp.User
+CREATE TABLE ChatApp.Users
 (
 	userId INT(5) NOT NULL AUTO_INCREMENT,
 	username VARCHAR(100) NOT NULL,
@@ -18,18 +18,24 @@ CREATE TABLE ChatApp.Message
 	messageId INT(5) NOT NULL AUTO_INCREMENT,
 	message VARCHAR(10000) NOT NULL,
 	sender VARCHAR(100) NOT NULL,
-	recipient VARCHAR(100) NOT NULL,
 	messageRead BOOLEAN NOT NULL,
 	timeSent DATE NOT NULL,
 	inForum BOOLEAN NOT NULL,
 	PRIMARY KEY (messageId)
 );
-
+CREATE TABLE ChatApp.Recipients
+(
+        messageId INT(5) NOT NULL,
+        userId INT(5) NOT NULL,
+        CONSTRAINT fkMessage FOREIGN KEY(messageId) REFERENCES ChatApp.Message(messageId),
+        CONSTRAINT fkUser FOREIGN(userId) REFERENCES ChatApp.Users(userId)
+        CONSTRAINT pkUserMessage PRIMARY KEY(messageId, userId)
+);
 CREATE TABLE ChatApp.UserMessage
 (
 	userId INT(5) NOT NULL,
 	messageId INT(5) NOT NULL,
-	CONSTRAINT fkUser FOREIGN KEY(userId) REFERENCES ChatApp.User(userId),
+	CONSTRAINT fkUser FOREIGN KEY(userId) REFERENCES ChatApp.Users(userId),
 	CONSTRAINT fkMessage FOREIGN KEY(messageId) REFERENCES ChatApp.Message(messageId)
 );
 
