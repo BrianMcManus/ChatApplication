@@ -5,7 +5,7 @@
  */
 package DAO;
 
-import DTO.Message;
+import business.Message;
 import Interfaces.MessageDAOInterface;
 import java.sql.Connection;
 import java.sql.Date;

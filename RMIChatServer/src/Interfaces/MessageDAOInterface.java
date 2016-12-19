@@ -5,7 +5,7 @@
  */
 package Interfaces;
 
-import DTO.Message;
+import business.Message;
 import java.sql.Date;
 import java.util.ArrayList;
 

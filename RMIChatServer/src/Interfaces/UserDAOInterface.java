@@ -5,7 +5,7 @@
  */
 package Interfaces;
 
-import DTO.User;
+import business.User;
 
 /**
  *

@@ -5,8 +5,8 @@
  */
 package Interfaces;
 
-import DTO.Message;
-import DTO.User;
+import business.Message;
+import business.User;
 import java.util.ArrayList;
 
 /**

@@ -7,6 +7,7 @@ package chat_functionality;
 
 
 import business.User;
+import callback_support.RMIChatClientInterface;
 import com.sun.corba.se.impl.protocol.giopmsgheaders.Message;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
@@ -23,7 +24,9 @@ public interface RMIChatInterface extends Remote
     public boolean register(User newUser) throws RemoteException;
     public boolean login(User user) throws RemoteException;
     
-    public boolean registerForCallback(RMIChatInterface client) throws RemoteException;
-    public boolean unregisterForCallback(RMIChatInterface client) throws RemoteException;
+    public boolean registerForCallback(RMIChatClientInterface client) throws RemoteException;
+    public boolean unregisterForCallback(RMIChatClientInterface client) throws RemoteException;
+
+ 
 }
 

@@ -5,7 +5,7 @@
  */
 package DAO;
 
-import DTO.User;
+import business.User;
 import Interfaces.UserDAOInterface;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

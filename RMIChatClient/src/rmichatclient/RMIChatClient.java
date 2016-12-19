@@ -7,10 +7,11 @@ package rmichatclient;
 
 
 
-import RMIChatClient.CallbackSupport.RMIChatClientImpl;
-import RMIChatClient.CallbackSupport.RMIChatClientInterface;
+
 import business.Message;
 import business.User;
+import callback_support.RMIChatClientImpl;
+import callback_support.RMIChatClientInterface;
 import chat_functionality.RMIChatInterface;
 
 import java.net.MalformedURLException;
@@ -39,17 +40,17 @@ public class RMIChatClient {
             RMIChatClientInterface thisClient = new RMIChatClientImpl();
             messageService.registerForCallback(thisClient);
             
-            Message m = new Message("I'll be back", "Ahnawld");
-            boolean added = messageService.addMessage(m);
-            
-            System.out.println("Quote added? " + added);
-            
-            Message newMessage = messageService.getMessage();
-            System.out.println(newMessage);
-            
-            User u = new User("Michelle", "password");
-            
-            System.out.println("Registered: " + messageService.register(u));
+//            Message m = new Message("I'll be back", "Ahnawld");
+//            boolean added = messageService.addMessage(m);
+//            
+//            System.out.println("Quote added? " + added);
+//            
+//            Message newMessage = messageService.getMessage();
+//            System.out.println(newMessage);
+//            
+//            User u = new User("Michelle", "password");
+//            
+//            System.out.println("Registered: " + messageService.register(u));
             
         } catch (NotBoundException ex) {
             Logger.getLogger(RMIChatClient.class.getName()).log(Level.SEVERE, null, ex);
