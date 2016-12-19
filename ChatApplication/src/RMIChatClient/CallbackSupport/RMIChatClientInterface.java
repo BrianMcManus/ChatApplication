@@ -8,10 +8,7 @@ package RMIChatClient.CallbackSupport;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
-/**
- *
- * @author grahamm
- */
+
 public interface RMIChatClientInterface extends Remote
 {
     public void newLoginNotification(String newLogin) throws RemoteException;

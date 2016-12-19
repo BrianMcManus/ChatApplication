@@ -8,10 +8,7 @@ package RMIChatClient.CallbackSupport;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
-/**
- *
- * @author grahamm
- */
+
 public class RMIChatClientImpl extends UnicastRemoteObject implements RMIChatClientInterface
 {
     public RMIChatClientImpl() throws RemoteException{
