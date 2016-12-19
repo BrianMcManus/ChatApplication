@@ -5,6 +5,7 @@
  */
 package RMIChatServer.Launch;
 
+import RMIChatClient.CallbackSupport.RMIChatClientImpl;
 import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
@@ -23,7 +24,7 @@ public class RMIServer {
      */
     public static void main(String[] args) {
         try {
-            RMIQuoteImpl quoteObject = new RMIQuoteImpl();
+            RMIChatClientImpl quoteObject = new RMIChatClientImpl();
             
             int portNum = 55555;
             startRegistry(portNum);
@@ -33,9 +34,9 @@ public class RMIServer {
             
             Naming.rebind(registryPath+objectLabel, quoteObject);
         } catch (RemoteException ex) {
-            Logger.getLogger(RMIQuoteServer.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RMIServer.class.getName()).log(Level.SEVERE, null, ex);
         } catch (MalformedURLException ex) {
-            Logger.getLogger(RMIQuoteServer.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RMIServer.class.getName()).log(Level.SEVERE, null, ex);
         }
         
     }
