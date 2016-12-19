@@ -18,20 +18,18 @@ public class Message implements Serializable{
     private int messageId;
     private String messageContent;
     private String sender;
-    private ArrayList<String> recipient;
     private boolean read;
     private Date timeSent;
     private boolean inForum;
 
     public Message() {
-        recipient = new ArrayList<String>();
+       
     }
 
-    public Message(int messageId, String messageContent, String sender, ArrayList<String> recipient, boolean read, Date timeSent, boolean inForum) {
+    public Message(int messageId, String messageContent, String sender, boolean read, Date timeSent, boolean inForum) {
         this.messageId = messageId;
         this.messageContent = messageContent;
         this.sender = sender;
-        this.recipient = recipient;
         this.read = read;
         this.timeSent = timeSent;
         this.inForum = inForum;
@@ -61,14 +59,6 @@ public class Message implements Serializable{
         this.sender = sender;
     }
 
-    public ArrayList<String> getRecipient() {
-        return recipient;
-    }
-
-    public void setRecipient(ArrayList<String> recipient) {
-        this.recipient = recipient;
-    }
-
     public boolean isRead() {
         return read;
     }
@@ -95,14 +85,13 @@ public class Message implements Serializable{
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 59 * hash + this.messageId;
-        hash = 59 * hash + Objects.hashCode(this.messageContent);
-        hash = 59 * hash + Objects.hashCode(this.sender);
-        hash = 59 * hash + Objects.hashCode(this.recipient);
-        hash = 59 * hash + (this.read ? 1 : 0);
-        hash = 59 * hash + Objects.hashCode(this.timeSent);
-        hash = 59 * hash + (this.inForum ? 1 : 0);
+        int hash = 5;
+        hash = 23 * hash + this.messageId;
+        hash = 23 * hash + Objects.hashCode(this.messageContent);
+        hash = 23 * hash + Objects.hashCode(this.sender);
+        hash = 23 * hash + (this.read ? 1 : 0);
+        hash = 23 * hash + Objects.hashCode(this.timeSent);
+        hash = 23 * hash + (this.inForum ? 1 : 0);
         return hash;
     }
 
@@ -133,9 +122,6 @@ public class Message implements Serializable{
         if (!Objects.equals(this.sender, other.sender)) {
             return false;
         }
-        if (!Objects.equals(this.recipient, other.recipient)) {
-            return false;
-        }
         if (!Objects.equals(this.timeSent, other.timeSent)) {
             return false;
         }
@@ -144,8 +130,10 @@ public class Message implements Serializable{
 
     @Override
     public String toString() {
-        return "Message{" + "messageId=" + messageId + ", messageContent=" + messageContent + ", sender=" + sender + ", recipient=" + recipient + ", read=" + read + ", timeSent=" + timeSent + ", inForum=" + inForum + '}';
+        return "Message{" + "messageId=" + messageId + ", messageContent=" + messageContent + ", sender=" + sender + ", read=" + read + ", timeSent=" + timeSent + ", inForum=" + inForum + '}';
     }
+
+    
     
     
 
