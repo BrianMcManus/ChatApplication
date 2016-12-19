@@ -5,10 +5,15 @@
  */
 package Interfaces;
 
+import DTO.Message;
+import DTO.User;
+import java.util.ArrayList;
+
 /**
  *
  * @author Brian
  */
 public interface UserMessageInterface {
-    
+    public User findUserByMessage(int messageId);
+    public ArrayList<Message> getAllMessagesByUser(int userId);
 }
