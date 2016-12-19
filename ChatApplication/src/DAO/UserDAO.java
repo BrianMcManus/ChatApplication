@@ -43,6 +43,20 @@ public class UserDAO extends DAO implements UserDAOInterface {
             }
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+                if (con != null) {
+                    freeConnection(con);
+                }
+            } catch (SQLException e) {
+                return null;
+            }
         }
         return user;
     }
@@ -66,6 +80,20 @@ public class UserDAO extends DAO implements UserDAOInterface {
             }
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+                if (con != null) {
+                    freeConnection(con);
+                }
+            } catch (SQLException e) {
+                return null;
+            }
         }
         return user;
     }
@@ -79,7 +107,6 @@ public class UserDAO extends DAO implements UserDAOInterface {
 
     @Override
     public boolean register(User newUser) {
-        boolean registered = false;
         user = newUser;
         try {
             con = getConnection();
@@ -89,11 +116,25 @@ public class UserDAO extends DAO implements UserDAOInterface {
             ps.setString(2, user.getEmail());
             ps.setString(3, user.getPassword());
             rs = ps.executeQuery();
-            registered = true;
+            return true;
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+                if (con != null) {
+                    freeConnection(con);
+                }
+            } catch (SQLException e) {
+                return false;
+            }
         }
-        return registered;
+        return false;
     }
 
     @Override
@@ -119,6 +160,20 @@ public class UserDAO extends DAO implements UserDAOInterface {
             }
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+                if (con != null) {
+                    freeConnection(con);
+                }
+            } catch (SQLException e) {
+                return false;
+            }
         }
         return false;
     }
