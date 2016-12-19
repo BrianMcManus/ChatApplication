@@ -1,0 +1,75 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package business;
+
+/**
+ *
+ * @author Brian
+ */
+public class UserMessage {
+    private int recipientId;
+    private int messageId;
+
+    public UserMessage() {
+    }
+
+    public UserMessage(int recipientId, int messageId) {
+        this.recipientId = recipientId;
+        this.messageId = messageId;
+    }
+
+    public int getRecipientId() {
+        return recipientId;
+    }
+
+    public void setRecipientId(int recipientId) {
+        this.recipientId = recipientId;
+    }
+
+    public int getMessageId() {
+        return messageId;
+    }
+
+    public void setMessageId(int messageId) {
+        this.messageId = messageId;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 37 * hash + this.recipientId;
+        hash = 37 * hash + this.messageId;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final UserMessage other = (UserMessage) obj;
+        if (this.recipientId != other.recipientId) {
+            return false;
+        }
+        if (this.messageId != other.messageId) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "UserMessage{" + "recipientId=" + recipientId + ", messageId=" + messageId + '}';
+    }
+    
+    
+}
