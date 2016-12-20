@@ -35,8 +35,8 @@ public class Register extends javax.swing.JFrame {
         passwordField = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         emailField = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        registerButton = new javax.swing.JButton();
+        returnButton = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -47,17 +47,17 @@ public class Register extends javax.swing.JFrame {
 
         jLabel3.setText("Please enter your email:");
 
-        jButton1.setText("Register");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        registerButton.setText("Register");
+        registerButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                registerButtonActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Go to Login");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        returnButton.setText("Go to Login");
+        returnButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                returnButtonActionPerformed(evt);
             }
         });
 
@@ -86,10 +86,10 @@ public class Register extends javax.swing.JFrame {
                         .addComponent(jLabel4))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(225, 225, 225)
-                        .addComponent(jButton1))
+                        .addComponent(registerButton))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(207, 207, 207)
-                        .addComponent(jButton2)))
+                        .addComponent(returnButton)))
                 .addContainerGap(230, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -110,31 +110,31 @@ public class Register extends javax.swing.JFrame {
                     .addComponent(jLabel3)
                     .addComponent(emailField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(30, 30, 30)
-                .addComponent(jButton1)
+                .addComponent(registerButton)
                 .addGap(19, 19, 19)
-                .addComponent(jButton2)
+                .addComponent(returnButton)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void returnButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnButtonActionPerformed
         
         this.setVisible(false);
         new Login().setVisible(true); // Main Form to show after the Login Form..
     
 
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_returnButtonActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
         String username = usernameField.getText();
         String password = passwordField.getText();
         String email = emailField.getText();
         
         User user = new User(username, password, email, false);
         
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_registerButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -173,13 +173,13 @@ public class Register extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField emailField;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JTextField passwordField;
+    private javax.swing.JButton registerButton;
+    private javax.swing.JButton returnButton;
     private javax.swing.JTextField usernameField;
     // End of variables declaration//GEN-END:variables
 }

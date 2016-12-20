@@ -59,7 +59,7 @@ public class RMIChatImpl extends UnicastRemoteObject implements RMIChatInterface
     @Override
     public boolean login(User user) throws RemoteException {
         synchronized (userList) {
-            if (user != null && userList.contains(user)) {
+            if(user != null && userList.contains(user)) {
                 return true;
             }
             return false;
