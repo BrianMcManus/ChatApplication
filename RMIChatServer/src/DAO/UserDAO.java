@@ -30,7 +30,7 @@ public class UserDAO extends DAO implements UserDAOInterface {
         user = new User();
         try {
             con = getConnection();
-            String query = "SELECT * FROM user WHERE userId = ?";
+            String query = "SELECT * FROM users WHERE userId = ?";
             ps = con.prepareStatement(query);
             ps.setInt(1, userId);
             rs = ps.executeQuery();
@@ -66,7 +66,7 @@ public class UserDAO extends DAO implements UserDAOInterface {
         user = new User();
         try {
             con = getConnection();
-            String query = "SELECT * FROM user WHERE username = ? AND password = ?";
+            String query = "SELECT * FROM users WHERE username = ? AND password = ?";
             ps = con.prepareStatement(query);
             ps.setString(1, userName);
             ps.setString(2, password);
@@ -110,7 +110,7 @@ public class UserDAO extends DAO implements UserDAOInterface {
         user = newUser;
         try {
             con = getConnection();
-            String query = "INSERT INTO user(username, email, password) VALUES(?,?,?)";
+            String query = "INSERT INTO users(username, email, password) VALUES(?,?,?)";
             ps = con.prepareStatement(query);
             ps.setString(1, user.getUserName());
             ps.setString(2, user.getEmail());
@@ -142,7 +142,7 @@ public class UserDAO extends DAO implements UserDAOInterface {
         user = new User();
         try {
             con = getConnection();
-            String query = "SELECT * FROM user WHERE userId = ?";
+            String query = "SELECT * FROM users WHERE userId = ?";
             ps = con.prepareStatement(query);
             ps.setInt(1, userId);
             rs = ps.executeQuery();
