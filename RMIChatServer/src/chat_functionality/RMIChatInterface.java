@@ -19,7 +19,7 @@ import java.rmi.RemoteException;
 public interface RMIChatInterface extends Remote
 {
     public boolean addMessage(Message newMessage) throws RemoteException;
-    public Message getMessage() throws RemoteException;
+    //public Message getMessage() throws RemoteException;
     
     public boolean register(User newUser) throws RemoteException;
     public boolean login(User user) throws RemoteException;
