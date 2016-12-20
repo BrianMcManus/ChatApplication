@@ -6,6 +6,7 @@
 package Interfaces;
 
 import business.User;
+import java.util.ArrayList;
 
 /**
  *
@@ -17,5 +18,5 @@ public interface UserDAOInterface {
     public void logout();
     public boolean register(User newUser);
     public boolean loggedIn(int userId);
-    
+    public ArrayList<User> getAllUsers();
 }
