@@ -5,17 +5,42 @@
  */
 package GUI;
 
+import business.User;
+import java.util.ArrayList;
+import static GUI.Login.chatService;
+import java.rmi.RemoteException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Megatronus
  */
 public class Chatroom extends javax.swing.JFrame {
 
+    
     /**
      * Creates new form Chatroom
      */
     public Chatroom() {
         initComponents();
+    }
+    
+    public static String[] populateList()
+    {
+        ArrayList<User> users = new ArrayList();
+        String[] usernames = null;
+        try {
+            users = chatService.getAllUsers();
+            usernames = new String[users.size()];
+            for(int i = 0; i< users.size(); i++)
+            {
+                usernames[i] = users.get(i).getUserName();
+            }
+        } catch (RemoteException ex) {
+            Logger.getLogger(Chatroom.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return usernames;
     }
 
     /**
@@ -35,9 +60,9 @@ public class Chatroom extends javax.swing.JFrame {
         messageLabel = new javax.swing.JLabel();
         sendButton = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        userList = new javax.swing.JList<>();
         jScrollPane5 = new javax.swing.JScrollPane();
-        jList2 = new javax.swing.JList<>();
+        messageList = new javax.swing.JList<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -55,21 +80,21 @@ public class Chatroom extends javax.swing.JFrame {
 
         sendButton.setText("Send");
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+        userList.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = populateList();
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        jList1.setName("userList"); // NOI18N
-        jScrollPane4.setViewportView(jList1);
+        userList.setName("userList"); // NOI18N
+        jScrollPane4.setViewportView(userList);
 
-        jList2.setModel(new javax.swing.AbstractListModel<String>() {
+        messageList.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        jList2.setName("messageList"); // NOI18N
-        jScrollPane5.setViewportView(jList2);
+        messageList.setName("messageList"); // NOI18N
+        jScrollPane5.setViewportView(messageList);
 
         javax.swing.GroupLayout chatRoomPanelLayout = new javax.swing.GroupLayout(chatRoomPanel);
         chatRoomPanel.setLayout(chatRoomPanelLayout);
@@ -140,6 +165,7 @@ public class Chatroom extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
+        
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -162,7 +188,6 @@ public class Chatroom extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Chatroom.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -173,15 +198,15 @@ public class Chatroom extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel chatRoomPanel;
-    private javax.swing.JList<String> jList1;
-    private javax.swing.JList<String> jList2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTextArea messageField;
     private javax.swing.JLabel messageLabel;
+    private javax.swing.JList<String> messageList;
     private javax.swing.JButton sendButton;
     private javax.swing.JLabel titleLabel;
+    private javax.swing.JList<String> userList;
     private javax.swing.JLabel userListLabel;
     // End of variables declaration//GEN-END:variables
 }

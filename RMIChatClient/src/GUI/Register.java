@@ -135,12 +135,19 @@ public class Register extends javax.swing.JFrame {
         String username = usernameField.getText();
         String password = passwordField.getText();
         String email = emailField.getText();
+        boolean valid = false;
         
         User user = new User(username, password, email);
         try {
-            chatService.register(user);
+            valid = chatService.register(user);
         } catch (RemoteException ex) {
             Logger.getLogger(Register.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        if(valid)
+        {
+            this.setVisible(false);
+            new Login().setVisible(true);
         }
         
     }//GEN-LAST:event_registerButtonActionPerformed
