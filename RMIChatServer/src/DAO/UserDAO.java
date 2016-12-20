@@ -139,47 +139,6 @@ public class UserDAO extends DAO implements UserDAOInterface {
     }
 
     @Override
-    public boolean loggedIn(int userId) {
-        user = new User();
-        try {
-            con = getConnection();
-            String query = "SELECT * FROM users WHERE userId = ?";
-            ps = con.prepareStatement(query);
-            ps.setInt(1, userId);
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                user.setUserId(rs.getInt("userId"));
-                user.setUserName(rs.getString("username"));
-                user.setEmail(rs.getString("email"));
-                user.setPassword(rs.getString("password"));
-                user.setLoggedIn(rs.getBoolean("loggedIn"));
-            }
-            if(user.isLoggedIn()==true){
-                return true;
-            } else{
-                return false;
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (ps != null) {
-                    ps.close();
-                }
-                if (con != null) {
-                    freeConnection(con);
-                }
-            } catch (SQLException e) {
-                return false;
-            }
-        }
-        return false;
-    }
-
-    @Override
     public ArrayList<User> getAllUsers() {        
         ArrayList<User> userList = new ArrayList();
         try {

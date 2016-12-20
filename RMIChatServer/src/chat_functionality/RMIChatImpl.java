@@ -22,7 +22,6 @@ public class RMIChatImpl extends UnicastRemoteObject implements RMIChatInterface
     private UserDAO uDAO = new UserDAO();
     private final ArrayList<Message> messageList = new ArrayList();// maybe change to Vector
     private final ArrayList<User> userList = uDAO.getAllUsers();
-    private final ArrayList<User> loggedInUserList = new ArrayList();
     private final ArrayList<RMIChatClientInterface> clientList = new ArrayList();
     private User u;
     
@@ -38,11 +37,15 @@ public class RMIChatImpl extends UnicastRemoteObject implements RMIChatInterface
         }
         return addMessage;
     }
-
-//    @Override
-//    public Message getMessage() throws RemoteException {
-//        
-//    }
+    @Override
+    public ArrayList<User> getAllUsers() throws RemoteException{
+        synchronized(userList){
+            if(userList!=null){
+                return userList;
+            }
+        }
+        return null;
+    }
     
     @Override
     public boolean register(User newUser) throws RemoteException {
@@ -71,7 +74,11 @@ public class RMIChatImpl extends UnicastRemoteObject implements RMIChatInterface
             if(user != null && userList.contains(user)) {
                 uDAO = new UserDAO();
                 u = uDAO.login(user.getUserName(), user.getPassword());
-                loggedInUserList.add(u);
+                for(int i = 0; i<userList.size();i++){
+                    if(userList.get(i).equals(u)){
+                        userList.get(i).setLoggedIn(true);
+                    }
+                }
                 return true;
             }
             return false;

@@ -17,6 +17,5 @@ public interface UserDAOInterface {
     public User login (String userName, String password);
     public void logout();
     public boolean register(User newUser);
-    public boolean loggedIn(int userId);
     public ArrayList<User> getAllUsers();
 }
