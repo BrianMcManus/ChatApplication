@@ -5,6 +5,7 @@
  */
 package chat_functionality;
 
+import DAO.MessageDAO;
 import DAO.UserDAO;
 import business.Message;
 import business.User;
@@ -20,7 +21,9 @@ import java.util.ArrayList;
 public class RMIChatImpl extends UnicastRemoteObject implements RMIChatInterface {
 
     private UserDAO uDAO = new UserDAO();
-    private final ArrayList<Message> messageList = new ArrayList();// maybe change to Vector
+    MessageDAO mDAO = new MessageDAO();
+    
+    private final ArrayList<Message> messageList = mDAO.getAllMessages();// maybe change to Vector
     private final ArrayList<User> userList = uDAO.getAllUsers();
     private final ArrayList<RMIChatClientInterface> clientList = new ArrayList();
     private User u;
@@ -105,6 +108,16 @@ public class RMIChatImpl extends UnicastRemoteObject implements RMIChatInterface
             }
             return false;
         }
+    }
+
+    @Override
+    public ArrayList<Message> getAllMessages() throws RemoteException {
+        synchronized(messageList){
+            if(messageList!=null && messageList.size()>0){
+                return messageList;
+            }
+        }
+        return new ArrayList();
     }
 
 }

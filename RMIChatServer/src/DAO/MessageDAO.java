@@ -84,7 +84,7 @@ public class MessageDAO extends DAO implements MessageDAOInterface{
     }
 
     @Override
-    public ArrayList<Message> getForumMessages() {
+    public ArrayList<Message> getAllMessages() {
         
         // ArrayList<Message> declaration for storing all the user's messages
         ArrayList<Message> messages = new ArrayList();
@@ -94,8 +94,8 @@ public class MessageDAO extends DAO implements MessageDAOInterface{
             con = getConnection();
 
             // creating the query
-            String query = "SELECT * FROM Message WHERE inForum = true";
-
+            String query = "SELECT * FROM Message";
+            ps = con.prepareStatement(query);
             // executing the query
             rs = ps.executeQuery();
 

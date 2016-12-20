@@ -8,6 +8,7 @@ package GUI;
 import business.User;
 import java.util.ArrayList;
 import static GUI.Login.chatService;
+import business.Message;
 import java.rmi.RemoteException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,7 +27,7 @@ public class Chatroom extends javax.swing.JFrame {
         initComponents();
     }
     
-    public static ArrayList<User> populateList()
+    public static ArrayList<User> populateUserList()
     {
         ArrayList<User> users = new ArrayList();
         try {
@@ -35,6 +36,15 @@ public class Chatroom extends javax.swing.JFrame {
             Logger.getLogger(Chatroom.class.getName()).log(Level.SEVERE, null, ex);
         }
         return users;
+    }
+    public static ArrayList<Message> populateMessageList(){
+        ArrayList<Message> messages = new ArrayList();
+        try{
+            messages = chatService.getAllMessages();
+        } catch (RemoteException ex){
+            Logger.getLogger(Chatroom.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return messages;
     }
 
     /**
@@ -75,7 +85,7 @@ public class Chatroom extends javax.swing.JFrame {
         sendButton.setText("Send");
 
         userList.setModel(new javax.swing.AbstractListModel<String>() {
-            ArrayList<User> usernameList = populateList();
+            ArrayList<User> usernameList = populateUserList();
             public int getSize() { return usernameList.size(); }
             public String getElementAt(int i) { return usernameList.get(i).getUserName(); }
         });
@@ -83,9 +93,9 @@ public class Chatroom extends javax.swing.JFrame {
         jScrollPane4.setViewportView(userList);
 
         messageList.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
+            ArrayList<Message> messageList = populateMessageList();
+            public int getSize() { return messageList.size(); }
+            public Object getElementAt(int i) { return messageList.get(i).getMessageContent(); }
         });
         messageList.setName("messageList"); // NOI18N
         jScrollPane5.setViewportView(messageList);

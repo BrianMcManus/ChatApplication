@@ -14,7 +14,7 @@ import java.util.ArrayList;
  * @author Megatronus
  */
 public interface MessageDAOInterface {
-    public ArrayList<Message> getForumMessages();
+    public ArrayList<Message> getAllMessages();
     public ArrayList<Message> getUserMessages(int userId);
     public Message getMessageById(int messageId);
     public ArrayList<Message> getMessageByDate(Date date);
