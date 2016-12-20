@@ -5,7 +5,18 @@
  */
 package GUI;
 
+import static GUI.Login.chatService;
 import business.User;
+import callback_support.RMIChatClientImpl;
+import callback_support.RMIChatClientInterface;
+import chat_functionality.RMIChatInterface;
+import java.net.MalformedURLException;
+import java.rmi.Naming;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import rmichatclient.RMIChatClient;
 
 /**
  *
@@ -132,7 +143,12 @@ public class Register extends javax.swing.JFrame {
         String password = passwordField.getText();
         String email = emailField.getText();
         
-        User user = new User(username, password, email, false);
+        User user = new User(username, password, email);
+        try {
+            chatService.register(user);
+        } catch (RemoteException ex) {
+            Logger.getLogger(Register.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
     }//GEN-LAST:event_registerButtonActionPerformed
 
@@ -162,6 +178,8 @@ public class Register extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Register.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        
+        
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {

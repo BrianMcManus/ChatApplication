@@ -26,11 +26,10 @@ public class User implements Serializable{
     }
     
 
-    public User(String userName, String password, String email, boolean loggedIn) {
+    public User(String userName, String password, String email) {
         this.userName = userName;
         this.password = password;
         this.email = email;
-        this.loggedIn = loggedIn;
     }
 
     public int getUserId() {
