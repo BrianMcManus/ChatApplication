@@ -7,16 +7,9 @@ package GUI;
 
 import static GUI.Login.chatService;
 import business.User;
-import callback_support.RMIChatClientImpl;
-import callback_support.RMIChatClientInterface;
-import chat_functionality.RMIChatInterface;
-import java.net.MalformedURLException;
-import java.rmi.Naming;
-import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import rmichatclient.RMIChatClient;
 
 /**
  *

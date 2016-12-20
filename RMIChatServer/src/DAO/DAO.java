@@ -16,7 +16,7 @@ import java.sql.SQLException;
 public class DAO {
     public Connection getConnection(){
         String driver = "com.mysql.jdbc.Driver";
-        String url = "jdbc:mysql://localhost:3306/ChatApp";
+        String url = "jdbc:mysql://localhost:3306/chatapp";
         String username = "root";
         String password = "";
         try

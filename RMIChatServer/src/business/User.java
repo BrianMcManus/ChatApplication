@@ -43,11 +43,8 @@ public class User implements Serializable{
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 97 * hash + this.userId;
-        hash = 97 * hash + Objects.hashCode(this.userName);
-        hash = 97 * hash + Objects.hashCode(this.password);
-        hash = 97 * hash + Objects.hashCode(this.email);
-        hash = 97 * hash + (this.loggedIn ? 1 : 0);
+        hash = 79 * hash + Objects.hashCode(this.userName);
+        hash = 79 * hash + Objects.hashCode(this.password);
         return hash;
     }
 
@@ -63,23 +60,16 @@ public class User implements Serializable{
             return false;
         }
         final User other = (User) obj;
-        if (this.userId != other.userId) {
-            return false;
-        }
-        if (this.loggedIn != other.loggedIn) {
-            return false;
-        }
         if (!Objects.equals(this.userName, other.userName)) {
             return false;
         }
         if (!Objects.equals(this.password, other.password)) {
             return false;
         }
-        if (!Objects.equals(this.email, other.email)) {
-            return false;
-        }
         return true;
     }
+
+    
 
     public String getUserName() {
         return userName;
