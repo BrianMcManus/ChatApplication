@@ -11,6 +11,7 @@ import business.User;
 import callback_support.RMIChatClientInterface;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 
 /**
  *
@@ -19,7 +20,7 @@ import java.rmi.RemoteException;
 public interface RMIChatInterface extends Remote
 {
     public boolean addMessage(Message newMessage) throws RemoteException;
-    public Message getMessage() throws RemoteException;
+    public ArrayList<User> getAllUsers() throws RemoteException;
     
     public boolean register(User newUser) throws RemoteException;
     public boolean login(User user) throws RemoteException;
