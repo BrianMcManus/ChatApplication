@@ -26,21 +26,15 @@ public class Chatroom extends javax.swing.JFrame {
         initComponents();
     }
     
-    public static String[] populateList()
+    public static ArrayList<User> populateList()
     {
         ArrayList<User> users = new ArrayList();
-        String[] usernames = null;
         try {
             users = chatService.getAllUsers();
-            usernames = new String[users.size()];
-            for(int i = 0; i< users.size(); i++)
-            {
-                usernames[i] = users.get(i).getUserName();
-            }
         } catch (RemoteException ex) {
             Logger.getLogger(Chatroom.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return usernames;
+        return users;
     }
 
     /**
@@ -60,9 +54,9 @@ public class Chatroom extends javax.swing.JFrame {
         messageLabel = new javax.swing.JLabel();
         sendButton = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
-        userList = new javax.swing.JList<>();
+        userList = new javax.swing.JList<String>();
         jScrollPane5 = new javax.swing.JScrollPane();
-        messageList = new javax.swing.JList<>();
+        messageList = new javax.swing.JList<String>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -81,17 +75,17 @@ public class Chatroom extends javax.swing.JFrame {
         sendButton.setText("Send");
 
         userList.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = populateList();
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
+            ArrayList<User> usernameList = populateList();
+            public int getSize() { return usernameList.size(); }
+            public String getElementAt(int i) { return usernameList.get(i).getUserName(); }
         });
         userList.setName("userList"); // NOI18N
         jScrollPane4.setViewportView(userList);
 
-        messageList.setModel(new javax.swing.AbstractListModel<String>() {
+        messageList.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
+            public Object getElementAt(int i) { return strings[i]; }
         });
         messageList.setName("messageList"); // NOI18N
         jScrollPane5.setViewportView(messageList);

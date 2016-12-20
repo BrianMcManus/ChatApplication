@@ -53,7 +53,7 @@ public class RMIChatImpl extends UnicastRemoteObject implements RMIChatInterface
             if (newUser != null) {
                 if (userList.size() > 0) {
                     for (User u : userList) {
-                        if (u.getUserName().equalsIgnoreCase(newUser.getUserName()) && u.getPassword().equalsIgnoreCase(newUser.getPassword())) {
+                        if (u.getUserName().equalsIgnoreCase(newUser.getUserName())) {
                             return false;
                         }
                     }
