@@ -23,31 +23,12 @@ import rmichatclient.RMIChatClient;
  */
 public class Login extends javax.swing.JFrame {
 
-    RMIChatInterface chatService;
+    public static RMIChatInterface chatService;
     /**
      * Creates new form Login
      */
     public Login() {
         initComponents();
-        try {
-            int portNum = 55555;
-            
-            String registryPath = "rmi://localhost:" + portNum;
-            String objectLabel = "/chatService";
-            
-            chatService = (RMIChatInterface) Naming.lookup(registryPath + objectLabel);
-            
-            RMIChatClientInterface thisClient = new RMIChatClientImpl();
-            chatService.registerForCallback(thisClient);
-            
-            } catch (NotBoundException ex) {
-            Logger.getLogger(RMIChatClient.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (MalformedURLException ex) {
-            Logger.getLogger(RMIChatClient.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (RemoteException ex) {
-            Logger.getLogger(RMIChatClient.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
     }
 
     /**
@@ -219,6 +200,25 @@ public class Login extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        
+        try {
+            int portNum = 55555;
+            
+            String registryPath = "rmi://localhost:" + portNum;
+            String objectLabel = "/chatService";
+            
+            chatService = (RMIChatInterface) Naming.lookup(registryPath + objectLabel);
+            
+            RMIChatClientInterface thisClient = new RMIChatClientImpl();
+            chatService.registerForCallback(thisClient);
+            
+            } catch (NotBoundException ex) {
+            Logger.getLogger(RMIChatClient.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(RMIChatClient.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (RemoteException ex) {
+            Logger.getLogger(RMIChatClient.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
