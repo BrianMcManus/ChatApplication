@@ -41,16 +41,16 @@ public class RMIChatClient {
             chatService.registerForCallback(thisClient);
             
 //            Message m = new Message("I'll be back", "Ahnawld");
-//            boolean added = messageService.addMessage(m);
+//            boolean added = chatService.addMessage(m);
 //            
 //            System.out.println("Quote added? " + added);
 //            
-//            Message newMessage = messageService.getMessage();
+//            Message newMessage = chatService.getMessage();
 //            System.out.println(newMessage);
 //            
 //            User u = new User("Michelle", "password");
 //            
-//            System.out.println("Registered: " + messageService.register(u));
+//            System.out.println("Registered: " + chatService.register(u));
             
         } catch (NotBoundException ex) {
             Logger.getLogger(RMIChatClient.class.getName()).log(Level.SEVERE, null, ex);

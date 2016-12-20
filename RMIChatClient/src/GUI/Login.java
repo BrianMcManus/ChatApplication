@@ -5,17 +5,49 @@
  */
 package GUI;
 
+import business.User;
+import callback_support.RMIChatClientImpl;
+import callback_support.RMIChatClientInterface;
+import chat_functionality.RMIChatInterface;
+import java.net.MalformedURLException;
+import java.rmi.Naming;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import rmichatclient.RMIChatClient;
+
 /**
  *
  * @author Brian
  */
 public class Login extends javax.swing.JFrame {
 
+    RMIChatInterface chatService;
     /**
      * Creates new form Login
      */
     public Login() {
         initComponents();
+        try {
+            int portNum = 55555;
+            
+            String registryPath = "rmi://localhost:" + portNum;
+            String objectLabel = "/chatService";
+            
+            chatService = (RMIChatInterface) Naming.lookup(registryPath + objectLabel);
+            
+            RMIChatClientInterface thisClient = new RMIChatClientImpl();
+            chatService.registerForCallback(thisClient);
+            
+            } catch (NotBoundException ex) {
+            Logger.getLogger(RMIChatClient.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(RMIChatClient.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (RemoteException ex) {
+            Logger.getLogger(RMIChatClient.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
 
     /**
@@ -28,9 +60,9 @@ public class Login extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        usernameField = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        passwordField = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
@@ -39,7 +71,11 @@ public class Login extends javax.swing.JFrame {
 
         jLabel1.setText("Please enter your username:");
 
+        usernameField.setName("usernameField"); // NOI18N
+
         jLabel2.setText("Please enter your password:");
+
+        passwordField.setName("passwordField"); // NOI18N
 
         jButton1.setText("Enter Chatroom");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -69,8 +105,8 @@ public class Login extends javax.swing.JFrame {
                     .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(46, 46, 46)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextField1)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 289, Short.MAX_VALUE))
+                    .addComponent(usernameField)
+                    .addComponent(passwordField, javax.swing.GroupLayout.DEFAULT_SIZE, 289, Short.MAX_VALUE))
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 157, Short.MAX_VALUE)
@@ -93,12 +129,12 @@ public class Login extends javax.swing.JFrame {
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(usernameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
                 .addGap(50, 50, 50)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(58, 58, 58)
                 .addComponent(jButton1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -115,8 +151,46 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        this.setVisible(false);
-        new Chatroom().setVisible(true);
+        
+            
+            String username = usernameField.getText();
+            String password = passwordField.getText();
+            User user = new User(username, password);
+            boolean loggedin;
+        try {
+            loggedin = chatService.login(user);
+            if(loggedin)
+            {
+                this.setVisible(false);
+                new Chatroom().setVisible(true);
+            }
+            else
+            {
+                System.out.println("Sorry you must enter a valid userame and password, if you dont have one please register");
+            }
+        } catch (RemoteException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            
+            
+            
+//            Message m = new Message("I'll be back", "Ahnawld");
+//            boolean added = chatService.addMessage(m);
+//            
+//            System.out.println("Quote added? " + added);
+//            
+//            Message newMessage = chatService.getMessage();
+//            System.out.println(newMessage);
+//            
+//            User u = new User("Michelle", "password");
+//            
+//            System.out.println("Registered: " + chatService.register(u));
+            
+        
+        
+        
+        
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -160,7 +234,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField passwordField;
+    private javax.swing.JTextField usernameField;
     // End of variables declaration//GEN-END:variables
 }
