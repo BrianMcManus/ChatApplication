@@ -197,6 +197,8 @@ public class Chatroom extends javax.swing.JFrame {
             //Creates message object and adds it to the servers message list
             Message newMessage = new Message(message, user.getUserName(), false, timeSent, true);
             chatService.addMessage(newMessage);
+            messageField.setText("");
+            
             //repopulates clients message list
             populateMessageList();
             //resets messageList to have updated list
