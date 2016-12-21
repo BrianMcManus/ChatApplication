@@ -26,6 +26,7 @@ public interface RMIChatInterface extends Remote
     
     public boolean register(User newUser) throws RemoteException;
     public boolean login(User user) throws RemoteException;
+    public boolean logoff(User user) throws RemoteException;
     
     public boolean registerForCallback(RMIChatClientInterface client) throws RemoteException;
     public boolean unregisterForCallback(RMIChatClientInterface client) throws RemoteException;
