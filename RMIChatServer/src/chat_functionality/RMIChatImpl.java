@@ -93,7 +93,8 @@ public class RMIChatImpl extends UnicastRemoteObject implements RMIChatInterface
             return false;
         }
     }
-
+    
+    @Override
     public boolean logoff(User user) throws RemoteException {
         synchronized (userList) {
             if (user != null && userList.contains(user)) {
