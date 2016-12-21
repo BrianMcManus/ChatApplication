@@ -11,8 +11,6 @@ import static GUI.Login.chatService;
 import business.Message;
 import java.rmi.RemoteException;
 import java.util.Date;
-import java.sql.Timestamp;
-import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
