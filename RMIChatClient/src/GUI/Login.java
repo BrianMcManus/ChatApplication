@@ -25,6 +25,7 @@ public class Login extends javax.swing.JFrame {
 
     public static RMIChatInterface chatService;
     private static Chatroom chatroom;
+    private User user;
     /**
      * Creates new form Login
      */
@@ -137,7 +138,7 @@ public class Login extends javax.swing.JFrame {
             
             String username = usernameField.getText();
             String password = passwordField.getText();
-            User user = new User(username, password);
+            user = new User(username, password);
             boolean loggedin;
         try {
             loggedin = chatService.login(user);
@@ -206,7 +207,7 @@ public class Login extends javax.swing.JFrame {
         try {
             int portNum = 55555;
             
-            String registryPath = "rmi://10.102.11.162:" + portNum;
+            String registryPath = "rmi://192.168.1.8:" + portNum;
             String objectLabel = "/chatService";
             
             chatService = (RMIChatInterface) Naming.lookup(registryPath + objectLabel);
@@ -229,6 +230,11 @@ public class Login extends javax.swing.JFrame {
                 new Login().setVisible(true);
             }
         });
+    }
+    
+    public User passUser()
+    {
+        return user;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

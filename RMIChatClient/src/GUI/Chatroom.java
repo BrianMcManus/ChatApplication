@@ -15,19 +15,24 @@ import java.rmi.RemoteException;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 /**
  *
  * @author Megatronus
  */
-public class Chatroom extends javax.swing.JFrame {
+public class Chatroom extends javax.swing.JFrame{
 
+    private User user;
+    private String recipient;
     
     /**
      * Creates new form Chatroom
      */
     public Chatroom() {
         initComponents();
+        setListener();
     }
     private static ArrayList<User> users;
     private static ArrayList<Message> messages;
@@ -37,6 +42,8 @@ public class Chatroom extends javax.swing.JFrame {
         users = new ArrayList();
         try {
             users = chatService.getAllUsers();
+            
+            
         } catch (RemoteException ex) {
             Logger.getLogger(Chatroom.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -50,6 +57,23 @@ public class Chatroom extends javax.swing.JFrame {
             Logger.getLogger(Chatroom.class.getName()).log(Level.SEVERE, null, ex);
         }
         return messages;
+    }
+    
+    private void setListener()
+    {
+        userList.addListSelectionListener(new ListSelectionListener()
+            {
+                @Override
+                public void valueChanged(ListSelectionEvent e) {
+                    if(e.getValueIsAdjusting())
+                    {
+                        Chatroom.this.setVisible(false);
+                        new ChatWindow().setVisible(true);
+                       recipient = userList.getSelectedValue().toString();
+                    }
+                }
+                
+            });
     }
 
     /**
@@ -287,4 +311,17 @@ public class Chatroom extends javax.swing.JFrame {
                 public Object getElementAt(int i) { return messages.get(i).getMessageContent(); 
                 }});
     }
+    
+    public User passUser()
+    {
+       Login login = new Login();
+        user = login.passUser();
+        return user;
+    }
+    
+    public String passRecipient()
+    {
+        return recipient;
+    }
+   
 }

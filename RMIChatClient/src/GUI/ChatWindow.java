@@ -5,17 +5,23 @@
  */
 package GUI;
 
+import business.User;
+
 /**
  *
  * @author Megatronus
  */
 public class ChatWindow extends javax.swing.JFrame {
 
+    private Chatroom chatRoom;
+    private User user;
     /**
      * Creates new form ChatWindow
      */
     public ChatWindow() {
         initComponents();
+        user = chatRoom.passUser();
+        SenderField.setText(user.getUserName());
     }
 
     /**
@@ -27,17 +33,75 @@ public class ChatWindow extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        TitleLabel = new javax.swing.JLabel();
+        SenderLabel = new javax.swing.JLabel();
+        SenderField = new javax.swing.JTextField();
+        RecipientLabel = new javax.swing.JLabel();
+        RecipientField = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        MessageTextArea = new javax.swing.JTextArea();
+        SendButton = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        TitleLabel.setFont(new java.awt.Font("Tahoma", 1, 21)); // NOI18N
+        TitleLabel.setText("Private Message");
+
+        SenderLabel.setText("Sender:");
+
+        SenderField.setEditable(false);
+
+        RecipientLabel.setText("Recipient:");
+
+        RecipientField.setEditable(false);
+
+        MessageTextArea.setColumns(20);
+        MessageTextArea.setRows(5);
+        jScrollPane1.setViewportView(MessageTextArea);
+
+        SendButton.setText("Send");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(TitleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(SenderLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(SenderField, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(55, 55, 55)
+                                .addComponent(RecipientLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(RecipientField, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)))
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(SendButton)
+                .addGap(46, 46, 46))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(TitleLabel)
+                .addGap(35, 35, 35)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(SenderLabel)
+                    .addComponent(SenderField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(RecipientLabel)
+                    .addComponent(RecipientField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(35, 35, 35)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(SendButton)
+                .addContainerGap(31, Short.MAX_VALUE))
         );
 
         pack();
@@ -79,5 +143,13 @@ public class ChatWindow extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextArea MessageTextArea;
+    private javax.swing.JTextField RecipientField;
+    private javax.swing.JLabel RecipientLabel;
+    private javax.swing.JButton SendButton;
+    private javax.swing.JTextField SenderField;
+    private javax.swing.JLabel SenderLabel;
+    private javax.swing.JLabel TitleLabel;
+    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }
