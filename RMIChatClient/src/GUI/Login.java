@@ -212,8 +212,8 @@ public class Login extends javax.swing.JFrame {
             chatService = (RMIChatInterface) Naming.lookup(registryPath + objectLabel);
             chatroom = new Chatroom();
             RMIChatClientInterface thisClient = new RMIChatClientImpl(chatroom);
-            
             chatService.registerForCallback(thisClient);
+            
             
             } catch (NotBoundException ex) {
             Logger.getLogger(RMIChatClient.class.getName()).log(Level.SEVERE, null, ex);

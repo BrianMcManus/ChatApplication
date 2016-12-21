@@ -219,7 +219,6 @@ public class Chatroom extends javax.swing.JFrame {
         try{
             user = chatService.getCurrentUser();
             chatService.logoff(user);
-            Chatroom chatroom = new Chatroom();
             RMIChatClientInterface thisClient = new RMIChatClientImpl(this);
             chatService.registerForCallback(thisClient);
             this.setVisible(false);
@@ -234,6 +233,7 @@ public class Chatroom extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
+        
         
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

@@ -26,7 +26,7 @@ public class RMIChatImpl extends UnicastRemoteObject implements RMIChatInterface
     private final ArrayList<Message> messageList = mDAO.getAllMessages();// maybe change to Vector
     private final ArrayList<User> userList = uDAO.getAllUsers();
     private final ArrayList<RMIChatClientInterface> clientList = new ArrayList();
-    private User u;
+    private User u = new User();
 
     public RMIChatImpl() throws RemoteException {
 
