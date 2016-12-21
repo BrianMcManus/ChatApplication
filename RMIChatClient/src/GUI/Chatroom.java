@@ -318,6 +318,10 @@ public class Chatroom extends javax.swing.JFrame{
         user = login.passUser();
         return user;
     }
+    public void setUser(User user){
+        this.user = user;
+    }
+    
     
     public String passRecipient()
     {

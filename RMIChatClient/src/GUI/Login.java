@@ -145,7 +145,7 @@ public class Login extends javax.swing.JFrame {
             if(loggedin)
             {
                 this.setVisible(false);
-               
+                chatroom.setUser(user);
                 chatroom.setVisible(true);
             }
             else
