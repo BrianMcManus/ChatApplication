@@ -67,9 +67,11 @@ public class Chatroom extends javax.swing.JFrame{
                 public void valueChanged(ListSelectionEvent e) {
                     if(e.getValueIsAdjusting())
                     {
+                        recipient = userList.getSelectedValue().toString();
+                        ChatWindow chatwindow = new ChatWindow(recipient);
                         Chatroom.this.setVisible(false);
-                        new ChatWindow().setVisible(true);
-                       recipient = userList.getSelectedValue().toString();
+                        chatwindow.setVisible(true);
+                       
                     }
                 }
                 

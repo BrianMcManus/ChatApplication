@@ -15,13 +15,24 @@ public class ChatWindow extends javax.swing.JFrame {
 
     private Chatroom chatRoom;
     private User user;
+    private String recipient;
     /**
      * Creates new form ChatWindow
      */
     public ChatWindow() {
         initComponents();
-        user = chatRoom.passUser();
-        SenderField.setText(user.getUserName());
+        //user = chatRoom.passUser();
+        //SenderField.setText(user.getUserName());
+        
+        
+    }
+
+    public ChatWindow(String recipient) {
+        initComponents();
+        this.recipient = recipient;
+
+        RecipientField.setText(recipient);
+        
     }
 
     /**
