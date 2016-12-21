@@ -25,9 +25,10 @@ public class RMIChatImpl extends UnicastRemoteObject implements RMIChatInterface
 
     private final ArrayList<Message> messageList = mDAO.getAllMessages();// maybe change to Vector
     private final ArrayList<User> userList = uDAO.getAllUsers();
+    private ArrayList<User> loggedOnUsers = new ArrayList<User>();
     private final ArrayList<RMIChatClientInterface> clientList = new ArrayList();
     private User u = new User();
-
+    
     public RMIChatImpl() throws RemoteException {
 
     }
@@ -87,6 +88,9 @@ public class RMIChatImpl extends UnicastRemoteObject implements RMIChatInterface
                 for (int i = 0; i < userList.size(); i++) {
                     if (userList.get(i).equals(u)) {
                         userList.get(i).setLoggedIn(true);
+                synchronized(loggedOnUsers){
+                        loggedOnUsers.add(u);
+                }
                     }
                 }
                 synchronized (clientList) {
@@ -105,6 +109,9 @@ public class RMIChatImpl extends UnicastRemoteObject implements RMIChatInterface
         synchronized (userList) {
             if (user != null && userList.contains(user)) {
                 user.setLoggedIn(false);
+                synchronized(loggedOnUsers){
+                loggedOnUsers.remove(u);
+                }
             } else {
                 return false;
             }
@@ -151,11 +158,17 @@ public class RMIChatImpl extends UnicastRemoteObject implements RMIChatInterface
     }
 
     @Override
-    public User getCurrentUser() throws RemoteException {
-        if (u != null) {
-            return u;
+    public User getCurrentUser(RMIChatClientInterface client) throws RemoteException {
+        if (client!=null && clientList.size()>0) {
+            synchronized(clientList){
+                for(int i = 0; i<clientList.size(); i++){
+                    if(clientList.get(i) == client){
+                        u = loggedOnUsers.get(i);
+                        return u;
+                    }
+                }
+            }
         }
         return null;
     }
-
 }

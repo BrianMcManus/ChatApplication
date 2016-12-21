@@ -32,25 +32,13 @@ public class RMIChatClient {
         try {
             int portNum = 55555;
             
-            String registryPath = "rmi://10.0.0.10:" + portNum;
+            String registryPath = "rmi://localhost:" + portNum;
             String objectLabel = "/chatService";
             
             RMIChatInterface chatService = (RMIChatInterface) Naming.lookup(registryPath + objectLabel);
             
             RMIChatClientInterface thisClient = new RMIChatClientImpl();
             chatService.registerForCallback(thisClient);
-            
-//            Message m = new Message("I'll be back", "Ahnawld");
-//            boolean added = chatService.addMessage(m);
-//            
-//            System.out.println("Quote added? " + added);
-//            
-//            Message newMessage = chatService.getMessage();
-//            System.out.println(newMessage);
-//            
-//            User u = new User("Michelle", "password");
-//            
-//            System.out.println("Registered: " + chatService.register(u));
             
         } catch (NotBoundException ex) {
             Logger.getLogger(RMIChatClient.class.getName()).log(Level.SEVERE, null, ex);
