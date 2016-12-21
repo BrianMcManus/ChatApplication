@@ -24,6 +24,7 @@ import rmichatclient.RMIChatClient;
 public class Login extends javax.swing.JFrame {
 
     public static RMIChatInterface chatService;
+    private static Chatroom chatroom;
     /**
      * Creates new form Login
      */
@@ -143,7 +144,8 @@ public class Login extends javax.swing.JFrame {
             if(loggedin)
             {
                 this.setVisible(false);
-                new Chatroom().setVisible(true);
+               
+                chatroom.setVisible(true);
             }
             else
             {
@@ -208,8 +210,9 @@ public class Login extends javax.swing.JFrame {
             String objectLabel = "/chatService";
             
             chatService = (RMIChatInterface) Naming.lookup(registryPath + objectLabel);
+            chatroom = new Chatroom();
+            RMIChatClientInterface thisClient = new RMIChatClientImpl(chatroom);
             
-            RMIChatClientInterface thisClient = new RMIChatClientImpl();
             chatService.registerForCallback(thisClient);
             
             } catch (NotBoundException ex) {

@@ -274,4 +274,12 @@ public class Chatroom extends javax.swing.JFrame {
     private javax.swing.JList<String> userList;
     private javax.swing.JLabel userListLabel;
     // End of variables declaration//GEN-END:variables
+
+    public void setMessages(ArrayList<Message> messages) {
+     
+      messageList.setModel(new javax.swing.AbstractListModel() {
+                public int getSize() { return messages.size(); }
+                public Object getElementAt(int i) { return messages.get(i).getMessageContent(); 
+                }});
+    }
 }
