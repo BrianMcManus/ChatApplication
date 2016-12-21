@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import static GUI.Login.chatService;
 import business.Message;
 import java.rmi.RemoteException;
+import java.util.Date;
+import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -26,10 +29,12 @@ public class Chatroom extends javax.swing.JFrame {
     public Chatroom() {
         initComponents();
     }
+    private static ArrayList<User> users;
+    private static ArrayList<Message> messages;
     
     public static ArrayList<User> populateUserList()
     {
-        ArrayList<User> users = new ArrayList();
+        users = new ArrayList();
         try {
             users = chatService.getAllUsers();
         } catch (RemoteException ex) {
@@ -38,7 +43,7 @@ public class Chatroom extends javax.swing.JFrame {
         return users;
     }
     public static ArrayList<Message> populateMessageList(){
-        ArrayList<Message> messages = new ArrayList();
+        messages = new ArrayList();
         try{
             messages = chatService.getAllMessages();
         } catch (RemoteException ex){
@@ -83,11 +88,16 @@ public class Chatroom extends javax.swing.JFrame {
         messageLabel.setText("Message Field");
 
         sendButton.setText("Send");
+        sendButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sendButtonActionPerformed(evt);
+            }
+        });
 
         userList.setModel(new javax.swing.AbstractListModel<String>() {
-            ArrayList<User> usernameList = populateUserList();
-            public int getSize() { return usernameList.size(); }
-            public String getElementAt(int i) { return usernameList.get(i).getUserName(); }
+            ArrayList<User> users = populateUserList();
+            public int getSize() { return users.size(); }
+            public String getElementAt(int i) { return users.get(i).getUserName(); }
         });
         userList.setName("userList"); // NOI18N
         jScrollPane4.setViewportView(userList);
@@ -164,6 +174,30 @@ public class Chatroom extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void sendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendButtonActionPerformed
+        String message = messageField.getText();
+        User user;
+        try {
+            user = chatService.getCurrentUser();
+            Date utilDate = new Date();
+            //gets time of message being created
+            java.sql.Date timeSent = new java.sql.Date(utilDate.getTime());
+            //Creates message object and adds it to the servers message list
+            Message newMessage = new Message(message, user.getUserName(), false, timeSent, true);
+            chatService.addMessage(newMessage);
+            //repopulates clients message list
+            populateMessageList();
+            //resets messageList to have updated list
+            messageList.setModel(new javax.swing.AbstractListModel() {
+                public int getSize() { return messages.size(); }
+                public Object getElementAt(int i) { return messages.get(i).getMessageContent(); 
+                }});
+            
+        } catch (RemoteException ex) {
+            Logger.getLogger(Chatroom.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_sendButtonActionPerformed
 
     /**
      * @param args the command line arguments

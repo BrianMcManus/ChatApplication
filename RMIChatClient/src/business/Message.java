@@ -7,7 +7,6 @@ package business;
 
 import java.io.Serializable;
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.Objects;
 
 /**
@@ -26,8 +25,7 @@ public class Message implements Serializable{
        
     }
 
-    public Message(int messageId, String messageContent, String sender, boolean read, Date timeSent, boolean inForum) {
-        this.messageId = messageId;
+    public Message(String messageContent, String sender, boolean read, Date timeSent, boolean inForum) {
         this.messageContent = messageContent;
         this.sender = sender;
         this.read = read;
@@ -86,7 +84,6 @@ public class Message implements Serializable{
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 23 * hash + this.messageId;
         hash = 23 * hash + Objects.hashCode(this.messageContent);
         hash = 23 * hash + Objects.hashCode(this.sender);
         hash = 23 * hash + (this.read ? 1 : 0);
@@ -107,9 +104,6 @@ public class Message implements Serializable{
             return false;
         }
         final Message other = (Message) obj;
-        if (this.messageId != other.messageId) {
-            return false;
-        }
         if (this.read != other.read) {
             return false;
         }

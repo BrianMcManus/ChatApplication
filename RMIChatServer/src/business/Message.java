@@ -26,8 +26,7 @@ public class Message implements Serializable{
        
     }
 
-    public Message(int messageId, String messageContent, String sender, boolean read, Date timeSent, boolean inForum) {
-        this.messageId = messageId;
+    public Message(String messageContent, String sender, boolean read, Date timeSent, boolean inForum) {
         this.messageContent = messageContent;
         this.sender = sender;
         this.read = read;

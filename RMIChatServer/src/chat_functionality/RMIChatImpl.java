@@ -21,7 +21,7 @@ import java.util.ArrayList;
 public class RMIChatImpl extends UnicastRemoteObject implements RMIChatInterface {
 
     private UserDAO uDAO = new UserDAO();
-    MessageDAO mDAO = new MessageDAO();
+    private MessageDAO mDAO = new MessageDAO();
     
     private final ArrayList<Message> messageList = mDAO.getAllMessages();// maybe change to Vector
     private final ArrayList<User> userList = uDAO.getAllUsers();
@@ -118,6 +118,14 @@ public class RMIChatImpl extends UnicastRemoteObject implements RMIChatInterface
             }
         }
         return new ArrayList();
+    }
+
+    @Override
+    public User getCurrentUser() throws RemoteException {
+        if(u!=null){
+            return u;
+        }
+        return null;
     }
 
 }
