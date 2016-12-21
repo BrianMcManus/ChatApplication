@@ -24,6 +24,7 @@ import rmichatclient.RMIChatClient;
 public class Login extends javax.swing.JFrame {
 
     public static RMIChatInterface chatService;
+    public static RMIChatClientInterface thisClient;
     private static Chatroom chatroom;
     private User user;
     /**
@@ -212,7 +213,7 @@ public class Login extends javax.swing.JFrame {
             
             chatService = (RMIChatInterface) Naming.lookup(registryPath + objectLabel);
             chatroom = new Chatroom();
-            RMIChatClientInterface thisClient = new RMIChatClientImpl(chatroom);
+            thisClient = new RMIChatClientImpl(chatroom);
             chatService.registerForCallback(thisClient);
             
             
@@ -236,6 +237,9 @@ public class Login extends javax.swing.JFrame {
     {
         return user;
     }
+    public static RMIChatClientInterface getClient(){
+        return thisClient;
+    } 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

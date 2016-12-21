@@ -162,7 +162,9 @@ public class RMIChatImpl extends UnicastRemoteObject implements RMIChatInterface
         if (client!=null && clientList.size()>0) {
             synchronized(clientList){
                 for(int i = 0; i<clientList.size(); i++){
-                    if(clientList.get(i) == client){
+                    System.out.println("Parameter: " + client.toString());
+                    System.out.println("List item: " + clientList.get(i).toString());
+                    if(clientList.get(i).equals(client)){
                         u = loggedOnUsers.get(i);
                         return u;
                     }

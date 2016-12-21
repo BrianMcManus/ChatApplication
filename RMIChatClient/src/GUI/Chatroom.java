@@ -24,7 +24,7 @@ import javax.swing.event.ListSelectionListener;
  */
 public class Chatroom extends javax.swing.JFrame{
 
-    private User user;
+    private User user = new User();
     private String recipient;
     
     /**
@@ -217,7 +217,7 @@ public class Chatroom extends javax.swing.JFrame{
     private void sendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendButtonActionPerformed
         String message = messageField.getText();
         try {
-            RMIChatClientInterface thisClient = new RMIChatClientImpl(this);
+            RMIChatClientInterface thisClient = Login.getClient();
             user = chatService.getCurrentUser(thisClient);
             Date utilDate = new Date();
             //gets time of message being created
@@ -242,10 +242,10 @@ public class Chatroom extends javax.swing.JFrame{
 
     private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutButtonActionPerformed
         try{
-            RMIChatClientInterface thisClient = new RMIChatClientImpl(this);
+            RMIChatClientInterface thisClient = Login.getClient();
             user = chatService.getCurrentUser(thisClient);
             chatService.logoff(user);
-            chatService.unregisterForCallback(thisClient);
+            chatService.registerForCallback(thisClient);
             this.setVisible(false);
             new Login().setVisible(true);
         } catch (RemoteException ex) {
