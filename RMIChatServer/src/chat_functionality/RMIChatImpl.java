@@ -98,7 +98,7 @@ public class RMIChatImpl extends UnicastRemoteObject implements RMIChatInterface
     public boolean logoff(User user) throws RemoteException {
         synchronized (userList) {
             if (user != null && userList.contains(user)) {
-                u.setLoggedIn(false);
+                user.setLoggedIn(false);
             } else {
                 return false;
             }
