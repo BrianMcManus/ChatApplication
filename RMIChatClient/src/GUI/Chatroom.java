@@ -9,6 +9,8 @@ import business.User;
 import java.util.ArrayList;
 import static GUI.Login.chatService;
 import business.Message;
+import callback_support.RMIChatClientImpl;
+import callback_support.RMIChatClientInterface;
 import java.rmi.RemoteException;
 import java.util.Date;
 import java.util.logging.Level;
@@ -217,6 +219,9 @@ public class Chatroom extends javax.swing.JFrame {
         try{
             user = chatService.getCurrentUser();
             chatService.logoff(user);
+            Chatroom chatroom = new Chatroom();
+            RMIChatClientInterface thisClient = new RMIChatClientImpl(this);
+            chatService.registerForCallback(thisClient);
             this.setVisible(false);
             new Login().setVisible(true);
         } catch (RemoteException ex) {
