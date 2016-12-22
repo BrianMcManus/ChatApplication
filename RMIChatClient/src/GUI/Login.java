@@ -24,6 +24,7 @@ import rmichatclient.RMIChatClient;
 public class Login extends javax.swing.JFrame {
 
     public static RMIChatInterface chatService;
+    public static RMIChatClientInterface thisClient;
     private static Chatroom chatroom;
     private User user;
     /**
@@ -238,6 +239,9 @@ public class Login extends javax.swing.JFrame {
     {
         return user;
     }
+    public static RMIChatClientInterface getClient(){
+        return thisClient;
+    } 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
