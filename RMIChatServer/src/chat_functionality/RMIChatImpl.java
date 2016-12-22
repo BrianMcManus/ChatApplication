@@ -96,9 +96,10 @@ public class RMIChatImpl extends UnicastRemoteObject implements RMIChatInterface
                     }
                 }
                 synchronized (clientList) {
+                    if(clientList.size()>0){
                     for (RMIChatClientInterface client : clientList) {
                         client.newLoginNotification(user.getUserName());
-                    }
+                    }}
                 }
                 return true;
             }
@@ -112,7 +113,7 @@ public class RMIChatImpl extends UnicastRemoteObject implements RMIChatInterface
             if (user != null && userList.contains(user)) {
                 user.setLoggedIn(false);
                 synchronized(loggedOnUsers){
-                loggedOnUsers.remove(u);
+                loggedOnUsers.remove(user);
                 }
             } else {
                 return false;

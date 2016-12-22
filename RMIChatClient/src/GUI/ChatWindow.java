@@ -164,7 +164,7 @@ public class ChatWindow extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
-                chatroom = new Chatroom(user, client);
+                chatroom = new Chatroom(user);
         try {
             RMIChatClientInterface thisClient = new RMIChatClientImpl(chatroom);
             chatService.registerForCallback(client);

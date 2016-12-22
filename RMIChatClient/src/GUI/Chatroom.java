@@ -68,12 +68,12 @@ public class Chatroom extends javax.swing.JFrame{
         this.user = user;
     }
 
-    Chatroom(User user, RMIChatClientInterface thisClient) {
-        initComponents();
-        setListener();
-        this.user = user;
-        this.client = thisClient;
-    }
+//    Chatroom(User user, RMIChatClientInterface thisClient) {
+//        initComponents();
+//        setListener();
+//        this.user = user;
+//        this.client = thisClient;
+//    }
     
     private void setListener()
     {
@@ -233,7 +233,6 @@ public class Chatroom extends javax.swing.JFrame{
     private void sendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendButtonActionPerformed
         String message = messageField.getText();
         try {
-            RMIChatClientInterface thisClient = Login.getClient();
             Date utilDate = new Date();
             //gets time of message being created
             java.sql.Date timeSent = new java.sql.Date(utilDate.getTime());
@@ -257,11 +256,9 @@ public class Chatroom extends javax.swing.JFrame{
 
     private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutButtonActionPerformed
         try{
-            RMIChatClientInterface thisClient = Login.getClient();
             chatService.logoff(user);
-            chatService.unregisterForCallback(thisClient);
-            this.setVisible(false);
-            new Login().setVisible(true);
+            chatService.unregisterForCallback(client);
+            System.exit(0);
         } catch (RemoteException ex) {
             Logger.getLogger(Chatroom.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -327,6 +324,8 @@ public class Chatroom extends javax.swing.JFrame{
                 }});
     }
     
- 
+        public void setClient(RMIChatClientInterface newClient){
+        this.client = newClient;
+    } 
    
 }

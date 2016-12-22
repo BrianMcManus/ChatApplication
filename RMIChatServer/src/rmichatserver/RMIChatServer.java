@@ -30,7 +30,7 @@ public class RMIChatServer {
             int portNum = 55555;
             startRegistry(portNum);
             
-            String registryPath = "rmi://10.102.11.134:" + portNum;
+            String registryPath = "rmi://localhost:" + portNum;
             String objectLabel = "/chatService";
             
             Naming.rebind(registryPath+objectLabel, chatObject);

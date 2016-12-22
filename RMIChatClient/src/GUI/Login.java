@@ -24,7 +24,7 @@ import rmichatclient.RMIChatClient;
 public class Login extends javax.swing.JFrame {
 
     public static RMIChatInterface chatService;
-    public static RMIChatClientInterface thisClient;
+    public RMIChatClientInterface thisClient;
     private static Chatroom chatroom;
     private User user;
     /**
@@ -146,8 +146,9 @@ public class Login extends javax.swing.JFrame {
             if(loggedin)
             {
                 chatroom = new Chatroom(user);
-                RMIChatClientInterface thisClient = new RMIChatClientImpl(chatroom);
+                thisClient = new RMIChatClientImpl(chatroom);
                 chatService.registerForCallback(thisClient);
+                chatroom.setClient(thisClient);
                 
                 this.setVisible(false);
                 chatroom.setVisible(true);
@@ -211,7 +212,7 @@ public class Login extends javax.swing.JFrame {
         try {
             int portNum = 55555;
             
-            String registryPath = "rmi://10.102.11.134:" + portNum;
+            String registryPath = "rmi://localhost:" + portNum;
             String objectLabel = "/chatService";
             
             chatService = (RMIChatInterface) Naming.lookup(registryPath + objectLabel);
@@ -233,11 +234,6 @@ public class Login extends javax.swing.JFrame {
             }
         });
     }
-    
-
-    public static RMIChatClientInterface getClient(){
-        return thisClient;
-    } 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
