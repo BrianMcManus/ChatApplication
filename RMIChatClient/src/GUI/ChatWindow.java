@@ -6,6 +6,7 @@
 package GUI;
 
 import business.User;
+import callback_support.RMIChatClientInterface;
 
 /**
  *
@@ -16,34 +17,21 @@ public class ChatWindow extends javax.swing.JFrame {
     private Chatroom chatRoom;
     private User user;
     private String recipient;
+    private RMIChatClientInterface client;
     /**
      * Creates new form ChatWindow
      */
-    public ChatWindow() {
-        initComponents();
-        //user = chatRoom.passUser();
-        //SenderField.setText(user.getUserName());
-        
-        
-    }
 
-    public ChatWindow(String recipient) {
-        initComponents();
-        System.out.println(user.getUserName());
-        this.recipient = recipient;
-        RecipientField.setText(recipient);
-        this.user = user;
-        SenderField.setText(user.getUserName());
-        
-    }
-
-    ChatWindow(User user, String recipient) {
+    ChatWindow(User user, String recipient, RMIChatClientInterface client) {
         initComponents();
         this.recipient = recipient;
         RecipientField.setText(recipient);
         
         this.user = user;
         SenderField.setText(user.getUserName());
+        
+        this.client = client;
+        
     }
 
     /**
@@ -156,12 +144,12 @@ public class ChatWindow extends javax.swing.JFrame {
         }
         //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new ChatWindow().setVisible(true);
-            }
-        });
+//        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new ChatWindow().setVisible(true);
+//            }
+//        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

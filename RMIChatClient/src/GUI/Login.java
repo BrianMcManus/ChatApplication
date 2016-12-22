@@ -146,7 +146,7 @@ public class Login extends javax.swing.JFrame {
             if(loggedin)
             {
                 System.out.println(user.getUserName());
-                chatroom = new Chatroom(user);
+                chatroom = new Chatroom(user, thisClient);
                 RMIChatClientInterface thisClient = new RMIChatClientImpl(chatroom);
                 chatService.registerForCallback(thisClient);
                 
@@ -235,10 +235,7 @@ public class Login extends javax.swing.JFrame {
         });
     }
     
-    public User passUser()
-    {
-        return user;
-    }
+
     public static RMIChatClientInterface getClient(){
         return thisClient;
     } 

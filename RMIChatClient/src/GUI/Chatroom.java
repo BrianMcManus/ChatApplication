@@ -26,14 +26,12 @@ public class Chatroom extends javax.swing.JFrame{
 
     private User user = new User();
     private String recipient;
+    private RMIChatClientInterface client;
     
     /**
      * Creates new form Chatroom
      */
-    public Chatroom() {
-        initComponents();
-        setListener();
-    }
+    
     private static ArrayList<User> users;
     private static ArrayList<Message> messages;
     
@@ -53,17 +51,21 @@ public class Chatroom extends javax.swing.JFrame{
         messages = new ArrayList();
         try{
             messages = chatService.getAllMessages();
+            
+            
         } catch (RemoteException ex){
             Logger.getLogger(Chatroom.class.getName()).log(Level.SEVERE, null, ex);
         }
         return messages;
     }
 
-    Chatroom(User user) {
+
+    Chatroom(User user, RMIChatClientInterface thisClient) {
         initComponents();
         setListener();
         this.user = user;
         System.out.println(user.getUserName());
+        this.client = thisClient;
     }
     
     private void setListener()
@@ -75,7 +77,7 @@ public class Chatroom extends javax.swing.JFrame{
                     if(e.getValueIsAdjusting())
                     {
                         recipient = userList.getSelectedValue().toString();
-                        ChatWindow chatwindow = new ChatWindow(user,recipient);
+                        ChatWindow chatwindow = new ChatWindow(user,recipient, client);
                         Chatroom.this.setVisible(false);
                         chatwindow.setVisible(true);
                        
@@ -248,9 +250,9 @@ public class Chatroom extends javax.swing.JFrame{
 
     private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutButtonActionPerformed
         try{
-            RMIChatClientInterface thisClient = Login.getClient();
+            
             chatService.logoff(user);
-            chatService.registerForCallback(thisClient);
+            chatService.registerForCallback(client);
             this.setVisible(false);
             new Login().setVisible(true);
         } catch (RemoteException ex) {
@@ -288,11 +290,11 @@ public class Chatroom extends javax.swing.JFrame{
         }
         //</editor-fold>
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Chatroom().setVisible(true);
-            }
-        });
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new Chatroom().setVisible(true);
+//            }
+//        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -318,20 +320,6 @@ public class Chatroom extends javax.swing.JFrame{
                 }});
     }
     
-    public User passUser()
-    {
-       Login login = new Login();
-        user = login.passUser();
-        return user;
-    }
-    public void setUser(User user){
-        this.user = user;
-    }
-    
-    
-    public String passRecipient()
-    {
-        return recipient;
-    }
+ 
    
 }
