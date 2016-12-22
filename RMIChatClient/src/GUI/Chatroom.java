@@ -259,7 +259,7 @@ public class Chatroom extends javax.swing.JFrame{
         try{
             RMIChatClientInterface thisClient = Login.getClient();
             chatService.logoff(user);
-            chatService.registerForCallback(thisClient);
+            chatService.unregisterForCallback(thisClient);
             this.setVisible(false);
             new Login().setVisible(true);
         } catch (RemoteException ex) {
