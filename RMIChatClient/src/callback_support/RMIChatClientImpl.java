@@ -32,7 +32,7 @@ public class RMIChatClientImpl extends UnicastRemoteObject implements RMIChatCli
     
     @Override
     public void newLogoffNotification(String newLogoff) throws RemoteException {
-        System.out.println(newLogoff + " has left into the chat room");
+        System.out.println(newLogoff + " has left the chat room");
     }
     
     @Override

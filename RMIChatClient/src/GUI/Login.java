@@ -145,8 +145,7 @@ public class Login extends javax.swing.JFrame {
             loggedin = chatService.login(user);
             if(loggedin)
             {
-                System.out.println(user.getUserName());
-                chatroom = new Chatroom(user, thisClient);
+                chatroom = new Chatroom(user);
                 RMIChatClientInterface thisClient = new RMIChatClientImpl(chatroom);
                 chatService.registerForCallback(thisClient);
                 

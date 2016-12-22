@@ -31,7 +31,10 @@ public class Chatroom extends javax.swing.JFrame{
     /**
      * Creates new form Chatroom
      */
-    
+    public Chatroom() {
+        initComponents();
+        setListener();
+    }
     private static ArrayList<User> users;
     private static ArrayList<Message> messages;
     
@@ -59,12 +62,16 @@ public class Chatroom extends javax.swing.JFrame{
         return messages;
     }
 
+    Chatroom(User user) {
+        initComponents();
+        setListener();
+        this.user = user;
+    }
 
     Chatroom(User user, RMIChatClientInterface thisClient) {
         initComponents();
         setListener();
         this.user = user;
-        System.out.println(user.getUserName());
         this.client = thisClient;
     }
     
@@ -77,7 +84,7 @@ public class Chatroom extends javax.swing.JFrame{
                     if(e.getValueIsAdjusting())
                     {
                         recipient = userList.getSelectedValue().toString();
-                        ChatWindow chatwindow = new ChatWindow(user,recipient, client);
+                        ChatWindow chatwindow = new ChatWindow(user,recipient);
                         Chatroom.this.setVisible(false);
                         chatwindow.setVisible(true);
                        
@@ -250,9 +257,9 @@ public class Chatroom extends javax.swing.JFrame{
 
     private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutButtonActionPerformed
         try{
-            
+            RMIChatClientInterface thisClient = Login.getClient();
             chatService.logoff(user);
-            chatService.registerForCallback(client);
+            chatService.registerForCallback(thisClient);
             this.setVisible(false);
             new Login().setVisible(true);
         } catch (RemoteException ex) {
@@ -290,11 +297,11 @@ public class Chatroom extends javax.swing.JFrame{
         }
         //</editor-fold>
         /* Create and display the form */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                new Chatroom().setVisible(true);
-//            }
-//        });
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new Chatroom().setVisible(true);
+            }
+        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -5,8 +5,13 @@
  */
 package GUI;
 
+import static GUI.Login.chatService;
 import business.User;
+import callback_support.RMIChatClientImpl;
 import callback_support.RMIChatClientInterface;
+import java.rmi.RemoteException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -18,6 +23,7 @@ public class ChatWindow extends javax.swing.JFrame {
     private User user;
     private String recipient;
     private RMIChatClientInterface client;
+    private Chatroom chatroom;
     /**
      * Creates new form ChatWindow
      */
@@ -32,6 +38,15 @@ public class ChatWindow extends javax.swing.JFrame {
         
         this.client = client;
         
+    }
+
+    ChatWindow(User user, String recipient) {
+        initComponents();
+        this.recipient = recipient;
+        RecipientField.setText(recipient);
+        
+        this.user = user;
+        SenderField.setText(user.getUserName());
     }
 
     /**
@@ -51,6 +66,7 @@ public class ChatWindow extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         MessageTextArea = new javax.swing.JTextArea();
         SendButton = new javax.swing.JButton();
+        backButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -70,6 +86,13 @@ public class ChatWindow extends javax.swing.JFrame {
         jScrollPane1.setViewportView(MessageTextArea);
 
         SendButton.setText("Send");
+
+        backButton.setText("Back");
+        backButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -92,7 +115,9 @@ public class ChatWindow extends javax.swing.JFrame {
                         .addComponent(RecipientField, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addGap(30, 30, 30)
+                .addComponent(backButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(SendButton)
                 .addGap(46, 46, 46))
         );
@@ -110,12 +135,28 @@ public class ChatWindow extends javax.swing.JFrame {
                 .addGap(35, 35, 35)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(SendButton)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(SendButton)
+                    .addComponent(backButton))
                 .addContainerGap(31, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
+                chatroom = new Chatroom(user, client);
+        try {
+            RMIChatClientInterface thisClient = new RMIChatClientImpl(chatroom);
+            chatService.registerForCallback(client);
+        } catch (RemoteException ex) {
+            Logger.getLogger(ChatWindow.class.getName()).log(Level.SEVERE, null, ex);
+        }
+                
+                
+                this.setVisible(false);
+                chatroom.setVisible(true);
+    }//GEN-LAST:event_backButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -160,6 +201,7 @@ public class ChatWindow extends javax.swing.JFrame {
     private javax.swing.JTextField SenderField;
     private javax.swing.JLabel SenderLabel;
     private javax.swing.JLabel TitleLabel;
+    private javax.swing.JButton backButton;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }
