@@ -212,7 +212,7 @@ public class Login extends javax.swing.JFrame {
         try {
             int portNum = 55555;
             
-            String registryPath = "rmi://localhost:" + portNum;
+            String registryPath = "rmi://10.102.11.134:" + portNum;
             String objectLabel = "/chatService";
             
             chatService = (RMIChatInterface) Naming.lookup(registryPath + objectLabel);

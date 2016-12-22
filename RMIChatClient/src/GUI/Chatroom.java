@@ -225,7 +225,6 @@ public class Chatroom extends javax.swing.JFrame{
         String message = messageField.getText();
         try {
             RMIChatClientInterface thisClient = Login.getClient();
-            user = chatService.getCurrentUser(thisClient);
             Date utilDate = new Date();
             //gets time of message being created
             java.sql.Date timeSent = new java.sql.Date(utilDate.getTime());
@@ -250,7 +249,6 @@ public class Chatroom extends javax.swing.JFrame{
     private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutButtonActionPerformed
         try{
             RMIChatClientInterface thisClient = Login.getClient();
-            user = chatService.getCurrentUser(thisClient);
             chatService.logoff(user);
             chatService.registerForCallback(thisClient);
             this.setVisible(false);
