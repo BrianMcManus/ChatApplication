@@ -23,6 +23,7 @@ public interface RMIChatInterface extends Remote
     public ArrayList<User> getAllUsers() throws RemoteException;
     public User getCurrentUser(RMIChatClientInterface client) throws RemoteException;
     public ArrayList<Message> getAllMessages() throws RemoteException;
+    public ArrayList<Message> getAllForumMessages() throws RemoteException;
     
     public boolean register(User newUser) throws RemoteException;
     public boolean login(User user) throws RemoteException;

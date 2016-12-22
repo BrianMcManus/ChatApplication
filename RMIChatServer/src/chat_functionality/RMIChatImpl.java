@@ -24,6 +24,7 @@ public class RMIChatImpl extends UnicastRemoteObject implements RMIChatInterface
     private MessageDAO mDAO = new MessageDAO();
 
     private final ArrayList<Message> messageList = mDAO.getAllMessages();// maybe change to Vector
+    private ArrayList<Message> forumMessages = new ArrayList<Message>();
     private final ArrayList<User> userList = uDAO.getAllUsers();
     private ArrayList<User> loggedOnUsers = new ArrayList<User>();
     private final ArrayList<RMIChatClientInterface> clientList = new ArrayList();
@@ -153,6 +154,24 @@ public class RMIChatImpl extends UnicastRemoteObject implements RMIChatInterface
         synchronized (messageList) {
             if (messageList != null && messageList.size() > 0) {
                 return messageList;
+            }
+        }
+        return new ArrayList();
+    }
+    
+    @Override
+    public ArrayList<Message> getAllForumMessages() throws RemoteException {
+        synchronized (messageList) {
+            if (messageList != null && messageList.size() > 0) {
+                
+                for(Message m: messageList)
+                {
+                    if(m.isInForum())
+                    {
+                        forumMessages.add(m);
+                    }
+                }
+                return forumMessages;
             }
         }
         return new ArrayList();

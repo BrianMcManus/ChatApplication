@@ -53,7 +53,7 @@ public class Chatroom extends javax.swing.JFrame{
     public static ArrayList<Message> populateMessageList(){
         messages = new ArrayList();
         try{
-            messages = chatService.getAllMessages();
+            messages = chatService.getAllForumMessages();
             
             
         } catch (RemoteException ex){
