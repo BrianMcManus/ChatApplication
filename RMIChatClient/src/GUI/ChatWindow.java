@@ -29,10 +29,21 @@ public class ChatWindow extends javax.swing.JFrame {
 
     public ChatWindow(String recipient) {
         initComponents();
+        System.out.println(user.getUserName());
         this.recipient = recipient;
+        RecipientField.setText(recipient);
+        this.user = user;
+        SenderField.setText(user.getUserName());
+        
+    }
 
+    ChatWindow(User user, String recipient) {
+        initComponents();
+        this.recipient = recipient;
         RecipientField.setText(recipient);
         
+        this.user = user;
+        SenderField.setText(user.getUserName());
     }
 
     /**

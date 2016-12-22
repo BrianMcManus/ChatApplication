@@ -9,6 +9,7 @@ package callback_support;
 
 import GUI.Chatroom;
 import business.Message;
+import business.User;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;

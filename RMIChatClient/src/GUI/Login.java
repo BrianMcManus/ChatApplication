@@ -144,8 +144,12 @@ public class Login extends javax.swing.JFrame {
             loggedin = chatService.login(user);
             if(loggedin)
             {
+                System.out.println(user.getUserName());
+                chatroom = new Chatroom(user);
+                RMIChatClientInterface thisClient = new RMIChatClientImpl(chatroom);
+                chatService.registerForCallback(thisClient);
+                
                 this.setVisible(false);
-                chatroom.setUser(user);
                 chatroom.setVisible(true);
             }
             else
@@ -211,9 +215,7 @@ public class Login extends javax.swing.JFrame {
             String objectLabel = "/chatService";
             
             chatService = (RMIChatInterface) Naming.lookup(registryPath + objectLabel);
-            chatroom = new Chatroom();
-            RMIChatClientInterface thisClient = new RMIChatClientImpl(chatroom);
-            chatService.registerForCallback(thisClient);
+            
             
             
             } catch (NotBoundException ex) {

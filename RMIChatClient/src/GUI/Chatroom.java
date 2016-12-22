@@ -58,6 +58,13 @@ public class Chatroom extends javax.swing.JFrame{
         }
         return messages;
     }
+
+    Chatroom(User user) {
+        initComponents();
+        setListener();
+        this.user = user;
+        System.out.println(user.getUserName());
+    }
     
     private void setListener()
     {
@@ -68,7 +75,7 @@ public class Chatroom extends javax.swing.JFrame{
                     if(e.getValueIsAdjusting())
                     {
                         recipient = userList.getSelectedValue().toString();
-                        ChatWindow chatwindow = new ChatWindow(recipient);
+                        ChatWindow chatwindow = new ChatWindow(user,recipient);
                         Chatroom.this.setVisible(false);
                         chatwindow.setVisible(true);
                        
