@@ -107,7 +107,7 @@ public class UserMessageDAO extends DAO implements UserMessageInterface{
                 
                 m.setMessageId(rs.getInt("messageId"));
                 m.setMessageContent(rs.getString("message"));
-                m.setSender(rs.getString("sender"));
+                m.setReceiver(rs.getString("receiver"));
                 m.setRead(rs.getBoolean("messageRead"));
                 m.setInForum(rs.getBoolean("inForum"));
                 
