@@ -9,6 +9,7 @@ import DAO.MessageDAO;
 import DAO.UserDAO;
 import business.Message;
 import business.User;
+import business.UserMessage;
 import callback_support.RMIChatClientInterface;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -27,6 +28,7 @@ public class RMIChatImpl extends UnicastRemoteObject implements RMIChatInterface
     private ArrayList<Message> forumMessages = new ArrayList<Message>();
     private final ArrayList<User> userList = uDAO.getAllUsers();
     private ArrayList<User> loggedOnUsers = new ArrayList<User>();
+    private ArrayList<UserMessage> senderList = new ArrayList<UserMessage>();
     private final ArrayList<RMIChatClientInterface> clientList = new ArrayList();
     private User u = new User();
     

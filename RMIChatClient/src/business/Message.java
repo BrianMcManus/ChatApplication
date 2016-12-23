@@ -16,7 +16,7 @@ import java.util.Objects;
 public class Message implements Serializable{
     private int messageId;
     private String messageContent;
-    private String sender;
+    private String receiver;
     private boolean read;
     private Date timeSent;
     private boolean inForum;
@@ -25,9 +25,9 @@ public class Message implements Serializable{
        
     }
 
-    public Message(String messageContent, String sender, boolean read, Date timeSent, boolean inForum) {
+    public Message(String messageContent, String receiver, boolean read, Date timeSent, boolean inForum) {
         this.messageContent = messageContent;
-        this.sender = sender;
+        this.receiver = receiver;
         this.read = read;
         this.timeSent = timeSent;
         this.inForum = inForum;
@@ -50,11 +50,11 @@ public class Message implements Serializable{
     }
 
     public String getSender() {
-        return sender;
+        return receiver;
     }
 
-    public void setSender(String sender) {
-        this.sender = sender;
+    public void setSender(String receiver) {
+        this.receiver = receiver;
     }
 
     public boolean isRead() {
@@ -85,7 +85,7 @@ public class Message implements Serializable{
     public int hashCode() {
         int hash = 5;
         hash = 23 * hash + Objects.hashCode(this.messageContent);
-        hash = 23 * hash + Objects.hashCode(this.sender);
+        hash = 23 * hash + Objects.hashCode(this.receiver);
         hash = 23 * hash + (this.read ? 1 : 0);
         hash = 23 * hash + Objects.hashCode(this.timeSent);
         hash = 23 * hash + (this.inForum ? 1 : 0);
@@ -113,7 +113,7 @@ public class Message implements Serializable{
         if (!Objects.equals(this.messageContent, other.messageContent)) {
             return false;
         }
-        if (!Objects.equals(this.sender, other.sender)) {
+        if (!Objects.equals(this.receiver, other.receiver)) {
             return false;
         }
         if (!Objects.equals(this.timeSent, other.timeSent)) {
@@ -124,7 +124,7 @@ public class Message implements Serializable{
 
     @Override
     public String toString() {
-        return "Message{" + "messageId=" + messageId + ", messageContent=" + messageContent + ", sender=" + sender + ", read=" + read + ", timeSent=" + timeSent + ", inForum=" + inForum + '}';
+        return "Message{" + "messageId=" + messageId + ", messageContent=" + messageContent + ", receiver=" + receiver + ", read=" + read + ", timeSent=" + timeSent + ", inForum=" + inForum + '}';
     }
 
     

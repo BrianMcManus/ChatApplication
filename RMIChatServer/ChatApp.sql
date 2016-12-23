@@ -33,7 +33,7 @@ CREATE TABLE ChatApp.Message
 
 	message VARCHAR(10000) NOT NULL,
 
-	sender VARCHAR(100) NOT NULL,
+	receiver VARCHAR(100) NOT NULL,
 
 	messageRead BOOLEAN NOT NULL,
 
@@ -65,10 +65,10 @@ INSERT INTO Users (username, email, password, loggedIn) VALUES ('brian', 'test@t
 INSERT INTO Users (username, email, password, loggedIn) VALUES ('niall', 'test1@test.com', 'password', 0);
 INSERT INTO Users (username, email, password, loggedIn) VALUES ('sergio', 'test2@test.com', 'password', 0);
 
-INSERT INTO Message(message, sender, messageRead, timeSent, inForum) VALUES ('Hello', 'brian', 0, '2016-02-02', 1);
-INSERT INTO Message(message, sender, messageRead, timeSent, inForum) VALUES ('Hi', 'sergio', 0, '2016-03-03', 0);
-INSERT INTO Message(message, sender, messageRead, timeSent, inForum) VALUES ('wats up?', 'niall', 0, '2016-04-04', 0);
+INSERT INTO Message(message, receiver , messageRead, timeSent, inForum) VALUES ('Hello', 'brian', 0, '2016-02-02', 1);
+INSERT INTO Message(message, receiver , messageRead, timeSent, inForum) VALUES ('Hi', 'sergio', 0, '2016-03-03', 0);
+INSERT INTO Message(message, receiver , messageRead, timeSent, inForum) VALUES ('wats up?', 'niall', 0, '2016-04-04', 0);
 
-INSERT INTO UserMessage(userId, messageId) VALUES (2,1);
+INSERT INTO UserMessage(userId, messageId) VALUES (3,1);
 INSERT INTO UserMessage(userId, messageId) VALUES (1,2);
-INSERT INTO UserMessage(userId, messageId) VALUES (3,3);
+INSERT INTO UserMessage(userId, messageId) VALUES (2,3);
