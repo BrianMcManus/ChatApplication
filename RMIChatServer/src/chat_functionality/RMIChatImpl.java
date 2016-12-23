@@ -248,4 +248,26 @@ public class RMIChatImpl extends UnicastRemoteObject implements RMIChatInterface
         }
         return null;
     }
+    
+    public boolean sendPrivateMessage(int userId, Message message)
+    {
+        boolean sent = false;
+        
+        if(message != null || userId > 0)
+        {
+            sent = mDAO.sendPrivateMessage(userId, message);
+        }
+        return sent;
+    }
+
+    @Override
+    public User getUser(String username) throws RemoteException {
+        User u = null;
+        
+        if(username!= null)
+        {
+            u = uDAO.getUserByUsername(username);
+        }
+        return u;
+    }
 }

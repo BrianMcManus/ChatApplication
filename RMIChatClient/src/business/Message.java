@@ -32,6 +32,15 @@ public class Message implements Serializable{
         this.timeSent = timeSent;
         this.inForum = inForum;
     }
+    
+    public Message(int messageId, String messageContent, String receiver, boolean read, Date timeSent, boolean inForum) {
+        this.messageId = messageId;
+        this.messageContent = messageContent;
+        this.receiver = receiver;
+        this.read = read;
+        this.timeSent = timeSent;
+        this.inForum = inForum;
+    }
 
     public int getMessageId() {
         return messageId;
@@ -49,11 +58,11 @@ public class Message implements Serializable{
         this.messageContent = messageContent;
     }
 
-    public String getSender() {
+    public String getReceiver() {
         return receiver;
     }
 
-    public void setSender(String receiver) {
+    public void setReceiver(String receiver) {
         this.receiver = receiver;
     }
 
@@ -81,9 +90,11 @@ public class Message implements Serializable{
         this.inForum = inForum;
     }
 
+    
     @Override
     public int hashCode() {
         int hash = 5;
+        hash = 23 * hash + this.messageId;
         hash = 23 * hash + Objects.hashCode(this.messageContent);
         hash = 23 * hash + Objects.hashCode(this.receiver);
         hash = 23 * hash + (this.read ? 1 : 0);
@@ -104,6 +115,9 @@ public class Message implements Serializable{
             return false;
         }
         final Message other = (Message) obj;
+        if (this.messageId != other.messageId) {
+            return false;
+        }
         if (this.read != other.read) {
             return false;
         }

@@ -22,4 +22,5 @@ public interface MessageDAOInterface {
     public boolean sendMessage (Message message);
     public void recieveMessage();
     public ArrayList<Message> getMessagesByUsername(String username);
+    public boolean sendPrivateMessage (int userId, Message message);
 }

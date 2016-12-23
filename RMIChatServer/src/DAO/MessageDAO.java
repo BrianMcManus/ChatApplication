@@ -54,7 +54,7 @@ public class MessageDAO extends DAO implements MessageDAOInterface{
                 
                 m.setMessageId(rs.getInt("messageId"));
                 m.setMessageContent(rs.getString("message"));
-                m.setReceiver(rs.getString("receiver"));
+                m.setReceiver(rs.getString("reciever"));
                 m.setRead(rs.getBoolean("messageRead"));
                 m.setInForum(rs.getBoolean("inForum"));
                 
@@ -95,7 +95,7 @@ public class MessageDAO extends DAO implements MessageDAOInterface{
             con = getConnection();
             
             // creating the query
-            String query = "select message.messageId, message.message, message.receiver, message.messageRead, message.inForum, "
+            String query = "select message.messageId, message.message, message.reciever, message.messageRead, message.inForum, "
                     + "message.timeSent from message, usermessage, users where message.messageId = usermessage.messageId and usermessage.userId = users.userId and users.username = (?) and message.inForum = false;";
             ps = con.prepareStatement(query);
 
@@ -113,7 +113,7 @@ public class MessageDAO extends DAO implements MessageDAOInterface{
                 
                 m.setMessageId(rs.getInt("messageId"));
                 m.setMessageContent(rs.getString("message"));
-                m.setReceiver(rs.getString("receiver"));
+                m.setReceiver(rs.getString("reciever"));
                 m.setRead(rs.getBoolean("messageRead"));
                 m.setInForum(rs.getBoolean("inForum"));
                 
@@ -167,7 +167,7 @@ public class MessageDAO extends DAO implements MessageDAOInterface{
                 
                 m.setMessageId(rs.getInt("messageId"));
                 m.setMessageContent(rs.getString("message"));
-                m.setReceiver(rs.getString("receiver"));
+                m.setReceiver(rs.getString("reciever"));
                 m.setRead(rs.getBoolean("messageRead"));
                 m.setInForum(rs.getBoolean("inForum"));
                 
@@ -221,7 +221,7 @@ public class MessageDAO extends DAO implements MessageDAOInterface{
                 
                 m.setMessageId(rs.getInt("messageId"));
                 m.setMessageContent(rs.getString("message"));
-                m.setReceiver(rs.getString("receiver"));
+                m.setReceiver(rs.getString("reciever"));
                 m.setRead(rs.getBoolean("messageRead"));
                 m.setInForum(rs.getBoolean("inForum"));
                 
@@ -279,7 +279,7 @@ public class MessageDAO extends DAO implements MessageDAOInterface{
                 
                 m.setMessageId(rs.getInt("messageId"));
                 m.setMessageContent(rs.getString("message"));
-                m.setReceiver(rs.getString("receiver"));
+                m.setReceiver(rs.getString("reciever"));
                 m.setRead(rs.getBoolean("messageRead"));
                 m.setInForum(rs.getBoolean("inForum"));
                 
@@ -336,7 +336,7 @@ public class MessageDAO extends DAO implements MessageDAOInterface{
                 
                 m.setMessageId(rs.getInt("messageId"));
                 m.setMessageContent(rs.getString("message"));
-                m.setReceiver(rs.getString("receiver"));
+                m.setReceiver(rs.getString("reciever"));
                 m.setRead(rs.getBoolean("messageRead"));
                 m.setInForum(rs.getBoolean("inForum"));
                 
@@ -375,5 +375,116 @@ public class MessageDAO extends DAO implements MessageDAOInterface{
     public void recieveMessage() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public boolean sendPrivateMessage(int userId, Message message) {
+        // Objects for stablishing the connection
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        // Checking that the message object received is not null
+        if (message == null) {
+            return false;
+        }
+
+        try {
+            // Getting the connection
+            con = getConnection();
+
+            // Preparing the query
+            String query = "INSERT INTO MESSAGE (message, reciever, messageRead, timeSent, inForum) VALUES (?,?,?,?,?);";
+
+            // Preparing the statement for the insertion
+            ps = con.prepareStatement(query);
+            
+            
+            ps.setString(1, message.getMessageContent());
+            ps.setString(2, message.getReceiver());
+            ps.setBoolean(3, message.isRead());
+            ps.setDate(4, message.getTimeSent());
+            ps.setBoolean(5, message.isInForum());
+            
+             // Executing the query and storing the response
+            // if i>0 the information was inserted
+            // if i==0 no information inserted into the database
+            int i = ps.executeUpdate();
+            
+            
+            query = "SELECT * FROM Message WHERE message.message = ? and message.reciever = ? and message.timeSent = ?";
+            ps = con.prepareStatement(query);
+
+            // preparing the query
+            ps.setString(1, message.getMessageContent());
+            ps.setString(2, message.getReceiver());
+            ps.setDate(3, message.getTimeSent());
+
+            // executing the query
+            rs = ps.executeQuery();
+
+            Message mess = new Message();
+            // This while loop stores all the messages retrieved from the database into the ArrayList
+            while (rs.next()) {
+                // Make a message object for the current customer
+                
+
+                
+                mess.setMessageId(rs.getInt("messageId"));
+                mess.setMessageContent(rs.getString("message"));
+                mess.setReceiver(rs.getString("reciever"));
+                mess.setTimeSent(rs.getDate("timeSent"));
+                mess.setRead(rs.getBoolean("messageRead"));
+                mess.setInForum(rs.getBoolean("inForum"));
+               
+            }
+            
+
+           
+            
+            query = "INSERT INTO USERMESSAGE (userId, messageId) VALUES (?, ?);";
+
+            // Preparing the statement for the insertion
+            ps = con.prepareStatement(query);
+            
+            ps.setInt(1, userId);
+            ps.setInt(2, mess.getMessageId());
+
+            // Executing the query and storing the response
+            // if i>0 the information was inserted
+            // if i==0 no information inserted into the database
+            int j = ps.executeUpdate();
+
+            // Returning true if the response is > than 0
+           if(i>0 && j>0)
+           {
+                return true;
+           }
+           else
+           {
+               return false;
+           }
+            
+
+            // catching any possible exception
+        } catch (SQLException e) {
+            return false;
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+                if (con != null) {
+                    freeConnection(con);
+                }
+            } catch (SQLException e) {
+                return false;
+            }
+        }
+
+    }
+    
     
 }

@@ -25,10 +25,12 @@ public interface RMIChatInterface extends Remote
     public ArrayList<Message> getAllMessages() throws RemoteException;
     public ArrayList<Message> getAllForumMessages() throws RemoteException;
     public ArrayList<Message> getAllPrivateMessages(String username1, String username2) throws RemoteException;
+    public boolean sendPrivateMessage(int userId, Message message) throws RemoteException;
     
     public boolean register(User newUser) throws RemoteException;
     public boolean login(User user) throws RemoteException;
     public boolean logoff(User user) throws RemoteException;
+    public User getUser(String username) throws RemoteException;
     
     public boolean registerForCallback(RMIChatClientInterface client) throws RemoteException;
     public boolean unregisterForCallback(RMIChatClientInterface client) throws RemoteException;

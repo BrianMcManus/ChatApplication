@@ -12,6 +12,7 @@ import callback_support.RMIChatClientImpl;
 import callback_support.RMIChatClientInterface;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
@@ -117,6 +118,11 @@ public class ChatWindow extends javax.swing.JFrame {
         jScrollPane1.setViewportView(MessageTextArea);
 
         SendButton.setText("Send");
+        SendButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SendButtonActionPerformed(evt);
+            }
+        });
 
         backButton.setText("Back");
         backButton.addActionListener(new java.awt.event.ActionListener() {
@@ -195,10 +201,45 @@ public class ChatWindow extends javax.swing.JFrame {
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
                 chatroom = new Chatroom(user);
                 
-                
                 this.setVisible(false);
                 chatroom.setVisible(true);
     }//GEN-LAST:event_backButtonActionPerformed
+
+    private void SendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SendButtonActionPerformed
+        int userId = user.getUserId();
+        String messageContent = MessageTextArea.getText();
+        String reciever = RecipientField.getText();
+        Date date = new Date();
+        java.sql.Date timeSent = new java.sql.Date(date.getTime());
+        Message message = new Message(messageContent, reciever, false, timeSent, false);
+        boolean valid = false;
+        
+        if(message != null && userId >0)
+        {
+            try {
+                valid = chatService.sendPrivateMessage(userId, message);
+                
+                if(valid)
+                {
+                    System.out.println("You sent a message to: " + reciever);
+                    privateMessages.add(message);
+                    populateMessageList();
+                    MessageTextArea.setText("");
+
+                }
+                else
+                {
+                    System.out.println("Sorry your message was not sent to: " + reciever);
+                }
+            } catch (RemoteException ex) {
+                Logger.getLogger(ChatWindow.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        else
+        {
+            System.out.println("Something is really wrong");
+        }
+    }//GEN-LAST:event_SendButtonActionPerformed
 
     /**
      * @param args the command line arguments

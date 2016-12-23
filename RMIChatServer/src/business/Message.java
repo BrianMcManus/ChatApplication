@@ -32,6 +32,15 @@ public class Message implements Serializable{
         this.timeSent = timeSent;
         this.inForum = inForum;
     }
+    
+    public Message(int messageId, String messageContent, String receiver, boolean read, Date timeSent, boolean inForum) {
+        this.messageId = messageId;
+        this.messageContent = messageContent;
+        this.receiver = receiver;
+        this.read = read;
+        this.timeSent = timeSent;
+        this.inForum = inForum;
+    }
 
     public int getMessageId() {
         return messageId;

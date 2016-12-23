@@ -139,12 +139,14 @@ public class Login extends javax.swing.JFrame {
             
             String username = usernameField.getText();
             String password = passwordField.getText();
+            
             user = new User(username, password);
             boolean loggedin;
         try {
             loggedin = chatService.login(user);
             if(loggedin)
             {
+                user = chatService.getUser(username);
                 chatroom = new Chatroom(user);
                 thisClient = new RMIChatClientImpl(chatroom);
                 chatService.registerForCallback(thisClient);
