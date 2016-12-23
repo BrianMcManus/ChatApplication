@@ -113,7 +113,7 @@ public class MessageDAO extends DAO implements MessageDAOInterface{
                 
                 m.setMessageId(rs.getInt("messageId"));
                 m.setMessageContent(rs.getString("message"));
-                m.setSender(rs.getString("receiver"));
+                m.setReceiver(rs.getString("receiver"));
                 m.setRead(rs.getBoolean("messageRead"));
                 m.setInForum(rs.getBoolean("inForum"));
                 

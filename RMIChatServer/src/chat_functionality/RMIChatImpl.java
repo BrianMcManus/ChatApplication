@@ -192,7 +192,7 @@ public class RMIChatImpl extends UnicastRemoteObject implements RMIChatInterface
                 
                 for(Message m: sentMessages)
                 {
-                    if(m.getSender().equals(username2) && m.isInForum() == false)
+                    if(m.getReceiver().equals(username2) && m.isInForum() == false)
                     {
                         privateMessages.add(m);
                     }
@@ -207,7 +207,7 @@ public class RMIChatImpl extends UnicastRemoteObject implements RMIChatInterface
                 
                 for(Message m: sentMessages)
                 {
-                    if(m.getSender().equals(username1) && m.isInForum() == false)
+                    if(m.getReceiver().equals(username1) && m.isInForum() == false)
                     {
                         privateMessages.add(m);
                     }
