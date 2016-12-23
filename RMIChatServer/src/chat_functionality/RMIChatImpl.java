@@ -43,11 +43,18 @@ public class RMIChatImpl extends UnicastRemoteObject implements RMIChatInterface
             int tempId = messageList.size();
             newMessage.setMessageId(tempId);
             addMessage = messageList.add(newMessage);
+        if(newMessage.isInForum()){
+                forumMessages.add(newMessage);
+            }
         }
         
         synchronized (clientList) {
                     for (RMIChatClientInterface client : clientList) {
-                        client.newMessageSent(messageList);
+                        if(newMessage.isInForum()){
+                            client.newMessageSent(forumMessages);
+                        } else{
+                            client.newMessageSent(messageList);
+                        }
                     }
                 }
         return addMessage;

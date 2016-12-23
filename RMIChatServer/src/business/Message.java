@@ -20,7 +20,6 @@ public class Message implements Serializable{
     private boolean read;
     private Date timeSent;
     private boolean inForum;
-    private String sendersUsername;
 
     public Message() {
        
@@ -80,14 +79,6 @@ public class Message implements Serializable{
 
     public void setInForum(boolean inForum) {
         this.inForum = inForum;
-    }
-
-    public String getSendersUsername() {
-        return sendersUsername;
-    }
-
-    public void setSendersUsername(String sendersUsername) {
-        this.sendersUsername = sendersUsername;
     }
 
     
