@@ -21,4 +21,5 @@ public interface MessageDAOInterface {
     public ArrayList<Message> getUnreadMessages(int userId);
     public boolean sendMessage (Message message);
     public void recieveMessage();
+    public ArrayList<Message> getMessagesByUsername(String username);
 }

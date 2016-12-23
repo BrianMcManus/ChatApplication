@@ -61,6 +61,42 @@ public class UserDAO extends DAO implements UserDAOInterface {
         }
         return user;
     }
+    
+    @Override
+    public User getUserByUsername(String username) {
+        user = new User();
+        try {
+            con = getConnection();
+            String query = "SELECT * FROM users WHERE username = ?";
+            ps = con.prepareStatement(query);
+            ps.setString(1, username);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                user.setUserId(rs.getInt("userId"));
+                user.setUserName(rs.getString("username"));
+                user.setEmail(rs.getString("email"));
+                user.setPassword(rs.getString("password"));
+                user.setLoggedIn(rs.getBoolean("loggedIn"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+                if (con != null) {
+                    freeConnection(con);
+                }
+            } catch (SQLException e) {
+                return null;
+            }
+        }
+        return user;
+    }
 
     @Override
     public User login(String userName, String password) {

@@ -179,6 +179,49 @@ public class RMIChatImpl extends UnicastRemoteObject implements RMIChatInterface
         }
         return new ArrayList();
     }
+    
+    @Override
+    public ArrayList<Message> getAllPrivateMessages(String username1, String username2) throws RemoteException {
+        ArrayList<Message> sentMessages = mDAO.getMessagesByUsername(username1);
+        ArrayList<Message> privateMessages = new ArrayList<Message>();
+        
+        synchronized (sentMessages) {
+            if (sentMessages != null && sentMessages.size() > 0) {
+                
+                for(Message m: sentMessages)
+                {
+                    if(m.getSender().equals(username2) && m.isInForum() == false)
+                    {
+                        privateMessages.add(m);
+                    }
+                }
+            }
+        }
+        
+        sentMessages = mDAO.getMessagesByUsername(username2);
+        
+        synchronized (sentMessages) {
+            if (sentMessages != null && sentMessages.size() > 0) {
+                
+                for(Message m: sentMessages)
+                {
+                    if(m.getSender().equals(username1) && m.isInForum() == false)
+                    {
+                        privateMessages.add(m);
+                    }
+                }
+            }
+        }
+        
+        if(privateMessages.size()>0)
+        {
+            return privateMessages;
+        }
+        else
+        {
+        return new ArrayList();
+        }
+    }
 
     @Override
     public User getCurrentUser(RMIChatClientInterface client) throws RemoteException {

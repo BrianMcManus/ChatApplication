@@ -7,6 +7,7 @@ package DAO;
 
 import business.Message;
 import Interfaces.MessageDAOInterface;
+import business.User;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -36,11 +37,70 @@ public class MessageDAO extends DAO implements MessageDAOInterface{
             con = getConnection();
 
             // creating the query
-            String query = "SELECT * FROM Message WHERE Message.messageId = userMessage.MessageId and userMessage.UserId = (?)";
+            String query = "SELECT * FROM Message, userMessage WHERE Message.messageId = userMessage.MessageId and userMessage.UserId = (?)";
             ps = con.prepareStatement(query);
 
             // preparing the query
             ps.setInt(1, userId);
+
+            // executing the query
+            rs = ps.executeQuery();
+
+            // This while loop stores all the messages retrieved from the database into the ArrayList
+            while (rs.next()) {
+                // Make a message object for the current customer
+                m = new Message();
+
+                
+                m.setMessageId(rs.getInt("messageId"));
+                m.setMessageContent(rs.getString("message"));
+                m.setSender(rs.getString("receiver"));
+                m.setRead(rs.getBoolean("messageRead"));
+                m.setInForum(rs.getBoolean("inForum"));
+                
+
+                // Store the current message object (now filled with information) in the arraylist
+                messages.add(m);
+            }
+            // Catching any possible exception
+        } catch (SQLException e) {
+            return null;
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+                if (con != null) {
+                    freeConnection(con);
+                }
+            } catch (SQLException e) {
+                return null;
+            }
+        }
+        // returning the addresses ArrayList
+        return messages;
+    }
+    
+    @Override
+    public ArrayList<Message> getMessagesByUsername(String username) {
+        
+        // ArrayList<Message> declaration for storing all the user's messages
+        ArrayList<Message> messages = new ArrayList();
+
+        try {
+            // requesting a connection
+            con = getConnection();
+            
+            // creating the query
+            String query = "select message.messageId, message.message, message.receiver, message.messageRead, message.inForum, "
+                    + "message.timeSent from message, usermessage, users where message.messageId = usermessage.messageId and usermessage.userId = users.userId and users.username = (?) and message.inForum = false;";
+            ps = con.prepareStatement(query);
+
+            // preparing the query
+            ps.setString(1, username);
 
             // executing the query
             rs = ps.executeQuery();

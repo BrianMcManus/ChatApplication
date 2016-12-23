@@ -6,12 +6,16 @@
 package GUI;
 
 import static GUI.Login.chatService;
+import business.Message;
 import business.User;
 import callback_support.RMIChatClientImpl;
 import callback_support.RMIChatClientInterface;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
+import javax.swing.JList;
 
 /**
  *
@@ -20,10 +24,11 @@ import java.util.logging.Logger;
 public class ChatWindow extends javax.swing.JFrame {
 
     private Chatroom chatRoom;
-    private User user;
-    private String recipient;
+    private static User user;
+    private static String recipient;
     private RMIChatClientInterface client;
     private Chatroom chatroom;
+    private ArrayList<Message> privateMessages = new ArrayList<Message>();
     /**
      * Creates new form ChatWindow
      */
@@ -47,6 +52,30 @@ public class ChatWindow extends javax.swing.JFrame {
         
         this.user = user;
         SenderField.setText(user.getUserName());
+        
+       populateMessageList();
+
+    }
+    
+    public ArrayList<Message> populateMessageList(){
+
+        try{
+            if(user != null && recipient != null)
+            {
+            privateMessages = chatService.getAllPrivateMessages(user.getUserName(), recipient);
+            
+            DefaultListModel<String> model = new DefaultListModel<String>();
+            for(Message m:privateMessages){
+                model.addElement(m.getMessageContent());
+            }
+            privateMessageList.setModel(model);
+            }
+
+            
+        } catch (RemoteException ex){
+            Logger.getLogger(Chatroom.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return privateMessages;
     }
 
     /**
@@ -68,7 +97,7 @@ public class ChatWindow extends javax.swing.JFrame {
         SendButton = new javax.swing.JButton();
         backButton = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        privateMessageList = new javax.swing.JList<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -96,12 +125,12 @@ public class ChatWindow extends javax.swing.JFrame {
             }
         });
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
+        privateMessageList.setModel(new javax.swing.AbstractListModel<String>() {
+            ArrayList<Message> messageList = populateMessageList();
+            public int getSize() { return messageList.size(); }
+            public String getElementAt(int i) { return messageList.get(i).getMessageContent(); }
         });
-        jScrollPane2.setViewportView(jList1);
+        jScrollPane2.setViewportView(privateMessageList);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -165,12 +194,6 @@ public class ChatWindow extends javax.swing.JFrame {
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
                 chatroom = new Chatroom(user);
-        try {
-            RMIChatClientInterface thisClient = new RMIChatClientImpl(chatroom);
-            chatService.registerForCallback(client);
-        } catch (RemoteException ex) {
-            Logger.getLogger(ChatWindow.class.getName()).log(Level.SEVERE, null, ex);
-        }
                 
                 
                 this.setVisible(false);
@@ -221,8 +244,8 @@ public class ChatWindow extends javax.swing.JFrame {
     private javax.swing.JLabel SenderLabel;
     private javax.swing.JLabel TitleLabel;
     private javax.swing.JButton backButton;
-    private javax.swing.JList<String> jList1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JList<String> privateMessageList;
     // End of variables declaration//GEN-END:variables
 }

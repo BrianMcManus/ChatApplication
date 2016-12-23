@@ -111,9 +111,9 @@ public class Chatroom extends javax.swing.JFrame{
         messageLabel = new javax.swing.JLabel();
         sendButton = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
-        userList = new javax.swing.JList<String>();
+        userList = new javax.swing.JList<>();
         jScrollPane5 = new javax.swing.JScrollPane();
-        messageList = new javax.swing.JList<String>();
+        messageList = new javax.swing.JList<>();
         logoutButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);

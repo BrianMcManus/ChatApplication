@@ -18,4 +18,6 @@ public interface UserDAOInterface {
     public void logout();
     public boolean register(User newUser);
     public ArrayList<User> getAllUsers();
+    public User getUserByUsername(String username);
+
 }
