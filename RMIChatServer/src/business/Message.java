@@ -20,6 +20,7 @@ public class Message implements Serializable{
     private boolean read;
     private Date timeSent;
     private boolean inForum;
+    private String sendersUsername;
 
     public Message() {
        
@@ -49,11 +50,11 @@ public class Message implements Serializable{
         this.messageContent = messageContent;
     }
 
-    public String getSender() {
+    public String getReceiver() {
         return receiver;
     }
 
-    public void setSender(String receiver) {
+    public void setReceiver(String receiver) {
         this.receiver = receiver;
     }
 
@@ -81,6 +82,15 @@ public class Message implements Serializable{
         this.inForum = inForum;
     }
 
+    public String getSendersUsername() {
+        return sendersUsername;
+    }
+
+    public void setSendersUsername(String sendersUsername) {
+        this.sendersUsername = sendersUsername;
+    }
+
+    
     @Override
     public int hashCode() {
         int hash = 5;
