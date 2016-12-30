@@ -1,14 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package GUI;
 
 import static GUI.Login.chatService;
 import business.Message;
 import business.User;
-import callback_support.RMIChatClientImpl;
 import callback_support.RMIChatClientInterface;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -16,11 +10,10 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
-import javax.swing.JList;
 
 /**
- *
- * @author Megatronus
+ * This class is used to create a GUI form to display a private message window to the user
+ * @author Brian
  */
 public class ChatWindow extends javax.swing.JFrame {
 
@@ -30,41 +23,52 @@ public class ChatWindow extends javax.swing.JFrame {
     private RMIChatClientInterface client;
     private Chatroom chatroom;
     private ArrayList<Message> privateMessages = new ArrayList<Message>();
+
     /**
-     * Creates new form ChatWindow
+     * Creates a new ChatWindow form that 
+     * carries the current user and the recipient of the private message.
+     * It then populates the relevant text fields with the senders and recipient's information
+     * so the user does not have to. It then populates the message list with the past messages 
+     * that have been sent between these two individuals.
+     * 
+     * @param user is the current user sending the private message
+     * @param recipient is the intended recipient of the private message
+     * 
+     * 
      */
-
-    ChatWindow(User user, String recipient, RMIChatClientInterface client) {
-        initComponents();
-        this.recipient = recipient;
-        RecipientField.setText(recipient);
-        
-        this.user = user;
-        SenderField.setText(user.getUserName());
-        
-        this.client = client;
-        
-    }
-
     ChatWindow(User user, String recipient) {
+        //Initalises the components to be placed on the chatWindow form
         initComponents();
+        
+        //Stores the recipient passed into the class and places it into the recipient field on the GUI
         this.recipient = recipient;
         RecipientField.setText(recipient);
         
+        //Stores the user passed into the class and places its username attribute in teh sender field on the GUI
         this.user = user;
         SenderField.setText(user.getUserName());
         
+       //Populates the message area with all messages sent between the sender and reciever
        populateMessageList();
 
     }
     
-    public ArrayList<Message> populateMessageList(){
+    /**
+     * This method is used to populate the message list of a gui by calling on the chatService to 
+     * return all the messages that has been sent between the sender and recipient in the form of 
+     * message objects which are held within an arrayList, it then creates a model and populates 
+     * it with the content of the returned message objects, once done it attaches the now populated 
+     * model to the private message list. 
+     */
+    public void populateMessageList(){
 
         try{
             if(user != null && recipient != null)
             {
+                //Use the chatService to get all messages sent between the sender and recipient 
             privateMessages = chatService.getAllPrivateMessages(user.getUserName(), recipient);
             
+            //Create a new model to store the messages retrieved and attach it to the list on the GUI
             DefaultListModel<String> model = new DefaultListModel<String>();
             for(Message m:privateMessages){
                 model.addElement(m.getMessageContent());
@@ -76,7 +80,7 @@ public class ChatWindow extends javax.swing.JFrame {
         } catch (RemoteException ex){
             Logger.getLogger(Chatroom.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return privateMessages;
+
     }
 
     /**
@@ -132,7 +136,7 @@ public class ChatWindow extends javax.swing.JFrame {
         });
 
         privateMessageList.setModel(new javax.swing.AbstractListModel<String>() {
-            ArrayList<Message> messageList = populateMessageList();
+            ArrayList<Message> messageList = new ArrayList();
             public int getSize() { return messageList.size(); }
             public String getElementAt(int i) { return messageList.get(i).getMessageContent(); }
         });
@@ -198,46 +202,86 @@ public class ChatWindow extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * This method listens for the back button on the GUI to be pushed, in doing so a new
+     * chatRoom object is created taking a user object containing the current users information,
+     * it then sets the chatWindow panel to be invisible and hen brings up the chatroom panel again.
+     * @param evt is the event that happened on the back button  
+     */
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
+                //Create a new chatroom form passing the user to it
                 chatroom = new Chatroom(user);
                 
+                //Make the chatroom visable to the user
                 this.setVisible(false);
                 chatroom.setVisible(true);
     }//GEN-LAST:event_backButtonActionPerformed
 
+    /**
+     * This method is used to send a message from the sender to the recipient and inform the user
+     * if it was successfully sent or not, it stores the current users id from the user object that 
+     * was taken in on the creation of the chat window, it takes the message content from the message 
+     * text area and stores it, it also takes the recipient from the recipient text field, the date is 
+     * created as an java.util.date, then it creates a java.util.date taking the java.util.date as a 
+     * parameter, a new message object is then created with the stored information, with the isRead 
+     * which states if the message is read or not and the inForum attribute which states if the message was 
+     * sent in the forum or not, both being stated as false in this case
+     * 
+     * The method checks for null values in the message object and the user id, if it passes,
+     * it asks the chatService to send a private message from the user relevant to the user id
+     * to the receiver held within the message object, this returns a boolean value specifying 
+     * if the message was sent successfully or not
+     * 
+     * If successful the method alerts the user that it was successful, adds the message to the private
+     * message arraylist and re-populates the list with the new message appearing to the user, it then wipes
+     * the text from the typing area so a new message can be written with ease
+     * 
+     * if unsuccessful the user will be alerted that the message was not sent and will be allowed to try again
+     * with their message text still available to them.
+     * 
+     * @param evt is the event that happened on the send button  
+     */
     private void SendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SendButtonActionPerformed
+        //Get the current users user id
         int userId = user.getUserId();
+        //Store the message content entered by the user
         String messageContent = MessageTextArea.getText();
+        //Get the reciever information from the appropriate text field
         String reciever = RecipientField.getText();
+        //Create a new date object to record when the message was sent
         Date date = new Date();
         java.sql.Date timeSent = new java.sql.Date(date.getTime());
+        //Create a new message object
         Message message = new Message(messageContent, reciever, false, timeSent, false);
         boolean valid = false;
         
-        if(message != null && userId >0)
+        if(!message.equals("") && userId >0)
         {
             try {
+                //Use chatService to send the message and record if it was successful or not
                 valid = chatService.sendPrivateMessage(userId, message);
                 
+                //If successful
                 if(valid)
                 {
+                    //Let the user know the message was sent to the intended recipient
                     System.out.println("You sent a message to: " + reciever);
+                    //Add the message to the messsage list containing the mesages already sent
                     privateMessages.add(message);
+                    //Repopulate the message list so the new message is visable
                     populateMessageList();
+                    //Clear the text area 
                     MessageTextArea.setText("");
 
                 }
                 else
                 {
+                    //Let the user know that the message was not sent
                     System.out.println("Sorry your message was not sent to: " + reciever);
                 }
             } catch (RemoteException ex) {
                 Logger.getLogger(ChatWindow.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }
-        else
-        {
-            System.out.println("Something is really wrong");
         }
     }//GEN-LAST:event_SendButtonActionPerformed
 

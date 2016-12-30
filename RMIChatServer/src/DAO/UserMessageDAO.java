@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package DAO;
 
 import business.Message;
@@ -15,7 +10,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
- *
+ * This class is used to control the data coming from and being posted to the UserMessage table within the 
+ * database, it extends the DAO class to be able to access connection methods for the database which are 
+ * within the DAO class, it implements the UserMessageInterface in order to ensure all methods are implemented
+ * and signatures are correct.
  * @author Brian
  */
 public class UserMessageDAO extends DAO implements UserMessageInterface{
@@ -26,8 +24,16 @@ public class UserMessageDAO extends DAO implements UserMessageInterface{
         private ResultSet rs = null;
         
 
+    /**
+     * This method is used to find the user that sent a particular message, it takes in a message id in the form of an int,
+     * it uses this id to identify the user by searching the UserMessage table in the database and finding the corresponding user
+     * to the message id, once a result is found it packs the users information into a User object and returns this object.
+     * @param messageId is the id of the message that we wish to know who sent.
+     * @return returns a User object with the senders information.
+     */
     @Override
     public User findUserByMessage(int messageId) {
+        //Create a new User object
          User user = new User();
          
         try {
@@ -57,7 +63,7 @@ public class UserMessageDAO extends DAO implements UserMessageInterface{
 
                 
             }
-            // Catching any possible exception
+            // Catching any possible exceptions
         } catch (SQLException e) {
             return null;
         } finally {
@@ -75,10 +81,18 @@ public class UserMessageDAO extends DAO implements UserMessageInterface{
                 return null;
             }
         }
-        // returning message
+        // returning the User oobject
         return user;
     }
 
+    /**
+     * This method is used to get all the messages that a specific user has sent, it takes in a single parameter,
+     * a user id in the form of an int to represent the user we wish to find messages for,
+     * The method uses this id to query the database and get all the users mail, when it gets results it packs 
+     * them into message objects and adds them to an ArrayList and returns this ArrayList
+     * @param userId is the id of the user we wish to find messages for
+     * @return returns an ArrayList of Message objects 
+     */
     @Override
     public ArrayList<Message> getAllMessagesByUser(int userId) {
         

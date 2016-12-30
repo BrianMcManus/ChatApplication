@@ -8,19 +8,28 @@ package business;
 /**
  *
  * @author Brian
+ * 
+ * This class is used to identify what attributes are present within a userMessage object
+ * 
  */
 public class UserMessage {
+    //The id of the person recieving the message
     private int recipientId;
+    //The id of the message sent 
     private int messageId;
 
+    //Empty constructor
     public UserMessage() {
     }
 
+    //Paramterized construtor using the recipient's id and the message id to create a new UserMesage object
     public UserMessage(int recipientId, int messageId) {
         this.recipientId = recipientId;
         this.messageId = messageId;
     }
 
+    //Setters and Getters
+    
     public int getRecipientId() {
         return recipientId;
     }
@@ -37,6 +46,7 @@ public class UserMessage {
         this.messageId = messageId;
     }
 
+    //Get hashcode of a UserMessage object
     @Override
     public int hashCode() {
         int hash = 3;
@@ -45,6 +55,7 @@ public class UserMessage {
         return hash;
     }
 
+    //Check equivalency of 2 UserMessage objects
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -66,6 +77,7 @@ public class UserMessage {
         return true;
     }
 
+    //Output userMessage attributes in the form of a string.
     @Override
     public String toString() {
         return "UserMessage{" + "recipientId=" + recipientId + ", messageId=" + messageId + '}';

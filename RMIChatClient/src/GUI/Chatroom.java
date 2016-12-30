@@ -9,7 +9,6 @@ import business.User;
 import java.util.ArrayList;
 import static GUI.Login.chatService;
 import business.Message;
-import callback_support.RMIChatClientImpl;
 import callback_support.RMIChatClientInterface;
 import java.rmi.RemoteException;
 import java.util.Date;
@@ -19,7 +18,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 /**
- *
+ * This class is used to create a new chatroom form for the user to see
  * @author Megatronus
  */
 public class Chatroom extends javax.swing.JFrame{
@@ -27,21 +26,52 @@ public class Chatroom extends javax.swing.JFrame{
     private User user = new User();
     private String recipient;
     private RMIChatClientInterface client;
-    
-    /**
-     * Creates new form Chatroom
-     */
-    public Chatroom() {
-        initComponents();
-        setListener();
-    }
     private static ArrayList<User> users;
     private static ArrayList<Message> messages;
     
+    /**
+     * Creates new chatRoom form with no parameters, it initalises the components on the panel
+     * and sets a listener to listen for any click on the user list in order to send a private
+     * message to the user thats clicked.
+     */
+    public Chatroom() {
+        //Initalises the components on the chatroom form
+        initComponents();
+        //Set the listener to listen for the users click
+        setListener();
+    }
+    
+    /**
+     * Creates new chatRoom form with a user object supplied as a parameter, 
+     * it initalises the components on the panel and sets a listener to listen 
+     * for any click on the user list in order to send a private message to the 
+     * user thats clicked, it then sets the global variable user to the user taken
+     * in so it can be used in other instances.
+     * @param user 
+     */
+    Chatroom(User user) {
+        //Initalises the components on the chatroom form
+        initComponents();
+        //Set the listener to listen for the users click
+        setListener();
+        //Set the current user as the user passed into the chatroom
+        this.user = user;
+    }
+    
+    
+    /**
+     * This method is used to populate the user list in the chatroom GUI, it uses 
+     * the global variable 'users' and makes it a new arrayList, it then populates the arrayList
+     * by calling on the chatService to return all the users in the database in the form of  
+     * user objects, it then returns the arrayList of user objects.
+     * @return users, an arrayList of user objects.
+     */
     public static ArrayList<User> populateUserList()
     {
+        //Create a new arraylist to store all the users registered
         users = new ArrayList();
         try {
+            //Use the chatService to get all the users registered
             users = chatService.getAllUsers();
             
             
@@ -50,9 +80,19 @@ public class Chatroom extends javax.swing.JFrame{
         }
         return users;
     }
+    
+    /**
+     * This method is used to populate the message list in the chatroom GUI, it uses
+     * the global variable 'messages' and makes it a new arrayList, it then populates 
+     * the arrayList by calling on the chatService to return all the messages in the database
+     * that where sent through the forum in the form of message objects which are then returned.
+     * @return messages, an arrayList of message objects.
+     */
     public static ArrayList<Message> populateMessageList(){
+        //Create a new array to store all the messages that are in the forum 
         messages = new ArrayList();
         try{
+            //Use the chatService to get all the messages posted to the forum
             messages = chatService.getAllForumMessages();
             
             
@@ -61,30 +101,30 @@ public class Chatroom extends javax.swing.JFrame{
         }
         return messages;
     }
-
-    Chatroom(User user) {
-        initComponents();
-        setListener();
-        this.user = user;
-    }
-
-//    Chatroom(User user, RMIChatClientInterface thisClient) {
-//        initComponents();
-//        setListener();
-//        this.user = user;
-//        this.client = thisClient;
-//    }
     
+    /**
+     * This method adds a listener to the user list to listen for user clicks, upon the click 
+     * of a user from the list is takes the value of the user selected and stores it, it then creates
+     * a new ChatWindow form that takes the user and recipient as parameters to carry the information 
+     * across, it then sets the chatroom panel to be invisible and brings the ChatWindow form the be 
+     * visible.
+     */
     private void setListener()
     {
+        //Add a listener to the list of users on the chatroom form
         userList.addListSelectionListener(new ListSelectionListener()
             {
                 @Override
+                //If an event happens invoke the method
                 public void valueChanged(ListSelectionEvent e) {
                     if(e.getValueIsAdjusting())
                     {
+                        //Set the recipient of the private message as the one clicked by the user
                         recipient = userList.getSelectedValue().toString();
+                        //Create a new chatWindow form passing the user and intended recipient to it
                         ChatWindow chatwindow = new ChatWindow(user,recipient);
+                        
+                        //Make the chatWindow form visable to the user
                         Chatroom.this.setVisible(false);
                         chatwindow.setVisible(true);
                        
@@ -93,6 +133,22 @@ public class Chatroom extends javax.swing.JFrame{
                 
             });
     }
+    
+    /**
+     * This method 
+     * @param messages 
+     */
+    public void setMessages(ArrayList<Message> messages) {
+     
+      messageList.setModel(new javax.swing.AbstractListModel() {
+                public int getSize() { return messages.size(); }
+                public Object getElementAt(int i) { return messages.get(i).getMessageContent(); 
+                }});
+    }
+    
+        public void setClient(RMIChatClientInterface newClient){
+        this.client = newClient;
+    } 
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -230,6 +286,23 @@ public class Chatroom extends javax.swing.JFrame{
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * This method is invoked once a user clicks the send button on the GUI
+     * in order to send a message the the forum, it creates a message variable 
+     * to store the text taken from the message text area on the GUI, 
+     * to record the time the message was sent a new java.util.Date object, once
+     * created it creates a java.sql.Date object taking the java.util.Date 
+     * object as a parameter, it then creates a new message object taking in 
+     * the relevant variables as parameters while setting the isRead attribute as false
+     * as the users have not seen this message yet, it also sets the inFourm
+     * attribute as true as the message  is being posted to the forum for all
+     * users to see, once created the chatService is called on to add the message 
+     * to the forum message list to be added to the database at a later stage, 
+     * it then clears the message text area of any ext so the user can send another
+     * message instantly, it then re-populates the message list to show the new message
+     * in the forum.
+     * @param evt 
+     */
     private void sendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendButtonActionPerformed
         String message = messageField.getText();
         try {
@@ -238,7 +311,9 @@ public class Chatroom extends javax.swing.JFrame{
             java.sql.Date timeSent = new java.sql.Date(utilDate.getTime());
             //Creates message object and adds it to the servers message list
             Message newMessage = new Message(message, user.getUserName(), false, timeSent, true);
+            //Use the chatService to add the message to the relevant lists
             chatService.addMessage(newMessage);
+            //clear the message field
             messageField.setText("");
             
             //repopulates clients message list
@@ -254,10 +329,21 @@ public class Chatroom extends javax.swing.JFrame{
         }
     }//GEN-LAST:event_sendButtonActionPerformed
 
+    /**
+     * this method is invoked once a user clicks the logout button on the GUI,
+     * once clicked the method calls on the chatService to log the user out of 
+     * the application and unregister the client from the callback service to 
+     * close the port the client was on to free it for other users, it then shuts 
+     * down the application.
+     * @param evt is the event that happens on the logout button e.g. user click
+     */
     private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutButtonActionPerformed
         try{
+            //Log the user out of the application
             chatService.logoff(user);
+            //Unregister the user for callback services
             chatService.unregisterForCallback(client);
+            //Close the application
             System.exit(0);
         } catch (RemoteException ex) {
             Logger.getLogger(Chatroom.class.getName()).log(Level.SEVERE, null, ex);
@@ -267,7 +353,7 @@ public class Chatroom extends javax.swing.JFrame{
 
     /**
      * @param args the command line arguments
-     */
+     */ 
     public static void main(String args[]) {
         
         
@@ -315,17 +401,4 @@ public class Chatroom extends javax.swing.JFrame{
     private javax.swing.JList<String> userList;
     private javax.swing.JLabel userListLabel;
     // End of variables declaration//GEN-END:variables
-
-    public void setMessages(ArrayList<Message> messages) {
-     
-      messageList.setModel(new javax.swing.AbstractListModel() {
-                public int getSize() { return messages.size(); }
-                public Object getElementAt(int i) { return messages.get(i).getMessageContent(); 
-                }});
-    }
-    
-        public void setClient(RMIChatClientInterface newClient){
-        this.client = newClient;
-    } 
-   
 }

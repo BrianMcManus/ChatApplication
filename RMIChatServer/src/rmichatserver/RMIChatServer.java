@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package rmichatserver;
 
 import chat_functionality.RMIChatImpl;
@@ -15,7 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
+ * This class is used to create the server and connect/create the registry
  * @author Brian
  */
 public class RMIChatServer {

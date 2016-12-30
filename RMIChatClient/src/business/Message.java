@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package business;
 
 import java.io.Serializable;
@@ -12,19 +7,30 @@ import java.util.Objects;
 /**
  *
  * @author Megatronus
+ * 
+ * This class is used to define what attributes a 'Message' object contains,
+ * it implements Serializable in order to allow the object to be passed over sockets
  */
 public class Message implements Serializable{
+    //The id used to identify the message
     private int messageId;
+    //The message to be sent
     private String messageContent;
+    //The receiver of the message
     private String receiver;
+    //States if the message has been read or not
     private boolean read;
+    //States the time the message was sent
     private Date timeSent;
+    //States if the message was sent publicly or privately
     private boolean inForum;
 
+    //Empty constructor
     public Message() {
        
     }
 
+    //Parameterized constructer without id for message obects that have not been assigned an id yet
     public Message(String messageContent, String receiver, boolean read, Date timeSent, boolean inForum) {
         this.messageContent = messageContent;
         this.receiver = receiver;
@@ -33,6 +39,7 @@ public class Message implements Serializable{
         this.inForum = inForum;
     }
     
+    //Parameterized constructer with id for message obects that have been assigned an id by the database
     public Message(int messageId, String messageContent, String receiver, boolean read, Date timeSent, boolean inForum) {
         this.messageId = messageId;
         this.messageContent = messageContent;
@@ -42,6 +49,8 @@ public class Message implements Serializable{
         this.inForum = inForum;
     }
 
+    //Setters and Getters
+    
     public int getMessageId() {
         return messageId;
     }
@@ -90,7 +99,7 @@ public class Message implements Serializable{
         this.inForum = inForum;
     }
 
-    
+    //Get hashcode of object
     @Override
     public int hashCode() {
         int hash = 5;
@@ -103,6 +112,7 @@ public class Message implements Serializable{
         return hash;
     }
 
+    //Verify the equilivancy of two message objects
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -136,6 +146,7 @@ public class Message implements Serializable{
         return true;
     }
 
+    //Output the attributes of the message object to string values
     @Override
     public String toString() {
         return "Message{" + "messageId=" + messageId + ", messageContent=" + messageContent + ", receiver=" + receiver + ", read=" + read + ", timeSent=" + timeSent + ", inForum=" + inForum + '}';

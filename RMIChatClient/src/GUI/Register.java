@@ -12,7 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
+ * This class is used to create a new Register form for the user to see and use
  * @author Brian
  */
 public class Register extends javax.swing.JFrame {
@@ -123,31 +123,60 @@ public class Register extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * This method is invoked once the user clicks the 'Go To Login' button,
+     * once clicked the current registration form is made invisible and creates
+     * a new login form and makes it visible to the user
+     * @param evt is the event that invoked the method e.g user click
+     */
     private void returnButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnButtonActionPerformed
         
+        //Make login form available to the user again
         this.setVisible(false);
-        new Login().setVisible(true); // Main Form to show after the Login Form..
+        new Login().setVisible(true); 
     
 
     }//GEN-LAST:event_returnButtonActionPerformed
 
+    /**
+     * This method is invoked once a user clicks the register button,
+     * once clicked the method takes the username, password and email that the 
+     * user entered and stores them, it takes the information and uses it to 
+     * create a new user object with it
+     * 
+     * It then uses the chatService to verify that the email is valid and that the 
+     * username chosen by the user has not already been taken, if it is not taken the 
+     * user is registered and brought to the login form, if unsuccessful the user is 
+     * alerted that their email is invalid or the username has been taken
+     * @param evt 
+     */
     private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
+        //Store the username entered by the user
         String username = usernameField.getText();
+        //Store the password entered by the user
         String password = passwordField.getText();
+        //Store the email entered by the user
         String email = emailField.getText();
         boolean valid = false;
-        
+        //Create a new user object with the information entered 
         User user = new User(username, password, email);
         try {
+            //Check to see if the username is already taken and email is valid
             valid = chatService.register(user);
         } catch (RemoteException ex) {
             Logger.getLogger(Register.class.getName()).log(Level.SEVERE, null, ex);
         }
         
+        //If all information is correct and valid
         if(valid)
         {
+            //Bring the user to the login page
             this.setVisible(false);
             new Login().setVisible(true);
+        }
+        else
+        {
+            System.out.println("Sorry that username is taken or email is invalid");
         }
         
     }//GEN-LAST:event_registerButtonActionPerformed
