@@ -2,6 +2,7 @@ package callback_support;
 
 import GUI.Chatroom;
 import business.Message;
+import business.User;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
@@ -74,5 +75,14 @@ public class RMIChatClientImpl extends UnicastRemoteObject implements RMIChatCli
         chatroom.setMessages(messages);
         
         return messages;
+    }
+    
+    
+    @Override
+    public ArrayList<User> newUserLoggedIn(ArrayList<User> userList) throws RemoteException
+    {
+        chatroom.setUsers(userList);
+        
+        return userList;
     }
 }

@@ -1,6 +1,7 @@
 package callback_support;
 
 import business.Message;
+import business.User;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -42,4 +43,6 @@ public interface RMIChatClientInterface extends Remote
      * @throws RemoteException ,this exception must be thrown if we wish to run this method remotely.
      */
     public ArrayList<Message> newMessageSent(ArrayList<Message> messages) throws RemoteException;
+    
+    public ArrayList<User> newUserLoggedIn(ArrayList<User> userList) throws RemoteException;
 }

@@ -186,6 +186,13 @@ public class Chatroom extends javax.swing.JFrame{
                 }});
     }
     
+    public void setUsers(ArrayList<User> nUserList) {
+        userList.setModel(new javax.swing.AbstractListModel() {
+                public int getSize() { return nUserList.size(); }
+                public Object getElementAt(int i) { return nUserList.get(i).getUserName(); 
+                }});
+    }
+    
     
     /**
      * This method is used to pass the client from the login to the chatroom by taking the client that
@@ -447,4 +454,6 @@ public class Chatroom extends javax.swing.JFrame{
     private javax.swing.JList<String> userList;
     private javax.swing.JLabel userListLabel;
     // End of variables declaration//GEN-END:variables
+
+    
 }
