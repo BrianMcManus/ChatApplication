@@ -135,8 +135,10 @@ public class Chatroom extends javax.swing.JFrame{
     }
     
     /**
-     * This method 
-     * @param messages 
+     * This method is used to refresh the message list for the chatroom, It takes in an ArrayList of messages
+     * as a parameter and binds this list to the message list model displaying all the objects message content
+     * attributes.
+     * @param messages is an ArrayList of Message objects
      */
     public void setMessages(ArrayList<Message> messages) {
      
@@ -146,8 +148,14 @@ public class Chatroom extends javax.swing.JFrame{
                 }});
     }
     
-        public void setClient(RMIChatClientInterface newClient){
-        this.client = newClient;
+    
+    /**
+     * This method is used to pass the client from the login to the chatroom by taking the client that
+     * is passed to the method and setting the client variable equal to the client passed.
+     * @param newClient is the clients details passed to the method
+     */
+    public void setClient(RMIChatClientInterface newClient){
+    this.client = newClient;
     } 
 
     /**
