@@ -165,6 +165,19 @@ public class UserDAO extends DAO implements UserDAOInterface {
                 user.setPassword(rs.getString("password"));
                 user.setLoggedIn(true);
             }
+            
+            //Mark the user as logged in
+            
+            //Create a query
+            query = "UPDATE Users SET loggedIn = true WHERE username = ?";
+            
+            //Create prepared statement
+            ps = con.prepareStatement(query);
+            ps.setString(1, userName);
+            
+             //Execute the update
+            ps.executeUpdate();
+
             //Catch any possible exceptions
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -194,6 +207,37 @@ public class UserDAO extends DAO implements UserDAOInterface {
      */
     @Override
     public void logout() {
+        
+        try {
+            //Get a connection to the database
+            con = getConnection();
+            //Create a query
+            String query = "UPDATE USER SET loggedIn = true WHERE username = ?";
+            //Create prepared statement
+            ps = con.prepareStatement(query);
+            ps.setString(1, user.getUserName());
+            //Execute the update
+            ps.executeUpdate();
+            
+            //Catch any possible exceptions
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+                if (con != null) {
+                    freeConnection(con);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+ 
         //If the users not already logged out
         if (user != null) {
             //log user out

@@ -142,7 +142,7 @@ public class RMIChatImpl extends UnicastRemoteObject implements RMIChatInterface
     public boolean login(User user) throws RemoteException {
         synchronized (userList) {
             //If the user list is not empty and it contains the user
-            if (user != null && userList.contains(user)) {
+            if (user != null) {
                 //Create a new userDAO object
                 uDAO = new UserDAO();
                 //Use the UserDAO to log the user in using their email and password
@@ -287,6 +287,10 @@ public class RMIChatImpl extends UnicastRemoteObject implements RMIChatInterface
      */
     @Override
     public ArrayList<Message> getAllForumMessages() throws RemoteException {
+        
+        //wipe the ArrayList
+        forumMessages = new ArrayList();
+        
         synchronized (messageList) {
             //If the list is not empty
             if (messageList != null && messageList.size() > 0) {

@@ -10,10 +10,14 @@ import java.util.ArrayList;
 import static GUI.Login.chatService;
 import business.Message;
 import callback_support.RMIChatClientInterface;
+import java.awt.Color;
+import java.awt.Component;
 import java.rmi.RemoteException;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultListCellRenderer;
+import javax.swing.JList;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -39,6 +43,8 @@ public class Chatroom extends javax.swing.JFrame{
         initComponents();
         //Set the listener to listen for the users click
         setListener();
+        //Set up the colors verifying if a user is logged in or not
+        setLoggedUsersColors();
     }
     
     /**
@@ -56,6 +62,8 @@ public class Chatroom extends javax.swing.JFrame{
         setListener();
         //Set the current user as the user passed into the chatroom
         this.user = user;
+        //Set up the colors verifying if a user is logged in or not
+        setLoggedUsersColors();
     }
     
     
@@ -132,6 +140,36 @@ public class Chatroom extends javax.swing.JFrame{
                 }
                 
             });
+    }
+    
+    public void setLoggedUsersColors()
+    {        
+        userList.setCellRenderer(new DefaultListCellRenderer() {
+
+                     @Override
+                     public Component getListCellRendererComponent(JList list, Object value, int index,
+                               boolean isSelected, boolean cellHasFocus) {
+                          Component c = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                          String username = value.toString();
+                          User u;
+                         try {
+                             u = chatService.getUser(username);
+                             
+                             if (u != null && u.isLoggedIn()) 
+                          {
+                                setBackground(Color.GREEN);
+                          } else 
+                          {
+                                setBackground(Color.RED);
+                          }
+                         } catch (RemoteException ex) {
+                             Logger.getLogger(Chatroom.class.getName()).log(Level.SEVERE, null, ex);
+                         }
+                          
+                          
+                          return c;
+                     }
+                });
     }
     
     /**
