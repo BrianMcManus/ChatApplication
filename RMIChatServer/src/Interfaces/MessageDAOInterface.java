@@ -125,3 +125,4 @@ public interface MessageDAOInterface {
     
     public boolean setMessagesAsRead(ArrayList<Message> messages, String username);
 }
+}
