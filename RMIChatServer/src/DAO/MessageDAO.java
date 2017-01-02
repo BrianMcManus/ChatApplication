@@ -775,4 +775,53 @@ public class MessageDAO extends DAO implements MessageDAOInterface{
         return messages;
     }
     
+    @Override
+    public boolean setMessagesAsRead(ArrayList<Message> messages, String username)
+    {
+        
+        try {
+            // requesting a connection
+            con = getConnection();
+
+            for(int i = 0; i<messages.size(); i++)
+                {
+                    if(username.equalsIgnoreCase(m.getReceiver()))
+                    {
+                        // creating the query
+                        String query = "UPDATE MESSAGE SET messageRead = true WHERE MessageId = (?)";
+                        ps = con.prepareStatement(query);
+
+                        Message m = messages.get(i);
+
+                        ps.setInt(1, m.getMessageId());
+                        // executing the query
+                        int j = ps.executeUpdate();
+
+                        if(j<=0)
+                        {
+                            return false;
+                        }
+                    }
+                }
+            // Catching any possible exception
+        } catch (SQLException e) {
+            return false;
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+                if (con != null) {
+                    freeConnection(con);
+                }
+            } catch (SQLException e) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
 }

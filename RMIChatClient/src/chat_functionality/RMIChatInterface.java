@@ -217,5 +217,7 @@ public interface RMIChatInterface extends Remote {
      * have applications use resources across networks non-locally
      */
     public ArrayList<String> getAllForumSenderNames() throws RemoteException;
+    
+    public boolean setMessagesAsRead(ArrayList<Message> messages, String username) throws RemoteException;
 
 }

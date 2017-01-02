@@ -487,6 +487,17 @@ public class RMIChatImpl extends UnicastRemoteObject implements RMIChatInterface
    { 
        return forumSenderList; 
    }
+   
+   @Override
+   public boolean setMessagesAsRead(ArrayList<Message> messages, String username) throws RemoteException
+   {
+       boolean marked = false;
+       if(messages != null)
+       {
+           marked = mDAO.setMessagesAsRead(messages, username);
+       }
+       return marked;
+   }
     
    
 

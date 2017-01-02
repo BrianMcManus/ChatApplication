@@ -122,4 +122,6 @@ public interface MessageDAOInterface {
      * @return An arraylist of messages that are meant for the forum chat
      */
     public ArrayList<Message> getAllForumMessages();
+    
+    public boolean setMessagesAsRead(ArrayList<Message> messages, String username);
 }

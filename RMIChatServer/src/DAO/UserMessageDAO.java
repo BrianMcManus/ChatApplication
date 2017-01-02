@@ -59,9 +59,7 @@ public class UserMessageDAO extends DAO implements UserMessageInterface{
                 user.setEmail(rs.getString("email"));
                 user.setPassword(rs.getString("password"));
                 user.setLoggedIn(rs.getBoolean("loggedIn"));
-                
-
-                
+  
             }
             // Catching any possible exceptions
         } catch (SQLException e) {

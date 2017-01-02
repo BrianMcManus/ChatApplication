@@ -50,6 +50,12 @@ public class ChatWindow extends javax.swing.JFrame {
         
        //Populates the message area with all messages sent between the sender and receiver
        populateMessageList();
+       
+        try {
+            chatService.setMessagesAsRead(privateMessages, user.getUserName());
+        } catch (RemoteException ex) {
+            Logger.getLogger(ChatWindow.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }
     

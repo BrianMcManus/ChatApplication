@@ -161,6 +161,8 @@ public interface RMIChatInterface extends Remote
      * @throws RemoteException 
      */
     public ArrayList<String> getAllForumSenderNames() throws RemoteException;
+    
+    public boolean setMessagesAsRead(ArrayList<Message> messages, String username) throws RemoteException;
 
  
 }
