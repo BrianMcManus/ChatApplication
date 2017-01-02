@@ -4,10 +4,10 @@ import business.Message;
 import Interfaces.MessageDAOInterface;
 import business.User;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 /**
@@ -61,6 +61,7 @@ public class MessageDAO extends DAO implements MessageDAOInterface{
                 m.setMessageId(rs.getInt("messageId"));
                 m.setMessageContent(rs.getString("message"));
                 m.setReceiver(rs.getString("receiver"));
+                m.setTimeSent(rs.getTimestamp("timeSent"));
                 m.setRead(rs.getBoolean("messageRead"));
                 m.setInForum(rs.getBoolean("inForum"));
                 
@@ -126,6 +127,7 @@ public class MessageDAO extends DAO implements MessageDAOInterface{
                 m.setMessageId(rs.getInt("messageId"));
                 m.setMessageContent(rs.getString("message"));
                 m.setReceiver(rs.getString("receiver"));
+                m.setTimeSent(rs.getTimestamp("timeSent"));
                 m.setRead(rs.getBoolean("messageRead"));
                 m.setInForum(rs.getBoolean("inForum"));
                 
@@ -185,6 +187,7 @@ public class MessageDAO extends DAO implements MessageDAOInterface{
                 m.setMessageId(rs.getInt("messageId"));
                 m.setMessageContent(rs.getString("message"));
                 m.setReceiver(rs.getString("receiver"));
+                m.setTimeSent(rs.getTimestamp("timeStamp"));
                 m.setRead(rs.getBoolean("messageRead"));
                 m.setInForum(rs.getBoolean("inForum"));
                 
@@ -246,6 +249,7 @@ public class MessageDAO extends DAO implements MessageDAOInterface{
                 m.setMessageId(rs.getInt("messageId"));
                 m.setMessageContent(rs.getString("message"));
                 m.setReceiver(rs.getString("receiver"));
+                m.setTimeSent(rs.getTimestamp("timeSent"));
                 m.setRead(rs.getBoolean("messageRead"));
                 m.setInForum(rs.getBoolean("inForum"));
                 
@@ -283,7 +287,7 @@ public class MessageDAO extends DAO implements MessageDAOInterface{
      * @return returns an ArrayList of Message objects
      */
     @Override
-    public ArrayList<Message> getMessageByDate(Date date) {
+    public ArrayList<Message> getMessageByDate(Timestamp date) {
         
         // ArrayList<Message> declaration for storing all the user's messages
         ArrayList<Message> messages = new ArrayList();
@@ -297,7 +301,7 @@ public class MessageDAO extends DAO implements MessageDAOInterface{
             ps = con.prepareStatement(query);
 
             // preparing the query
-            ps.setDate(1, date);
+            ps.setTimestamp(1, date);
 
             // executing the query
             rs = ps.executeQuery();
@@ -311,6 +315,7 @@ public class MessageDAO extends DAO implements MessageDAOInterface{
                 m.setMessageId(rs.getInt("messageId"));
                 m.setMessageContent(rs.getString("message"));
                 m.setReceiver(rs.getString("receiver"));
+                m.setTimeSent(rs.getTimestamp("timeSent"));
                 m.setRead(rs.getBoolean("messageRead"));
                 m.setInForum(rs.getBoolean("inForum"));
                 
@@ -378,6 +383,7 @@ public class MessageDAO extends DAO implements MessageDAOInterface{
                 m.setMessageId(rs.getInt("messageId"));
                 m.setMessageContent(rs.getString("message"));
                 m.setReceiver(rs.getString("receiver"));
+                m.setTimeSent(rs.getTimestamp("timeSent"));
                 m.setRead(rs.getBoolean("messageRead"));
                 m.setInForum(rs.getBoolean("inForum"));
                 
@@ -405,24 +411,6 @@ public class MessageDAO extends DAO implements MessageDAOInterface{
         }
         // returning the messages ArrayList
         return messages;
-    }
-
-    /**
-     * This method is used to send a message to the forum, it takes in a Message object as a parameter
-     * @param message is the message to be posted to the forum
-     * @return returns true or false value stating if the message was successfully sent or not
-     */
-    @Override
-    public boolean sendMessage(Message message) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    /**
-     * This method is used to receive any messages that are posted to the forum, it takes no parameters and returns nothing
-     */
-    @Override
-    public void recieveMessage() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     /**
@@ -461,7 +449,7 @@ public class MessageDAO extends DAO implements MessageDAOInterface{
             ps.setString(1, message.getMessageContent());
             ps.setString(2, message.getReceiver());
             ps.setBoolean(3, message.isRead());
-            ps.setDate(4, message.getTimeSent());
+            ps.setTimestamp(4, message.getTimeSent());
             ps.setBoolean(5, message.isInForum());
             
              // Executing the query and storing the response
@@ -476,7 +464,7 @@ public class MessageDAO extends DAO implements MessageDAOInterface{
             // preparing the query
             ps.setString(1, message.getMessageContent());
             ps.setString(2, message.getReceiver());
-            ps.setDate(3, message.getTimeSent());
+            ps.setTimestamp(3, message.getTimeSent());
 
             // executing the query
             rs = ps.executeQuery();
@@ -491,7 +479,7 @@ public class MessageDAO extends DAO implements MessageDAOInterface{
                 mess.setMessageId(rs.getInt("messageId"));
                 mess.setMessageContent(rs.getString("message"));
                 mess.setReceiver(rs.getString("receiver"));
-                mess.setTimeSent(rs.getDate("timeSent"));
+                mess.setTimeSent(rs.getTimestamp("timeSent"));
                 mess.setRead(rs.getBoolean("messageRead"));
                 mess.setInForum(rs.getBoolean("inForum"));
                
@@ -584,7 +572,7 @@ public class MessageDAO extends DAO implements MessageDAOInterface{
             ps.setString(1, newMessage.getMessageContent());
             ps.setString(2, newMessage.getReceiver());
             ps.setBoolean(3, newMessage.isRead());
-            ps.setDate(4, newMessage.getTimeSent());
+            ps.setTimestamp(4, newMessage.getTimeSent());
             ps.setBoolean(5, newMessage.isInForum());
             
              // Executing the query and storing the response
@@ -599,7 +587,7 @@ public class MessageDAO extends DAO implements MessageDAOInterface{
             // preparing the query
             ps.setString(1, newMessage.getMessageContent());
             ps.setString(2, newMessage.getReceiver());
-            ps.setDate(3, newMessage.getTimeSent());
+            ps.setTimestamp(3, newMessage.getTimeSent());
 
             // executing the query
             rs = ps.executeQuery();
@@ -688,7 +676,7 @@ public class MessageDAO extends DAO implements MessageDAOInterface{
             // preparing the query
             ps.setString(1, newMessage.getMessageContent());
             ps.setString(2, newMessage.getReceiver());
-            ps.setDate(3, newMessage.getTimeSent());
+            ps.setTimestamp(3, newMessage.getTimeSent());
 
             // executing the query
             rs = ps.executeQuery();
@@ -747,6 +735,7 @@ public class MessageDAO extends DAO implements MessageDAOInterface{
                 m.setMessageId(rs.getInt("messageId"));
                 m.setMessageContent(rs.getString("message"));
                 m.setReceiver(rs.getString("receiver"));
+                m.setTimeSent(rs.getTimestamp("timeSent"));
                 m.setRead(rs.getBoolean("messageRead"));
                 m.setInForum(rs.getBoolean("inForum"));
                 
@@ -775,6 +764,14 @@ public class MessageDAO extends DAO implements MessageDAOInterface{
         return messages;
     }
     
+    /**
+     * This method takes in an ArrayList of Message objects and set all those objects
+     * isRead attribute as read in the database if the intended receiver was that particular user 
+     * and returns a true or false value depending on if the all the messages where set as read or not
+     * @param messages is an ArrayList of Message objects
+     * @param username is the username of the person viewing at the messages
+     * @return returns a true or false value depending if the objects isRead attribute were all changed successfully
+     */
     @Override
     public boolean setMessagesAsRead(ArrayList<Message> messages, String username)
     {
@@ -823,5 +820,6 @@ public class MessageDAO extends DAO implements MessageDAOInterface{
         }
         return true;
     }
+
     
 }

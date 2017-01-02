@@ -1,12 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package business;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.Objects;
 
 /**
@@ -26,7 +21,7 @@ public class Message implements Serializable{
     //States if the message has been read or not
     private boolean read;
     //States the time the message was sent
-    private Date timeSent;
+    private Timestamp timeSent;
     //States if the message was sent publicly or privately
     private boolean inForum;
 
@@ -36,7 +31,7 @@ public class Message implements Serializable{
     }
 
     //Parameterized constructer without id for message obects that have not been assigned an id yet
-    public Message(String messageContent, String receiver, boolean read, Date timeSent, boolean inForum) {
+    public Message(String messageContent, String receiver, boolean read, Timestamp timeSent, boolean inForum) {
         this.messageContent = messageContent;
         this.receiver = receiver;
         this.read = read;
@@ -45,7 +40,7 @@ public class Message implements Serializable{
     }
     
     //Parameterized constructer with id for message obects that have been assigned an id by the database
-    public Message(int messageId, String messageContent, String receiver, boolean read, Date timeSent, boolean inForum) {
+    public Message(int messageId, String messageContent, String receiver, boolean read, Timestamp timeSent, boolean inForum) {
         this.messageId = messageId;
         this.messageContent = messageContent;
         this.receiver = receiver;
@@ -88,11 +83,11 @@ public class Message implements Serializable{
         this.read = read;
     }
 
-    public Date getTimeSent() {
+    public Timestamp getTimeSent() {
         return timeSent;
     }
 
-    public void setTimeSent(Date timeSent) {
+    public void setTimeSent(Timestamp timeSent) {
         this.timeSent = timeSent;
     }
 

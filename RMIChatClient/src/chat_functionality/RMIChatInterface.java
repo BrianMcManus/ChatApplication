@@ -218,6 +218,16 @@ public interface RMIChatInterface extends Remote {
      */
     public ArrayList<String> getAllForumSenderNames() throws RemoteException;
     
+    /**
+     * This method is used to set all this users messages as read as they are viewing them, it
+     * takes in an ArrayList of Message objects representing the messages sent privately between
+     * two users and if the username is the same as the intended receiver then it marks them as 
+     * read in the database.
+     * @param messages an ArrayList of Message objects that represent the messages sent between two users privately
+     * @param username is the username of the user looking at the messages
+     * @return returns true or false depending if the method was successful or not
+     * @throws RemoteException must be thrown or order to access this method remotely
+     */
     public boolean setMessagesAsRead(ArrayList<Message> messages, String username) throws RemoteException;
 
 }

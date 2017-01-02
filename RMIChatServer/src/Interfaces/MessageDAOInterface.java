@@ -6,7 +6,7 @@
 package Interfaces;
 
 import business.Message;
-import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 /**
@@ -47,7 +47,7 @@ public interface MessageDAOInterface {
      * @param date is a Date object containing the date which we wish to find the messages in
      * @return returns an ArrayList of Message objects
      */
-    public ArrayList<Message> getMessageByDate(Date date);
+    public ArrayList<Message> getMessageByDate(Timestamp date);
     
     /**
      * This method is used to get all unread messages for a specific user, it takes in a user id and uses this id to find all the messages
@@ -57,19 +57,6 @@ public interface MessageDAOInterface {
      * @return returns an ArrayList of Message objects
      */
     public ArrayList<Message> getUnreadMessages(int userId);
-    
-    /**
-     * This method is used to post a message to the forum, it takes in a Message object which contains the information needed to post the message,
-     * if the message is posted successfully it returns a value of true otherwise it returns false.
-     * @param message is the message object containing the message information
-     * @return returns true or false depending on if the message was sent successfully or not.
-     */
-    public boolean sendMessage (Message message);
-    
-    /**
-     * This method is used to receive messages that are posted to the forum, it has no parameters and no return values
-     */
-    public void recieveMessage();
     
     /**
      * This method is used to get all messages that a particular user has sent, this user is identified by the username that is taken in as a parameter,
@@ -123,6 +110,17 @@ public interface MessageDAOInterface {
      */
     public ArrayList<Message> getAllForumMessages();
     
+    /**
+     * This method is used to set all this users messages as read as they are viewing them, it
+     * takes in an ArrayList of Message objects representing the messages sent privately between
+     * two users and if the username is the same as the intended receiver then it marks them as 
+     * read in the database.
+     * @param messages an ArrayList of Message objects that represent the messages sent between two users privately
+     * @param username is the username of the user looking at the messages
+     * @return returns true or false depending if the method was successful or not
+     * @throws RemoteException must be thrown or order to access this method remotely
+     */
     public boolean setMessagesAsRead(ArrayList<Message> messages, String username);
-}
+
+
 }

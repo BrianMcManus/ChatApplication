@@ -4,12 +4,18 @@ import static GUI.Login.chatService;
 import business.Message;
 import business.User;
 import callback_support.RMIChatClientInterface;
+import java.awt.Color;
+import java.awt.Component;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
+import javax.swing.JList;
 
 /**
  * This class is used to create a GUI form to display a private message window to the user
@@ -51,6 +57,9 @@ public class ChatWindow extends javax.swing.JFrame {
        //Populates the message area with all messages sent between the sender and receiver
        populateMessageList();
        
+       //Sets the colour of the mesages depending on who sent them
+       setColorsForUserMessages();
+       
         try {
             chatService.setMessagesAsRead(privateMessages, user.getUserName());
         } catch (RemoteException ex) {
@@ -74,6 +83,16 @@ public class ChatWindow extends javax.swing.JFrame {
                 //Use the chatService to get all messages sent between the sender and recipient 
             privateMessages = chatService.getAllPrivateMessages(user.getUserName(), recipient);
             
+            if(privateMessages!= null)
+            {
+                Collections.sort(privateMessages, new Comparator<Message>() {
+                @Override
+                public int compare(Message m1, Message m2) {
+                    return m1.getTimeSent().compareTo(m2.getTimeSent());
+                }
+                });
+            }
+            
             //Create a new model to store the messages retrieved and attach it to the list on the GUI
             DefaultListModel<String> model = new DefaultListModel<String>();
             for(Message m:privateMessages){
@@ -87,6 +106,40 @@ public class ChatWindow extends javax.swing.JFrame {
             Logger.getLogger(Chatroom.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+    }
+    
+    public void setColorsForUserMessages() {
+        privateMessageList.setCellRenderer(new DefaultListCellRenderer() {
+
+            @Override
+            public Component getListCellRendererComponent(JList list, Object value, int index,
+                    boolean isSelected, boolean cellHasFocus) {
+                Component c = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                if (value != null) {
+                    String m = value.toString();
+                    
+                    for(int i = 0; i<privateMessages.size(); i++)
+                        {
+                            if(m.equalsIgnoreCase(privateMessages.get(i).getMessageContent()))
+                            {
+
+                                if (privateMessages.get(i).getReceiver().equalsIgnoreCase(user.getUserName())) 
+                                {
+                                setBackground(Color.CYAN);
+                                } 
+                                else 
+                                {
+                                setBackground(Color.yellow);
+                                }
+                            }
+                        }
+                        
+                    
+                }
+
+                return c;
+            }
+        });
     }
 
     /**
@@ -255,8 +308,8 @@ public class ChatWindow extends javax.swing.JFrame {
         //Get the receiver information from the appropriate text field
         String receiver = RecipientField.getText();
         //Create a new date object to record when the message was sent
-        Date date = new Date();
-        java.sql.Date timeSent = new java.sql.Date(date.getTime());
+        Calendar calendar = Calendar.getInstance();
+        java.sql.Timestamp timeSent = new java.sql.Timestamp(calendar.getTimeInMillis());
         //Create a new message object
         Message message = new Message(messageContent, receiver, false, timeSent, false);
         boolean valid = false;

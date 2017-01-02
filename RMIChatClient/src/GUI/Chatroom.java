@@ -13,7 +13,7 @@ import callback_support.RMIChatClientInterface;
 import java.awt.Color;
 import java.awt.Component;
 import java.rmi.RemoteException;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListCellRenderer;
@@ -494,9 +494,9 @@ public class Chatroom extends javax.swing.JFrame {
     private void sendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendButtonActionPerformed
         String message = messageField.getText();
         try {
-            Date utilDate = new Date();
             //gets time of message being created
-            java.sql.Date timeSent = new java.sql.Date(utilDate.getTime());
+            Calendar calendar = Calendar.getInstance();
+            java.sql.Timestamp timeSent = new java.sql.Timestamp(calendar.getTimeInMillis());
             //Creates message object and adds it to the servers message list
             Message newMessage = new Message(message, "Forum", false, timeSent, true);
             //Use the chatService to add the message to the relevant lists
