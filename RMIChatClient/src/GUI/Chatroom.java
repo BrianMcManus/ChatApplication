@@ -296,15 +296,20 @@ public class Chatroom extends javax.swing.JFrame{
         messageLabel = new javax.swing.JLabel();
         sendButton = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
-        userList = new javax.swing.JList<>();
+        userList = new javax.swing.JList<String>();
         jScrollPane5 = new javax.swing.JScrollPane();
-        messageList = new javax.swing.JList<>();
+        messageList = new javax.swing.JList<String>();
         logoutButton = new javax.swing.JButton();
         unreadMailLabel = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        unreadMailList = new javax.swing.JList<>();
+        unreadMailList = new javax.swing.JList<String>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         titleLabel.setFont(new java.awt.Font("Arial Black", 1, 24)); // NOI18N
         titleLabel.setText("CHATROOM");
@@ -505,6 +510,17 @@ public class Chatroom extends javax.swing.JFrame{
                 Logger.getLogger(Chatroom.class.getName()).log(Level.SEVERE, null, ex);
             }
     }//GEN-LAST:event_sendButtonActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+           try{
+            //Log the user out of the application
+            chatService.logoff(user);
+            //Unregister the user for callback services
+            chatService.unregisterForCallback(client);
+        } catch (RemoteException ex) {
+            Logger.getLogger(Chatroom.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
