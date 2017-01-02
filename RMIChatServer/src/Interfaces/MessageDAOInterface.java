@@ -94,4 +94,6 @@ public interface MessageDAOInterface {
     public int getForumMessageId(Message newMessage);
     
     public ArrayList<Message> getAllForumMessages();
+    
+    public boolean setMessagesAsRead(ArrayList<Message> messages, String username);
 }
