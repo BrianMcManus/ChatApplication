@@ -89,9 +89,37 @@ public interface MessageDAOInterface {
      */
     public boolean sendPrivateMessage (int userId, Message message);
     
+    /**
+     * This method is used to record messages submitted to the forum by 
+     * recording them to the database. The method itself accepts two parameters, 
+     * these parameters being an int (userId) and a message object (newMessage).
+     * 
+     * @param userId This is the id of the user submitting the message to the 
+     * forum. The id is required for entering in information to the user message
+     * table
+     * @param newMessage This the actual message being submitted to the forum 
+     * and database
+     * @return a boolean value of true/false or 0/1 to indicate whether the 
+     * insertion was successful or not  
+     */
     public boolean addForumMessage(int userId, Message newMessage);
     
+    /**
+     * This method is to allow us to get id associated with a message in the 
+     * database. This is done submitting a message object. This allows us to 
+     * maintain an arraylist on the clientside that directly reflects the 
+     * message table in the database.
+     * @param newMessage the message to be used in the query for finding the 
+     * proper id of said message
+     * @return returns an int with a value equal to the messageId stored in the 
+     * database
+     */
     public int getForumMessageId(Message newMessage);
     
+    /**
+     * This method returns an arraylist of message objects. With the requirement
+     * that the inForum boolean value stored in each object is equal to true.
+     * @return An arraylist of messages that are meant for the forum chat
+     */
     public ArrayList<Message> getAllForumMessages();
 }

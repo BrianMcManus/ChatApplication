@@ -477,7 +477,12 @@ public class RMIChatImpl extends UnicastRemoteObject implements RMIChatInterface
 //            mDAO.
 //        }
 //    }
-
+    /**
+     * Reruns the current forumSenderList. This is an arraylist of strings. 
+     * @return Return an ArrayList<String> thats stores the names of users as 
+     * they submit messages to the forum chat
+     * @throws RemoteException 
+     */
    @Override public ArrayList<String> getAllForumSenderNames() throws RemoteException 
    { 
        return forumSenderList; 

@@ -154,6 +154,12 @@ public interface RMIChatInterface extends Remote
      */
     public ArrayList<User> getAllMessageSenders(ArrayList<Message> messages) throws RemoteException;
     
+     /**
+     * Reruns the current forumSenderList. This is an arraylist of strings. 
+     * @return Return an ArrayList<String> thats stores the names of users as 
+     * they submit messages to the forum chat
+     * @throws RemoteException 
+     */
     public ArrayList<String> getAllForumSenderNames() throws RemoteException;
 
  

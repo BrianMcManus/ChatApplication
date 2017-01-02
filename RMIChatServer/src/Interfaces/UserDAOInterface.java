@@ -24,9 +24,10 @@ public interface UserDAOInterface {
      * This method is used to log a user into the system using their username and password to do so,
      * it takes in the username and password and searches the database for a corresponding user, if 
      * it gets a result it packs this result into a User object and returns it.
-     * @param userName
-     * @param password
-     * @return 
+     * @param userName the text name submitted by the user
+     * @param password the text password submitted by the user
+     * @return Returns a user object with all information stored on the user 
+     * table for that user
      */
     public User login (String userName, String password);
     
