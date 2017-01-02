@@ -168,6 +168,7 @@ public class RMIChatImpl extends UnicastRemoteObject implements RMIChatInterface
                 if (clientList.size() > 0) {
                     for (RMIChatClientInterface client : clientList) {
                         client.newLoginNotification(user.getUserName());
+                        client.newUserLoggedIn(userList);
                     }
                 }
             }
@@ -208,6 +209,7 @@ public class RMIChatImpl extends UnicastRemoteObject implements RMIChatInterface
         synchronized (clientList) {
             for (RMIChatClientInterface client : clientList) {
                 client.newLogoffNotification(user.getUserName());
+                client.newUserLoggedIn(userList);
             }
         }
             }
