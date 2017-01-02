@@ -41,7 +41,7 @@ public class UserMessageDAO extends DAO implements UserMessageInterface{
             con = getConnection();
 
             // creating the query
-            String query = "SELECT * FROM User WHERE User.UserId = UserMessage.UserId and UserMessage.MessageId = (?)";
+            String query = "SELECT * FROM Users, UserMessage WHERE Users.UserId = UserMessage.UserId and UserMessage.MessageId = (?)";
             ps = con.prepareStatement(query);
 
             // preparing the query

@@ -26,7 +26,7 @@ public interface RMIChatInterface extends Remote
      * @return returns true or false depending if the message was sent successfully or not
      * @throws RemoteException must be thrown so the method can be accessed remotely
      */
-    public boolean addMessage(Message newMessage) throws RemoteException;
+    public boolean addMessage(Message newMessage, User user) throws RemoteException;
     
     /**
      * This method is used to retrieve an ArrayList of User objects representing all users 
@@ -133,7 +133,27 @@ public interface RMIChatInterface extends Remote
      * @throws RemoteException must be thrown in order to access this method remotely.
      */
     public boolean unregisterForCallback(RMIChatClientInterface client) throws RemoteException;
+    
+    /**
+     * This method is used to get all the messages that have not been read by a specific user, the method takes a single
+     * parameter, an int representing a user id, it uses this id to find all the messages from that user and stores the unread
+     * ones and returns them
+     * @param userId is the id of the user we wish to get unread messages for
+     * @return returns an ArrayList of Message objects
+     */
+    public ArrayList<Message> getUnreadMessages(int userId) throws RemoteException;
 
+    /**
+     * This method is used to get all the senders of the unread messages of a particular user,
+     * it takes in an an ArrayList of Message objects representing this users unread messages, 
+     * it then cycles through this list and uses the userMessageDAO to get the user that sent 
+     * each message and stores them in a list and then returns this list
+     * @param messages is the messages that the user has not read yet
+     * @return returns an ArrayList of User objects who sent said messages
+     */
+    public ArrayList<User> getAllMessageSenders(ArrayList<Message> messages) throws RemoteException;
+    
+    public ArrayList<String> getAllForumSenderNames() throws RemoteException;
 
  
 }

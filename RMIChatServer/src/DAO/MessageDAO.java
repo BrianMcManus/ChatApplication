@@ -2,6 +2,7 @@ package DAO;
 
 import business.Message;
 import Interfaces.MessageDAOInterface;
+import business.User;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -352,16 +353,18 @@ public class MessageDAO extends DAO implements MessageDAOInterface{
         // ArrayList<Message> declaration for storing all the user's messages
         ArrayList<Message> messages = new ArrayList();
 
+        UserDAO userDAO = new UserDAO();
+        User u = userDAO.getUserById(userId);
         try {
             // requesting a connection
             con = getConnection();
 
             // creating the query
-            String query = "SELECT * FROM Message WHERE userId = (?) AND messageRead = false";
+            String query = "SELECT * FROM Message WHERE reciever = (?) and messageRead = false";
             ps = con.prepareStatement(query);
 
             // preparing the query
-            ps.setInt(1, userId);
+            ps.setString(1, u.getUserName());
 
             // executing the query
             rs = ps.executeQuery();
@@ -542,5 +545,205 @@ public class MessageDAO extends DAO implements MessageDAOInterface{
 
     }
     
+    @Override
+    public boolean addForumMessage(int userId, Message newMessage) {
+        // Objects for stablishing the connection
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        // Checking that the message object received is not null
+        if (newMessage == null) {
+            return false;
+        }
+
+        try {
+            // Getting the connection
+            con = getConnection();
+
+            // Preparing the query
+            String query = "INSERT INTO MESSAGE (message, reciever, messageRead, timeSent, inForum) VALUES (?,?,?,?,?);";
+
+            // Preparing the statement for the insertion
+            ps = con.prepareStatement(query);
+            
+            
+            ps.setString(1, newMessage.getMessageContent());
+            ps.setString(2, newMessage.getReceiver());
+            ps.setBoolean(3, newMessage.isRead());
+            ps.setDate(4, newMessage.getTimeSent());
+            ps.setBoolean(5, newMessage.isInForum());
+            
+             // Executing the query and storing the response
+            // if i>0 the information was inserted
+            // if i==0 no information inserted into the database
+            int i = ps.executeUpdate();
+            
+            
+            query = "SELECT * FROM Message WHERE message.message = ? and message.reciever = ? and message.timeSent = ?";
+            ps = con.prepareStatement(query);
+
+            // preparing the query
+            ps.setString(1, newMessage.getMessageContent());
+            ps.setString(2, newMessage.getReceiver());
+            ps.setDate(3, newMessage.getTimeSent());
+
+            // executing the query
+            rs = ps.executeQuery();
+            
+            // This while loop stores all the messages retrieved from the database into the ArrayList
+            while (rs.next()) {
+                // Make a message object for the current message
+                newMessage.setMessageId(rs.getInt("messageId"));
+               
+            }
+                        
+            query = "INSERT INTO USERMESSAGE (userId, messageId) VALUES (?, ?);";
+
+            // Preparing the statement for the insertion
+            ps = con.prepareStatement(query);
+            
+            ps.setInt(1, userId);
+            ps.setInt(2, newMessage.getMessageId());
+
+            // Executing the query and storing the response
+            // if i>0 the information was inserted
+            // if i==0 no information inserted into the database
+            int j = ps.executeUpdate();
+
+            // Returning true if the response is > than 0
+           if(i>0 && j>0)
+           {
+                return true;
+           }
+           else
+           {
+               return false;
+           }
+            
+
+            // catching any possible exception
+        } catch (SQLException e) {
+            return false;
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+                if (con != null) {
+                    freeConnection(con);
+                }
+            } catch (SQLException e) {
+                return false;
+            }
+        }
+    }
+
+    @Override
+    public int getForumMessageId(Message newMessage) {
+        // Objects for stablishing the connection
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        int id = -1;
+        // Checking that the message object received is not null
+        if (newMessage == null) {
+            return id;
+        }
+
+        try {
+            // Getting the connection
+            con = getConnection();
+            // Preparing the query
+            String query = "SELECT * FROM Message WHERE message.message = ? and message.reciever = ? and message.timeSent = ?";
+            ps = con.prepareStatement(query);
+
+            // preparing the query
+            ps.setString(1, newMessage.getMessageContent());
+            ps.setString(2, newMessage.getReceiver());
+            ps.setDate(3, newMessage.getTimeSent());
+
+            // executing the query
+            rs = ps.executeQuery();
+            
+            // This while loop stores all the messages retrieved from the database into the ArrayList
+            while (rs.next()) {
+                // Make a message object for the current message
+                id = rs.getInt("messageId");
+            }
+            // catching any possible exception
+        } catch (SQLException e) {
+            return -1;
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+                if (con != null) {
+                    freeConnection(con);
+                }
+            } catch (SQLException e) {
+                return 0;
+            }
+        return id;    
+        }
+    }
+    
+    @Override
+    public ArrayList<Message> getAllForumMessages(){
+        ArrayList<Message> messages = new ArrayList();
+        try {
+            // requesting a connection
+            con = getConnection();
+
+            // creating the query
+            String query = "SELECT * FROM Message WHERE Message.inForum = true";
+            ps = con.prepareStatement(query);
+
+            // executing the query
+            rs = ps.executeQuery();
+
+            // This while loop stores all the messages retrieved from the database into the ArrayList
+            while (rs.next()) {
+                // Make a message object for the current message
+                m = new Message();
+
+                
+                m.setMessageId(rs.getInt("messageId"));
+                m.setMessageContent(rs.getString("message"));
+                m.setReceiver(rs.getString("reciever"));
+                m.setRead(rs.getBoolean("messageRead"));
+                m.setInForum(rs.getBoolean("inForum"));
+                
+
+                // Store the current message object (now filled with information) in the arraylist
+                messages.add(m);
+            }
+            // Catching any possible exception
+        } catch (SQLException e) {
+            return null;
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+                if (con != null) {
+                    freeConnection(con);
+                }
+            } catch (SQLException e) {
+                return null;
+            }
+        }
+        return messages;
+    }
     
 }

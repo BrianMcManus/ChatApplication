@@ -2,6 +2,7 @@ package chat_functionality;
 
 import DAO.MessageDAO;
 import DAO.UserDAO;
+import DAO.UserMessageDAO;
 import business.Message;
 import business.User;
 import business.UserMessage;
@@ -22,11 +23,13 @@ public class RMIChatImpl extends UnicastRemoteObject implements RMIChatInterface
     private UserDAO uDAO = new UserDAO();
     //Create a new MessageDAO object
     private MessageDAO mDAO = new MessageDAO();
+    //Create a new MessageDAO object
+    private UserMessageDAO umDAO = new UserMessageDAO();
 
     //Create a list of all the messages posted to the application
     private final ArrayList<Message> messageList = mDAO.getAllMessages();
     //Create a list to hold the messages that where posted to the forum
-    private ArrayList<Message> forumMessages = new ArrayList<Message>();
+    private ArrayList<Message> forumMessages = mDAO.getAllForumMessages();
     //Create a list of all the users registered to the application
     private final ArrayList<User> userList = uDAO.getAllUsers();
     //Create an arrayList to hold all the users that are currently logged into the system
@@ -35,6 +38,8 @@ public class RMIChatImpl extends UnicastRemoteObject implements RMIChatInterface
     private ArrayList<UserMessage> userMessageList = new ArrayList<UserMessage>();
     //Create an arrayList to hold all of the 'Clients'
     private final ArrayList<RMIChatClientInterface> clientList = new ArrayList();
+    //Create an arraylist to hold all names in the order in which they submit messages to the forum 
+    private ArrayList<String> forumSenderList = new ArrayList();
     //Create a new user instance
     private User u = new User();
     
@@ -54,27 +59,30 @@ public class RMIChatImpl extends UnicastRemoteObject implements RMIChatInterface
      * @return
      * @throws RemoteException 
      */
-    @Override
-    public boolean addMessage(Message newMessage) throws RemoteException {
+     @Override
+    public boolean addMessage(Message newMessage, User user) throws RemoteException {
         boolean addMessage = false;
-        synchronized (messageList) {
-            int tempId = messageList.size();
-            newMessage.setMessageId(tempId);
-            addMessage = messageList.add(newMessage);
-        if(newMessage.isInForum()){
-                forumMessages.add(newMessage);
-            }
+        synchronized (forumMessages) {
+            addMessage = mDAO.addForumMessage(user.getUserId(), newMessage);
+            newMessage.setMessageId(mDAO.getForumMessageId(newMessage));
+            forumMessages.add(newMessage);
         }
-        
-        synchronized (clientList) {
-                    for (RMIChatClientInterface client : clientList) {
-                        if(newMessage.isInForum()){
-                            client.newMessageSent(forumMessages);
-                        } else{
-                            client.newMessageSent(messageList);
-                        }
+        if (addMessage) {
+            synchronized (userMessageList) {
+                UserMessage um = new UserMessage(user.getUserId(), newMessage.getMessageId());
+                userMessageList.add(um);
+            }
+
+            synchronized (clientList) {
+                for (RMIChatClientInterface client : clientList) {
+                    if (newMessage.isInForum()) {
+                        client.newMessageSent(forumMessages);
+                    } else {
+                        client.newMessageSent(messageList);
                     }
                 }
+            }
+        }
         return addMessage;
     }
 
@@ -140,39 +148,32 @@ public class RMIChatImpl extends UnicastRemoteObject implements RMIChatInterface
      */
     @Override
     public boolean login(User user) throws RemoteException {
-        synchronized (userList) {
-            //If the user list is not empty and it contains the user
-            if (user != null) {
-                //Create a new userDAO object
-                uDAO = new UserDAO();
-                //Use the UserDAO to log the user in using their email and password
-                // store the user object that is returned
-                u = uDAO.login(user.getUserName(), user.getPassword());
-                //Cycle through the list of users and when the user is found set their loggedIn status as true
+        //if the user is not null and is contained within the list of users
+        if (user != null) {
+            //user (u) = to the user object retrieved with the login method from the database
+            u = uDAO.login(user.getUserName(), user.getPassword());
+            //lock the list of users 
+            synchronized (userList) {
                 for (int i = 0; i < userList.size(); i++) {
                     if (userList.get(i).equals(u)) {
                         userList.get(i).setLoggedIn(true);
                         u.setLoggedIn(true);
-                //Add the user to the list containing all the user currently logged on
-                synchronized(loggedOnUsers){
-                        loggedOnUsers.add(u);
-                }
                     }
                 }
-                //Notify all clients that a new user has logged in
-                synchronized (clientList) {
-                    if(clientList.size()>0){
+            }
+            synchronized (loggedOnUsers) {
+                loggedOnUsers.add(u);
+            }
+            synchronized (clientList) {
+                if (clientList.size() > 0) {
                     for (RMIChatClientInterface client : clientList) {
                         client.newLoginNotification(user.getUserName());
-                        client.newUserLoggedIn(userList);
-                    }}
+                    }
                 }
-                //Return true if all methods are completed correctly
-                return true;
             }
-            //Return false if login fails
-            return false;
+            return true;
         }
+        return false;
     }
     
     /**
@@ -288,30 +289,25 @@ public class RMIChatImpl extends UnicastRemoteObject implements RMIChatInterface
      */
     @Override
     public ArrayList<Message> getAllForumMessages() throws RemoteException {
-        
-        //wipe the ArrayList
-        forumMessages = new ArrayList();
-        
-        synchronized (messageList) {
-            //If the list is not empty
-            if (messageList != null && messageList.size() > 0) {
+        //If the list is not empty
+        if (messageList != null && messageList.size() > 0) {
+            synchronized (forumMessages) {
+                forumSenderList = new ArrayList();
                 //Cycle through the list
-                for(Message m: messageList)
-                {
-                    //Check was the message sent to the forum
-                    if(m.isInForum())
-                    {
-                        //If it was add it to the new list
-                        forumMessages.add(m);
-                    }
+                for (Message m : forumMessages) {
+                        for (int i = 0; i < forumMessages.size(); i++) {
+                            User user = umDAO.findUserByMessage(forumMessages.get(i).getMessageId());
+                            forumSenderList.add(user.getUserName());
+                        }
+                    //Return the list
+                    return forumMessages;
                 }
-                //Return the list
-                return forumMessages;
             }
         }
         //If the list was empty return a new empty list
         return new ArrayList();
     }
+    
     
     /**
      * This method is used to get all messages that have been privately sent between two users, it takes two String 
@@ -392,7 +388,7 @@ public class RMIChatImpl extends UnicastRemoteObject implements RMIChatInterface
      * @param message is the Message object contain all the message information.
      * @return returns a true or false value depending on if the message was sent successfully or not
      */
-    public boolean sendPrivateMessage(int userId, Message message)
+    public boolean sendPrivateMessage(int userId, Message message) throws RemoteException
     {
         boolean sent = false;
         
@@ -429,4 +425,55 @@ public class RMIChatImpl extends UnicastRemoteObject implements RMIChatInterface
         //Returb the User object
         return u;
     }
+    
+    /**
+     * This method gets all the messages that where sent to the user while they where offline,
+     * it takes in an int representing the users id that we wish to get unread messages for,
+     * the results are then returned if any
+     * @param userId is the id of the user we wish to get unread messages for
+     * @return returns an arrayList of message objects
+     */
+    public ArrayList<Message> getUnreadMessages(int userId) throws RemoteException
+    {
+        return mDAO.getUnreadMessages(userId);
+    }
+    
+    /**
+     * This method is used to get all the senders of the unread messages of a particular user,
+     * it takes in an an ArrayList of Message objects representing this users unread messages, 
+     * it then cycles through this list and uses the userMessageDAO to get the user that sent 
+     * each message and stores them in a list and then returns this list
+     * @param messages is the messages that the user has not read yet
+     * @return returns an ArrayList of User objects who sent said messages
+     */
+    public ArrayList<User> getAllMessageSenders(ArrayList<Message> messages) throws RemoteException
+    {
+        ArrayList<User> senders = new ArrayList<User>();
+        
+        if(messages != null)
+        {
+            for(int i = 0; i<messages.size(); i++)
+            {
+                senders.add(umDAO.findUserByMessage(messages.get(i).getMessageId()));
+            }
+        }
+        return senders;
+    }
+    
+//    public void setPrivateMessageAsRead(Message message)
+//    {
+//        if(message != null)
+//        {
+//            mDAO.
+//        }
+//    }
+
+   @Override public ArrayList<String> getAllForumSenderNames() throws RemoteException 
+   { 
+       return forumSenderList; 
+   }
+    
+   
+
+
 }

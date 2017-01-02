@@ -88,4 +88,10 @@ public interface MessageDAOInterface {
      * @return returns a true or false value depending if the message was sent successfully or not
      */
     public boolean sendPrivateMessage (int userId, Message message);
+    
+    public boolean addForumMessage(int userId, Message newMessage);
+    
+    public int getForumMessageId(Message newMessage);
+    
+    public ArrayList<Message> getAllForumMessages();
 }
