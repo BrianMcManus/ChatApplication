@@ -60,7 +60,7 @@ public class MessageDAO extends DAO implements MessageDAOInterface{
                 
                 m.setMessageId(rs.getInt("messageId"));
                 m.setMessageContent(rs.getString("message"));
-                m.setReceiver(rs.getString("reciever"));
+                m.setReceiver(rs.getString("receiver"));
                 m.setRead(rs.getBoolean("messageRead"));
                 m.setInForum(rs.getBoolean("inForum"));
                 
@@ -107,7 +107,7 @@ public class MessageDAO extends DAO implements MessageDAOInterface{
             con = getConnection();
             
             // creating the query
-            String query = "select message.messageId, message.message, message.reciever, message.messageRead, message.inForum, "
+            String query = "select message.messageId, message.message, message.receiver, message.messageRead, message.inForum, "
                     + "message.timeSent from message, usermessage, users where message.messageId = usermessage.messageId and usermessage.userId = users.userId and users.username = (?) and message.inForum = false;";
             ps = con.prepareStatement(query);
 
@@ -125,7 +125,7 @@ public class MessageDAO extends DAO implements MessageDAOInterface{
                 
                 m.setMessageId(rs.getInt("messageId"));
                 m.setMessageContent(rs.getString("message"));
-                m.setReceiver(rs.getString("reciever"));
+                m.setReceiver(rs.getString("receiver"));
                 m.setRead(rs.getBoolean("messageRead"));
                 m.setInForum(rs.getBoolean("inForum"));
                 
@@ -184,7 +184,7 @@ public class MessageDAO extends DAO implements MessageDAOInterface{
                 
                 m.setMessageId(rs.getInt("messageId"));
                 m.setMessageContent(rs.getString("message"));
-                m.setReceiver(rs.getString("reciever"));
+                m.setReceiver(rs.getString("receiver"));
                 m.setRead(rs.getBoolean("messageRead"));
                 m.setInForum(rs.getBoolean("inForum"));
                 
@@ -245,7 +245,7 @@ public class MessageDAO extends DAO implements MessageDAOInterface{
                 
                 m.setMessageId(rs.getInt("messageId"));
                 m.setMessageContent(rs.getString("message"));
-                m.setReceiver(rs.getString("reciever"));
+                m.setReceiver(rs.getString("receiver"));
                 m.setRead(rs.getBoolean("messageRead"));
                 m.setInForum(rs.getBoolean("inForum"));
                 
@@ -310,7 +310,7 @@ public class MessageDAO extends DAO implements MessageDAOInterface{
                 
                 m.setMessageId(rs.getInt("messageId"));
                 m.setMessageContent(rs.getString("message"));
-                m.setReceiver(rs.getString("reciever"));
+                m.setReceiver(rs.getString("receiver"));
                 m.setRead(rs.getBoolean("messageRead"));
                 m.setInForum(rs.getBoolean("inForum"));
                 
@@ -360,7 +360,7 @@ public class MessageDAO extends DAO implements MessageDAOInterface{
             con = getConnection();
 
             // creating the query
-            String query = "SELECT * FROM Message WHERE reciever = (?) and messageRead = false";
+            String query = "SELECT * FROM Message WHERE receiver = (?) and messageRead = false";
             ps = con.prepareStatement(query);
 
             // preparing the query
@@ -377,7 +377,7 @@ public class MessageDAO extends DAO implements MessageDAOInterface{
                 
                 m.setMessageId(rs.getInt("messageId"));
                 m.setMessageContent(rs.getString("message"));
-                m.setReceiver(rs.getString("reciever"));
+                m.setReceiver(rs.getString("receiver"));
                 m.setRead(rs.getBoolean("messageRead"));
                 m.setInForum(rs.getBoolean("inForum"));
                 
@@ -452,7 +452,7 @@ public class MessageDAO extends DAO implements MessageDAOInterface{
             con = getConnection();
 
             // Preparing the query
-            String query = "INSERT INTO MESSAGE (message, reciever, messageRead, timeSent, inForum) VALUES (?,?,?,?,?);";
+            String query = "INSERT INTO MESSAGE (message, receiver, messageRead, timeSent, inForum) VALUES (?,?,?,?,?);";
 
             // Preparing the statement for the insertion
             ps = con.prepareStatement(query);
@@ -470,7 +470,7 @@ public class MessageDAO extends DAO implements MessageDAOInterface{
             int i = ps.executeUpdate();
             
             
-            query = "SELECT * FROM Message WHERE message.message = ? and message.reciever = ? and message.timeSent = ?";
+            query = "SELECT * FROM Message WHERE message.message = ? and message.receiver = ? and message.timeSent = ?";
             ps = con.prepareStatement(query);
 
             // preparing the query
@@ -490,7 +490,7 @@ public class MessageDAO extends DAO implements MessageDAOInterface{
                 
                 mess.setMessageId(rs.getInt("messageId"));
                 mess.setMessageContent(rs.getString("message"));
-                mess.setReceiver(rs.getString("reciever"));
+                mess.setReceiver(rs.getString("receiver"));
                 mess.setTimeSent(rs.getDate("timeSent"));
                 mess.setRead(rs.getBoolean("messageRead"));
                 mess.setInForum(rs.getBoolean("inForum"));
@@ -562,7 +562,7 @@ public class MessageDAO extends DAO implements MessageDAOInterface{
             con = getConnection();
 
             // Preparing the query
-            String query = "INSERT INTO MESSAGE (message, reciever, messageRead, timeSent, inForum) VALUES (?,?,?,?,?);";
+            String query = "INSERT INTO MESSAGE (message, receiver, messageRead, timeSent, inForum) VALUES (?,?,?,?,?);";
 
             // Preparing the statement for the insertion
             ps = con.prepareStatement(query);
@@ -580,7 +580,7 @@ public class MessageDAO extends DAO implements MessageDAOInterface{
             int i = ps.executeUpdate();
             
             
-            query = "SELECT * FROM Message WHERE message.message = ? and message.reciever = ? and message.timeSent = ?";
+            query = "SELECT * FROM Message WHERE message.message = ? and message.receiver = ? and message.timeSent = ?";
             ps = con.prepareStatement(query);
 
             // preparing the query
@@ -658,7 +658,7 @@ public class MessageDAO extends DAO implements MessageDAOInterface{
             // Getting the connection
             con = getConnection();
             // Preparing the query
-            String query = "SELECT * FROM Message WHERE message.message = ? and message.reciever = ? and message.timeSent = ?";
+            String query = "SELECT * FROM Message WHERE message.message = ? and message.receiver = ? and message.timeSent = ?";
             ps = con.prepareStatement(query);
 
             // preparing the query
@@ -717,7 +717,7 @@ public class MessageDAO extends DAO implements MessageDAOInterface{
                 
                 m.setMessageId(rs.getInt("messageId"));
                 m.setMessageContent(rs.getString("message"));
-                m.setReceiver(rs.getString("reciever"));
+                m.setReceiver(rs.getString("receiver"));
                 m.setRead(rs.getBoolean("messageRead"));
                 m.setInForum(rs.getBoolean("inForum"));
                 

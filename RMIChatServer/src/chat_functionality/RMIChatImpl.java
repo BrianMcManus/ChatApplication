@@ -335,7 +335,7 @@ public class RMIChatImpl extends UnicastRemoteObject implements RMIChatInterface
                 //Cycle through the list
                 for(Message m: sentMessages)
                 {
-                    //If the other user was the intended reciever and the message was sent privately
+                    //If the other user was the intended receiver and the message was sent privately
                     if(m.getReceiver().equals(username2) && m.isInForum() == false)
                     {
                         //add the message to the list of private messages

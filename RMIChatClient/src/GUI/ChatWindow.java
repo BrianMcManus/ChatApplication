@@ -48,7 +48,7 @@ public class ChatWindow extends javax.swing.JFrame {
         this.user = user;
         SenderField.setText(user.getUserName());
         
-       //Populates the message area with all messages sent between the sender and reciever
+       //Populates the message area with all messages sent between the sender and receiver
        populateMessageList();
 
     }
@@ -246,13 +246,13 @@ public class ChatWindow extends javax.swing.JFrame {
         int userId = user.getUserId();
         //Store the message content entered by the user
         String messageContent = MessageTextArea.getText();
-        //Get the reciever information from the appropriate text field
-        String reciever = RecipientField.getText();
+        //Get the receiver information from the appropriate text field
+        String receiver = RecipientField.getText();
         //Create a new date object to record when the message was sent
         Date date = new Date();
         java.sql.Date timeSent = new java.sql.Date(date.getTime());
         //Create a new message object
-        Message message = new Message(messageContent, reciever, false, timeSent, false);
+        Message message = new Message(messageContent, receiver, false, timeSent, false);
         boolean valid = false;
         
         if(!message.equals("") && userId >0)
@@ -265,7 +265,7 @@ public class ChatWindow extends javax.swing.JFrame {
                 if(valid)
                 {
                     //Let the user know the message was sent to the intended recipient
-                    System.out.println("You sent a message to: " + reciever);
+                    System.out.println("You sent a message to: " + receiver);
                     //Add the message to the messsage list containing the mesages already sent
                     privateMessages.add(message);
                     //Repopulate the message list so the new message is visable
@@ -277,7 +277,7 @@ public class ChatWindow extends javax.swing.JFrame {
                 else
                 {
                     //Let the user know that the message was not sent
-                    System.out.println("Sorry your message was not sent to: " + reciever);
+                    System.out.println("Sorry your message was not sent to: " + receiver);
                 }
             } catch (RemoteException ex) {
                 Logger.getLogger(ChatWindow.class.getName()).log(Level.SEVERE, null, ex);
