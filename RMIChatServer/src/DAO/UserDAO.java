@@ -206,16 +206,16 @@ public class UserDAO extends DAO implements UserDAOInterface {
      * User object to be null so the users details are removed from the system
      */
     @Override
-    public void logout() {
+    public void logout(User u) {
         
         try {
             //Get a connection to the database
             con = getConnection();
             //Create a query
-            String query = "UPDATE USER SET loggedIn = true WHERE username = ?";
+            String query = "UPDATE USERS SET loggedIn = false WHERE username = ?";
             //Create prepared statement
             ps = con.prepareStatement(query);
-            ps.setString(1, user.getUserName());
+            ps.setString(1, u.getUserName());
             //Execute the update
             ps.executeUpdate();
             

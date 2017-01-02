@@ -31,9 +31,9 @@ public interface UserDAOInterface {
     public User login (String userName, String password);
     
     /**
-     * This method is used to log the user out of the the system, it takes no parameters and returns nothing
+     * This method is used to log the user out of the the system, it takes a User as a parameter and returns nothing
      */
-    public void logout();
+    public void logout(User u);
     
     /**
      * This method is used to register a new user into the system, it takes in a single parameter, a User object which contains
