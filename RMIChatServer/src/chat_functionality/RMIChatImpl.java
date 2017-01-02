@@ -189,26 +189,33 @@ public class RMIChatImpl extends UnicastRemoteObject implements RMIChatInterface
      */
     @Override
     public boolean logoff(User user) throws RemoteException {
-        synchronized (userList) {
-            //If the user passed is not null and the user is in the list of users
+        
+        //If the user passed is not null and the user is in the list of users
             if (user != null && userList.contains(user)) {
-                //Set the user as not logged in
-                user.setLoggedIn(false);
+                
+                synchronized (userList) {
+                        //Set the user as not logged in
+                        user.setLoggedIn(false);
+                }
+                
                 synchronized(loggedOnUsers){
                     //Remove the user from the list of users
                 loggedOnUsers.remove(user);
                 }
-            } else {
-                return false;
-            }
-        }
-
-        //Notify everyone that the user has logged ut
+                
+                //Notify everyone that the user has logged ut
         synchronized (clientList) {
             for (RMIChatClientInterface client : clientList) {
                 client.newLogoffNotification(user.getUserName());
             }
         }
+            }
+            else
+            {
+                return false;
+            }
+
+        
         return true;
     }
 
