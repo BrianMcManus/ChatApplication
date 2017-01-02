@@ -108,8 +108,7 @@ public class MessageDAO extends DAO implements MessageDAOInterface{
             con = getConnection();
             
             // creating the query
-            String query = "select message.messageId, message.message, message.receiver, message.messageRead, message.inForum, "
-                    + "message.timeSent from message, usermessage, users where message.messageId = usermessage.messageId and usermessage.userId = users.userId and users.username = (?) and message.inForum = false;";
+            String query = "select * from message, usermessage, users where message.messageId = usermessage.messageId and usermessage.userId = users.userId and users.username = (?) and message.inForum = false;";
             ps = con.prepareStatement(query);
 
             // preparing the query
