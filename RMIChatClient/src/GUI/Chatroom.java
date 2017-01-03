@@ -230,7 +230,7 @@ public class Chatroom extends javax.swing.JFrame {
      * @param messages is an ArrayList of Message objects
      */
     public void setMessages(ArrayList<Message> messages) {
-
+        populateMessageList();
         messageList.setModel(new javax.swing.AbstractListModel() {
             public int getSize() {
                 return messages.size();
@@ -261,7 +261,9 @@ public class Chatroom extends javax.swing.JFrame {
             }
         });
     }
-
+    /**
+     * 
+     */
     public void setUnreadMessageSenders() {
         ArrayList<User> senders = populateUnreadMessageList();
 
@@ -511,15 +513,15 @@ public class Chatroom extends javax.swing.JFrame {
             //repopulates clients message list
             populateMessageList();
             //resets messageList to have updated list
-            messageList.setModel(new javax.swing.AbstractListModel() {
-                public int getSize() {
-                    return messages.size();
-                }
-
-                public Object getElementAt(int i) {
-                    return messageSenderList.get(i) + ": " + messages.get(i).getMessageContent();
-                }
-            });
+//            messageList.setModel(new javax.swing.AbstractListModel() {
+//                public int getSize() {
+//                    return messages.size();
+//                }
+//
+//                public Object getElementAt(int i) {
+//                    return messageSenderList.get(i) + ": " + messages.get(i).getMessageContent();
+//                }
+//            });
 
         } catch (RemoteException ex) {
             Logger.getLogger(Chatroom.class.getName()).log(Level.SEVERE, null, ex);
