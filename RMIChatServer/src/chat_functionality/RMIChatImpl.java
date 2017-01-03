@@ -305,13 +305,11 @@ public class RMIChatImpl extends UnicastRemoteObject implements RMIChatInterface
                 forumSenderList = new ArrayList();
                 //Cycle through the list
                 for (Message m : forumMessages) {
-                        for (int i = 0; i < forumMessages.size(); i++) {
-                            User user = umDAO.findUserByMessage(forumMessages.get(i).getMessageId());
+                            User user = umDAO.findUserByMessage(m.getMessageId());
                             forumSenderList.add(user.getUserName());
                         }
                     //Return the list
                     return forumMessages;
-                }
             }
         }
         //If the list was empty return a new empty list
