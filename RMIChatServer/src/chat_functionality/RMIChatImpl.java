@@ -196,6 +196,13 @@ public class RMIChatImpl extends UnicastRemoteObject implements RMIChatInterface
                 
                 synchronized (userList) {
                         //Set the user as not logged in
+                        for(int i = 0; i< userList.size(); i++)
+                        {
+                            if(userList.get(i).equals(user))
+                            {
+                                userList.get(i).setLoggedIn(false);
+                            }
+                        }
                         user.setLoggedIn(false);
                         uDAO.logout(user);
                 }
