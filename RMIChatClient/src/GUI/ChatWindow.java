@@ -23,7 +23,6 @@ import javax.swing.JList;
  */
 public class ChatWindow extends javax.swing.JFrame {
 
-    private Chatroom chatRoom;
     private static User user;
     private static String recipient;
     private RMIChatClientInterface client;
@@ -269,7 +268,7 @@ public class ChatWindow extends javax.swing.JFrame {
      */
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
                 //Create a new chatroom form passing the user to it
-                chatroom = new Chatroom(user);
+                //chatroom = new Chatroom(user);
                 
                 //Make the chatroom visable to the user
                 this.setVisible(false);

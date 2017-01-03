@@ -246,18 +246,17 @@ public class Chatroom extends javax.swing.JFrame {
         });
     }
 
-    public void setUsers(ArrayList<User> nUserList) {
+   public void setUsers(ArrayList<User> nUserList) {
+        ArrayList<User> temp = nUserList;
+        temp.remove(user);
         userList.setModel(new javax.swing.AbstractListModel() {
             public int getSize() {
-                return nUserList.size();
+                return temp.size();
             }
-
+            
             public Object getElementAt(int i) {
-                if (nUserList.get(i).getUserName().equals(user.getUserName())) {
-                    return null;
-                } else {
-                    return nUserList.get(i).getUserName();
-                }
+                
+                    return temp.get(i).getUserName();
             }
         });
     }
