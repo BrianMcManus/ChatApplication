@@ -178,7 +178,7 @@ public class Chatroom extends javax.swing.JFrame {
                 if (e.getValueIsAdjusting()) {
                     if (unreadMailList != null) {
                         //Set the recipient of the private message as the one clicked by the user
-                        recipient = unreadMailList.getSelectedValue().toString();
+                        recipient = unreadMailList.getSelectedValue();
                         //Create a new chatWindow form passing the user and intended recipient to it
                         ChatWindow chatwindow = new ChatWindow(user, recipient);
 
