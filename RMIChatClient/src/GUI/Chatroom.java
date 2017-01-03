@@ -237,7 +237,11 @@ public class Chatroom extends javax.swing.JFrame {
             }
 
             public Object getElementAt(int i) {
+                if(messageSenderList.size() == messages.size())
+                {
                 return messageSenderList.get(i) + ": " + messages.get(i).getMessageContent();
+                }
+                return null;
             }
         });
     }
