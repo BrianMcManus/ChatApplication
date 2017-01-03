@@ -59,6 +59,7 @@ public class ChatWindow extends javax.swing.JFrame {
        //Sets the colour of the mesages depending on who sent them
        setColorsForUserMessages();
        
+       
         try {
             chatService.setMessagesAsRead(privateMessages, user.getUserName());
         } catch (RemoteException ex) {
@@ -105,6 +106,10 @@ public class ChatWindow extends javax.swing.JFrame {
             Logger.getLogger(Chatroom.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+    }
+    
+    public void setClient(RMIChatClientInterface client) {
+        this.client = client;
     }
     
     public void setColorsForUserMessages() {
@@ -268,7 +273,9 @@ public class ChatWindow extends javax.swing.JFrame {
      */
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
                 //Create a new chatroom form passing the user to it
-                //chatroom = new Chatroom(user);
+                chatroom = new Chatroom(user);
+                
+                chatroom.setClient(client);
                 
                 //Make the chatroom visable to the user
                 this.setVisible(false);
@@ -341,6 +348,8 @@ public class ChatWindow extends javax.swing.JFrame {
                 Logger.getLogger(ChatWindow.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        
+        
     }//GEN-LAST:event_SendButtonActionPerformed
 
     /**
@@ -384,4 +393,6 @@ public class ChatWindow extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JList<String> privateMessageList;
     // End of variables declaration//GEN-END:variables
+
+    
 }

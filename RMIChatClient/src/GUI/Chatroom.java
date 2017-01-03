@@ -159,6 +159,8 @@ public class Chatroom extends javax.swing.JFrame {
                         recipient = userList.getSelectedValue();
                         //Create a new chatWindow form passing the user and intended recipient to it
                         ChatWindow chatwindow = new ChatWindow(user, recipient);
+                        
+                        chatwindow.setClient(client);
 
                         //Make the chatWindow form visable to the user
                         Chatroom.this.setVisible(false);
