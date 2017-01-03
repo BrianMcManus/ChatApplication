@@ -85,4 +85,10 @@ public class RMIChatClientImpl extends UnicastRemoteObject implements RMIChatCli
         
         return userList;
     }
+    
+    @Override
+    public void repopulateUnreadMessages() throws RemoteException
+    {
+        chatroom.populateUnreadMessageList();
+    }
 }

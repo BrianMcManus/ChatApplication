@@ -405,6 +405,13 @@ public class RMIChatImpl extends UnicastRemoteObject implements RMIChatInterface
         {
             //Use the MessageDAO to send the private message
             sent = mDAO.sendPrivateMessage(userId, message);
+            
+            synchronized (clientList) {
+            for (RMIChatClientInterface client : clientList) {
+                client.repopulateUnreadMessages();
+            }
+        }
+            
         }
         //Return true or false depending on if the message was successfully sent
         return sent;
