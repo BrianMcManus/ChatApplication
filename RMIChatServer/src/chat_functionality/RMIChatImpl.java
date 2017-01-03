@@ -203,7 +203,6 @@ public class RMIChatImpl extends UnicastRemoteObject implements RMIChatInterface
                                 userList.get(i).setLoggedIn(false);
                             }
                         }
-                        user.setLoggedIn(false);
                         uDAO.logout(user);
                 }
                 

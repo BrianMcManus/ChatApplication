@@ -106,9 +106,6 @@ public class User implements Serializable{
         if (this.userId != other.userId) {
             return false;
         }
-        if (this.loggedIn != other.loggedIn) {
-            return false;
-        }
         if (!Objects.equals(this.userName, other.userName)) {
             return false;
         }
