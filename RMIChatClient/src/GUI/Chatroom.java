@@ -590,7 +590,7 @@ public class Chatroom extends javax.swing.JFrame {
             Calendar calendar = Calendar.getInstance();
             java.sql.Timestamp timeSent = new java.sql.Timestamp(calendar.getTimeInMillis());
             //Creates message object and adds it to the servers message list
-            Message newMessage = new Message(message, "Forum", false, timeSent, true);
+            Message newMessage = new Message(message, "Forum", false, null, true);
             //Use the chatService to add the message to the relevant lists
             chatService.addMessage(newMessage, user);
             //clear the message field

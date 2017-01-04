@@ -10,6 +10,7 @@ import callback_support.RMIChatClientInterface;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 /**
  * This class is used to implement those methods defined in the RMIChatInterface by
@@ -62,7 +63,11 @@ public class RMIChatImpl extends UnicastRemoteObject implements RMIChatInterface
      @Override
     public boolean addMessage(Message newMessage, User user) throws RemoteException {
         boolean addMessage = false;
+        
         synchronized (forumMessages) {
+            Calendar calendar = Calendar.getInstance();
+            java.sql.Timestamp timeSent = new java.sql.Timestamp(calendar.getTimeInMillis());
+            newMessage.setTimeSent(timeSent);
             addMessage = mDAO.addForumMessage(user.getUserId(), newMessage);
             newMessage.setMessageId(mDAO.getForumMessageId(newMessage));
             forumMessages.add(newMessage);
@@ -409,6 +414,9 @@ public class RMIChatImpl extends UnicastRemoteObject implements RMIChatInterface
         //If the message is not empty and the users id is valid
         if(message != null || userId > 0)
         {
+            Calendar calendar = Calendar.getInstance();
+            java.sql.Timestamp timeSent = new java.sql.Timestamp(calendar.getTimeInMillis());
+            message.setTimeSent(timeSent);
             //Use the MessageDAO to send the private message
             sent = mDAO.sendPrivateMessage(userId, message);
             

@@ -367,7 +367,7 @@ public class ChatWindow extends javax.swing.JFrame {
         Calendar calendar = Calendar.getInstance();
         java.sql.Timestamp timeSent = new java.sql.Timestamp(calendar.getTimeInMillis());
         //Create a new message object
-        Message message = new Message(messageContent, receiver, false, timeSent, false);
+        Message message = new Message(messageContent, receiver, false, null, false);
         boolean valid = false;
         
         if(!message.equals("") && userId >0)
