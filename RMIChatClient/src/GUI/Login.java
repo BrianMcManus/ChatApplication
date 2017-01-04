@@ -15,7 +15,6 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import rmichatclient.RMIChatClient;
 
 /**
  * This class is used to create a new login form for the user to see and use
@@ -250,7 +249,7 @@ public class Login extends javax.swing.JFrame {
             
             
             } catch (NotBoundException | MalformedURLException | RemoteException ex) {
-            Logger.getLogger(RMIChatClient.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         /* Create and display the form */

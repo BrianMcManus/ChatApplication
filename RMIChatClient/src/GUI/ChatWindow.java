@@ -59,36 +59,6 @@ public class ChatWindow extends javax.swing.JFrame {
        
        //Sets the colour of the mesages depending on who sent them
        setColorsForUserMessages();
-       
-       
-        
-
-    }
-
-    ChatWindow(User user, String recipient, Chatroom chatroom) {
-        //Initalises the components to be placed on the chatWindow form
-        initComponents();
-        
-        //Stores the recipient passed into the class and places it into the recipient field on the GUI
-        this.recipient = recipient;
-        RecipientField.setText(recipient);
-        
-        //Stores the user passed into the class and places its username attribute in teh sender field on the GUI
-        this.user = user;
-        SenderField.setText(user.getUserName());
-        
-       //Populates the message area with all messages sent between the sender and receiver
-       populateMessageList();
-       
-       //Sets the colour of the mesages depending on who sent them
-       setColorsForUserMessages();
-       
-       this.chatroom = chatroom;
-
-       
-       
-       
-       
     }
     
     /**
@@ -124,7 +94,7 @@ public class ChatWindow extends javax.swing.JFrame {
             privateMessageList.setModel(model);
             }
 
-             
+             //This method sets all the messages as read as the individual is now looking at them
             chatService.setMessagesAsRead(privateMessages, user.getUserName());
         
             
@@ -142,10 +112,23 @@ public class ChatWindow extends javax.swing.JFrame {
 
     }
     
+    /**
+     * This method allows the client to be passed from the chatroom to the chatwindow,
+     * it gets this client as a parameter to the method and sets the classes client to 
+     * be the client passed.
+     * @param client is the RMIChatClientInterface object that is passed representing a client
+     */
     public void setClient(RMIChatClientInterface client) {
         this.client = client;
     }
     
+    /**
+     * This method is used to set the correct colors of the private messages depending on which user
+     * sent them, it colors the sent messages yellow while coloring the receivers messages cyan, It does this
+     * by getting the value from the list and checking its value, then cycling through the private message list
+     * and if the receiver is the same as the user it colors it accordingly.
+     * 
+     */
     public void setColorsForUserMessages() {
         privateMessageList.setCellRenderer(new DefaultListCellRenderer() {
 
@@ -316,9 +299,9 @@ public class ChatWindow extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     /**
-     * This method listens for the back button on the GUI to be pushed, in doing so a new
-     * chatRoom object is created taking a user object containing the current users information,
-     * it then sets the chatWindow panel to be invisible and hen brings up the chatroom panel again.
+     * This method listens for the back button on the GUI to be pushed, in doing so
+     * this window is made invisible to the user which gives the chatroom focus again
+     * 
      * @param evt is the event that happened on the back button  
      */
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
@@ -414,6 +397,15 @@ public class ChatWindow extends javax.swing.JFrame {
         
     }//GEN-LAST:event_SendButtonActionPerformed
 
+    /**
+     * this method is invoked once a user clicks the logout button on the GUI,
+     * once clicked the method calls on the chatService to log the user out of
+     * the application and unregister the client from the callback service to
+     * close the port the client was on to free it for other users, it then
+     * shuts down the application.
+     *
+     * @param evt is the event that happens on the logout button e.g. user click
+     */
     private void logOutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logOutButtonActionPerformed
         try {
             //Log the user out of the application

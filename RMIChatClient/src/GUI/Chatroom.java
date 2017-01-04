@@ -188,7 +188,7 @@ public class Chatroom extends javax.swing.JFrame {
                 //Set the recipient of the private message as the one clicked by the user
                 recipient = userList.getSelectedValue();
                 //Create a new chatWindow form passing the user and intended recipient to it
-                ChatWindow chatwindow = new ChatWindow(user, recipient, chatroom);
+                ChatWindow chatwindow = new ChatWindow(user, recipient);
                 
                         try {
                             thisClient = new RMIChatClientImpl(chatwindow);
@@ -231,7 +231,7 @@ public class Chatroom extends javax.swing.JFrame {
                         //Set the recipient of the private message as the one clicked by the user
                         recipient = unreadMailList.getSelectedValue();
                         //Create a new chatWindow form passing the user and intended recipient to it
-                ChatWindow chatwindow = new ChatWindow(user, recipient, chatroom);
+                        ChatWindow chatwindow = new ChatWindow(user, recipient);
                 
                         try {
                             thisClient = new RMIChatClientImpl(chatwindow);
@@ -244,14 +244,6 @@ public class Chatroom extends javax.swing.JFrame {
                             //make the chatroom visable to the user
                             //Chatroom.this.setVisible(false);
                             chatwindow.setVisible(true);
-//                            int j= unreadMailList.getModel().getSize() - 1;
-//                            for(int i = 0; i<= j; i++)
-//                                {
-//                                    if(unreadMailList.getModel().getElementAt(i).equalsIgnoreCase(unreadMailList.getSelectedValue()))
-//                                    {
-//                                        unreadMailList.remove(i);
-//                                    }
-//                                }
                             
                         } catch (RemoteException ex) {
                             Logger.getLogger(Chatroom.class.getName()).log(Level.SEVERE, null, ex);
@@ -272,6 +264,12 @@ public class Chatroom extends javax.swing.JFrame {
         });
     }
 
+    /**
+     * This method is used to set the colors of the users in the user list according to their online
+     * status, it colors the users username green if they are online and red if not, it does this by 
+     * getting the user from the db and checking if the user is logged in or not, if they are it colors them
+     * green otherwise they will be red
+     */
     public void setLoggedUsersColors() {
         userList.setCellRenderer(new DefaultListCellRenderer() {
 
@@ -333,6 +331,14 @@ public class Chatroom extends javax.swing.JFrame {
         });
     }
 
+    /**
+     * This method is used to set the model foe the userlist and populate that list with the 
+     * usernames of all the users registered to the chatroom, it also removes the current user 
+     * name for the list as they should not be able to message themselves, It does this by cycling 
+     * through the temp list and attaching the username of each user to the model which is bound to
+     * the user list on the gui.
+     * @param nUserList is an ArrayList of User objects representing the users registered to the application
+     */
    public void setUsers(ArrayList<User> nUserList) {
         ArrayList<User> temp = nUserList;
         temp.remove(user);
@@ -348,7 +354,11 @@ public class Chatroom extends javax.swing.JFrame {
         });
     }
     /**
-     * 
+     * This method is used alert a user that they have unread mail by placing the name of the 
+     * sender of the messages in the unread messages list on the gui, once the method has the 
+     * senders by using the populateUnreadMessageList method which returns the names of all the
+     * senders of the unread messages, it then cycles through these senders and attaches their 
+     * username to the unread messages list on the gui.
      */
     public void setUnreadMessageSenders() {
         ArrayList<User> senders = populateUnreadMessageList();
