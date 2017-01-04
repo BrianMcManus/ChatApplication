@@ -409,6 +409,7 @@ public class Chatroom extends javax.swing.JFrame {
         unreadMailLabel = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         unreadMailList = new javax.swing.JList<String>();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -479,26 +480,30 @@ public class Chatroom extends javax.swing.JFrame {
             });
             jScrollPane1.setViewportView(unreadMailList);
 
+            jLabel1.setText("click on a username to start a private chat");
+
             javax.swing.GroupLayout chatRoomPanelLayout = new javax.swing.GroupLayout(chatRoomPanel);
             chatRoomPanel.setLayout(chatRoomPanelLayout);
             chatRoomPanelLayout.setHorizontalGroup(
                 chatRoomPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(chatRoomPanelLayout.createSequentialGroup()
-                    .addContainerGap()
-                    .addGroup(chatRoomPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, chatRoomPanelLayout.createSequentialGroup()
-                            .addGap(71, 71, 71)
-                            .addComponent(unreadMailLabel))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, chatRoomPanelLayout.createSequentialGroup()
-                            .addGap(90, 90, 90)
+                    .addGroup(chatRoomPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(chatRoomPanelLayout.createSequentialGroup()
+                            .addContainerGap()
+                            .addGroup(chatRoomPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 383, Short.MAX_VALUE)
+                                .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, chatRoomPanelLayout.createSequentialGroup()
+                                    .addGap(71, 71, 71)
+                                    .addComponent(unreadMailLabel))))
+                        .addGroup(chatRoomPanelLayout.createSequentialGroup()
+                            .addGap(129, 129, 129)
                             .addComponent(userListLabel)))
                     .addGroup(chatRoomPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(chatRoomPanelLayout.createSequentialGroup()
-                            .addGap(382, 382, 382)
-                            .addComponent(titleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 250, Short.MAX_VALUE)
+                            .addGap(337, 337, 337)
+                            .addComponent(titleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 125, Short.MAX_VALUE)
                             .addComponent(logoutButton))
                         .addGroup(chatRoomPanelLayout.createSequentialGroup()
                             .addGap(104, 104, 104)
@@ -511,23 +516,31 @@ public class Chatroom extends javax.swing.JFrame {
                                         .addComponent(sendButton))
                                     .addGap(0, 0, Short.MAX_VALUE)))))
                     .addContainerGap())
+                .addGroup(chatRoomPanelLayout.createSequentialGroup()
+                    .addGap(81, 81, 81)
+                    .addComponent(jLabel1)
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             );
             chatRoomPanelLayout.setVerticalGroup(
                 chatRoomPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(chatRoomPanelLayout.createSequentialGroup()
-                    .addGroup(chatRoomPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addContainerGap()
+                    .addGroup(chatRoomPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(chatRoomPanelLayout.createSequentialGroup()
-                            .addContainerGap()
                             .addGroup(chatRoomPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(logoutButton)
                                 .addComponent(titleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(36, 36, 36)
-                            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 363, Short.MAX_VALUE))
+                            .addGap(13, 13, 13))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, chatRoomPanelLayout.createSequentialGroup()
+                            .addComponent(userListLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                    .addComponent(jLabel1)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(chatRoomPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(chatRoomPanelLayout.createSequentialGroup()
-                            .addGap(24, 24, 24)
-                            .addComponent(userListLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jScrollPane4)))
+                            .addGap(9, 9, 9)
+                            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 357, Short.MAX_VALUE))
+                        .addComponent(jScrollPane4))
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                     .addGroup(chatRoomPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(messageLabel)
@@ -692,6 +705,7 @@ public class Chatroom extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel chatRoomPanel;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;

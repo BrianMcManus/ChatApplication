@@ -240,7 +240,7 @@ public class Login extends javax.swing.JFrame {
             int portNum = 55555;
             
             //Store the registery location 
-            String registryPath = "rmi://10.102.11.134:" + portNum;
+            String registryPath = "rmi://localhost:" + portNum;
             String objectLabel = "/chatService";
             
             //Try to connect to the registry and if not found create one 
