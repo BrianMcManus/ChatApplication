@@ -199,11 +199,22 @@ public class Chatroom extends javax.swing.JFrame {
                         //Set the recipient of the private message as the one clicked by the user
                         recipient = unreadMailList.getSelectedValue();
                         //Create a new chatWindow form passing the user and intended recipient to it
-                        ChatWindow chatwindow = new ChatWindow(user, recipient);
+                ChatWindow chatwindow = new ChatWindow(user, recipient, chatroom);
+                
+                        try {
+                            thisClient = new RMIChatClientImpl(chatwindow);
+                            
+                            //register the client for callback services
+                            chatService.registerForCallback(thisClient);
+                            //Set the chatroom client as the current client
+                            chatwindow.setClient(thisClient);
 
-                        //Make the chatWindow form visable to the user
-                        Chatroom.this.setVisible(false);
-                        chatwindow.setVisible(true);
+                            //make the chatroom visable to the user
+                            //Chatroom.this.setVisible(false);
+                            chatwindow.setVisible(true);
+                        } catch (RemoteException ex) {
+                            Logger.getLogger(Chatroom.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                     }
 
                 }
