@@ -321,7 +321,7 @@ public class ChatWindow extends javax.swing.JFrame {
         }
                 //Make the chatroom visable to the user
                 this.setVisible(false);
-                chatroom.setVisible(true);
+                //chatroom.setVisible(true);
     }//GEN-LAST:event_backButtonActionPerformed
 
     /**
