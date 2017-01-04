@@ -33,6 +33,7 @@ public interface UserDAOInterface {
     
     /**
      * This method is used to log the user out of the the system, it takes a User as a parameter and returns nothing
+     * @param u this is the user object we will use to log the user out
      */
     public void logout(User u);
     

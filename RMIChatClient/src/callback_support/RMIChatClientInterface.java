@@ -22,7 +22,7 @@ public interface RMIChatClientInterface extends Remote
      * that a user has logged into the chatroom, It takes in a string with the name of
      * the user that just logged in.
      * @param newLogin is the string containing the message with the users name attached.
-     * @throws RemoteException, this exception must be thrown if we wish to run this method remotely.
+     * @throws RemoteException this exception allows us to use the method remotely. i.e. from non-local virtual machines
      */
     public void newLoginNotification(String newLogin) throws RemoteException;
     
@@ -31,7 +31,7 @@ public interface RMIChatClientInterface extends Remote
      * that a user has logged out of the chatroom, It takes in a string with the name of
      * the user that just logged out.
      * @param newLogoff is the string containing the message with the users name attached.
-     * @throws RemoteException, this exception must be thrown if we wish to run this method remotely.
+     * @throws RemoteException this exception must be thrown if we wish to run this method remotely.
      */
     public void newLogoffNotification(String newLogoff) throws RemoteException;
     

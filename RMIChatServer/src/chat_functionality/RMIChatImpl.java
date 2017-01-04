@@ -49,8 +49,8 @@ public class RMIChatImpl extends UnicastRemoteObject implements RMIChatInterface
     /**
      * Empty constructor
      *
-     * @throws RemoteException, must be thrown so that the constructor can be
-     * accessed remotely
+     * @throws RemoteException must be thrown in order to access this method
+     * remotely.
      */
     public RMIChatImpl() throws RemoteException {
 
@@ -74,7 +74,8 @@ public class RMIChatImpl extends UnicastRemoteObject implements RMIChatInterface
      *
      * @return An boolean value of true/false dependant on whether the message
      * was successfully added to the list and database.
-     * @throws RemoteException
+     * @throws RemoteException must be thrown in order to access this method
+     * remotely.
      */
     @Override
     public boolean addMessage(Message newMessage, User user) throws RemoteException {
@@ -111,10 +112,9 @@ public class RMIChatImpl extends UnicastRemoteObject implements RMIChatInterface
      * containing all users details, as long as the userList is not empty
      * otherwise it returns a null value, it uses the synchronized method to
      * ensure that the data that is being read is the correct data
-     *
      * @return returns an ArrayList of User objects
-     * @throws RemoteException, must be thrown so the method can be accessed
-     * remotely
+     * @throws RemoteException must be thrown in order to access this method
+     * remotely.
      */
     @Override
     public ArrayList<User> getAllUsers() throws RemoteException {
@@ -139,7 +139,7 @@ public class RMIChatImpl extends UnicastRemoteObject implements RMIChatInterface
      * @param newUser is the user object containing the users details
      * @return returns a true or false value depending if the user was
      * registered successfully or not
-     * @throws RemoteException, must be thrown in order to access this method
+     * @throws RemoteException must be thrown in order to access this method
      * remotely
      */
     @Override
@@ -176,7 +176,7 @@ public class RMIChatImpl extends UnicastRemoteObject implements RMIChatInterface
      * as email, password and username
      * @return returns a true or false value depending on if the user was logged
      * in or not
-     * @throws RemoteException, must be thrown to allow this method to be called
+     * @throws RemoteException must be thrown to allow this method to be called
      * remotely i.e. from a non-local virtual device
      */
     @Override
@@ -224,7 +224,7 @@ public class RMIChatImpl extends UnicastRemoteObject implements RMIChatInterface
      * wishes to log out
      * @return returns a true or false value depending if the logout was
      * successful or not
-     * @throws RemoteException, must be thrown in order to access the method
+     * @throws RemoteException must be thrown in order to access the method
      * remotely
      */
     @Override
@@ -274,7 +274,7 @@ public class RMIChatImpl extends UnicastRemoteObject implements RMIChatInterface
      * can registered for callback services
      * @return returns a true or false value depending on if the user was
      * registered successfully or not
-     * @throws RemoteException, must be thrown so the method can be accessed
+     * @throws RemoteException must be thrown so the method can be accessed
      * remotely
      */
     @Override
@@ -304,7 +304,7 @@ public class RMIChatImpl extends UnicastRemoteObject implements RMIChatInterface
      * can be unregistered for callback services
      * @return returns a value of true or false depending on if the client was
      * unregistered successfully or not
-     * @throws RemoteException, must be thrown so that the method can be
+     * @throws RemoteException must be thrown so that the method can be
      * accessed remotely.
      */
     @Override
@@ -556,9 +556,10 @@ public class RMIChatImpl extends UnicastRemoteObject implements RMIChatInterface
      * forumMessages so that they can accurately be displayed beside the
      * username of the user that submitted the message
      *
-     * @return Return an ArrayList<String> thats stores the names of users as
+     * @return Return an ArrayList of Strings thats stores the names of users as
      * they submit messages to the forum chat
-     * @throws RemoteException
+     * @throws RemoteException must be thrown in order to access this method
+     * remotely.
      */
     @Override
     public ArrayList<String> getAllForumSenderNames() throws RemoteException {

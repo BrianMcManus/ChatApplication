@@ -23,6 +23,7 @@ public interface RMIChatInterface extends Remote {
      * message object as a parameter that is the object that must be sent.
      *
      * @param newMessage is the message object to be sent
+     * @param user the user object is submitted which allows the id to be recorded in the usermessage table
      * @return returns true or false depending if the message was sent
      * successfully or not
      * @throws RemoteException must be thrown so the method can be accessed
@@ -189,6 +190,8 @@ public interface RMIChatInterface extends Remote {
      * stores the unread ones and returns them
      *
      * @param userId is the id of the user we wish to get unread messages for
+     * @throws RemoteException must be thrown in order to access this method
+     * remotely.
      * @return returns an ArrayList of Message objects
      */
     public ArrayList<Message> getUnreadMessages(int userId) throws RemoteException;
@@ -201,6 +204,8 @@ public interface RMIChatInterface extends Remote {
      * stores them in a list and then returns this list
      *
      * @param messages is the messages that the user has not read yet
+     * @throws RemoteException must be thrown in order to access this method
+     * remotely.
      * @return returns an ArrayList of User objects who sent said messages
      */
     public ArrayList<User> getAllMessageSenders(ArrayList<Message> messages) throws RemoteException;
@@ -212,7 +217,7 @@ public interface RMIChatInterface extends Remote {
      * chat with the names of the users being the name of the user that sent the 
      * message
      *
-     * @return ArrayList<String> collection of strings that are usernames
+     * @return ArrayList of strings that are usernames
      * @throws RemoteException This thrown exception is used when we wish to 
      * have applications use resources across networks non-locally
      */

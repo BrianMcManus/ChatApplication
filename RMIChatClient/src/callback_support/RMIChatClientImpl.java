@@ -22,7 +22,7 @@ public class RMIChatClientImpl extends UnicastRemoteObject implements RMIChatCli
     
     /**
      * Empty constructor
-     * @throws RemoteException, must be thrown if we want to call this constructor remotely
+     * @throws RemoteException must be thrown if we want to call this constructor remotely
      */
     public RMIChatClientImpl() throws RemoteException{
     }
@@ -32,7 +32,7 @@ public class RMIChatClientImpl extends UnicastRemoteObject implements RMIChatCli
      * and takes in a instance of the chatroom as a parameter and sets the chatroom
      * form as the one taken in as a parameter.
      * @param chatroom is the new chatroom GUI form 
-     * @throws RemoteException, must be thrown if we want to call this constructor remotely 
+     * @throws RemoteException must be thrown if we want to call this constructor remotely 
      */
     public RMIChatClientImpl(Chatroom chatroom)  throws RemoteException {
       this.chatroom = chatroom;
@@ -57,7 +57,7 @@ public class RMIChatClientImpl extends UnicastRemoteObject implements RMIChatCli
      * has just logged in and outputs a message telling all users currently in the forum that 
      * this user has entered
      * @param newLogin is the username of the user that just logged in
-     * @throws RemoteException, this exception must be thrown to call this method remotely
+     * @throws RemoteException this exception must be thrown to call this method remotely
      */
     @Override
     public void newLoginNotification(String newLogin) throws RemoteException {

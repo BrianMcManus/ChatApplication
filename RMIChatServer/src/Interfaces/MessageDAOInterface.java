@@ -62,7 +62,7 @@ public interface MessageDAOInterface {
      * This method is used to get all messages that a particular user has sent, this user is identified by the username that is taken in as a parameter,
      * if this user has messages then they are packed into message objects and these objects are added to an ArrayList and this ArrayList is then returned.
      * @param username is the username of the user we wish to find messages for.
-     * @return 
+     * @return an arraylist of message objects
      */
     public ArrayList<Message> getMessagesByUsername(String username);
     
@@ -117,8 +117,7 @@ public interface MessageDAOInterface {
      * read in the database.
      * @param messages an ArrayList of Message objects that represent the messages sent between two users privately
      * @param username is the username of the user looking at the messages
-     * @return returns true or false depending if the method was successful or not
-     * @throws RemoteException must be thrown or order to access this method remotely
+     * @return returns true or false depending if the method was successful or not#
      */
     public boolean setMessagesAsRead(ArrayList<Message> messages, String username);
 

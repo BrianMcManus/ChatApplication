@@ -36,7 +36,8 @@ public interface RMIChatInterface extends Remote {
      *
      * @return An boolean value of true/false dependant on whether the message
      * was successfully added to the list and database.
-     * @throws RemoteException
+     * @throws RemoteException must be thrown in order to access this method
+     * remotely.
      */
     public boolean addMessage(Message newMessage, User user) throws RemoteException;
 
@@ -48,8 +49,8 @@ public interface RMIChatInterface extends Remote {
      * ensure that the data that is being read is the correct data
      *
      * @return returns an ArrayList of User objects
-     * @throws RemoteException, must be thrown so the method can be accessed
-     * remotely
+     * @throws RemoteException must be thrown in order to access this method
+     * remotely.
      */
     public ArrayList<User> getAllUsers() throws RemoteException;
 
@@ -115,6 +116,8 @@ public interface RMIChatInterface extends Remote {
      * @param message is the Message object contain all the message information.
      * @return returns a true or false value depending on if the message was
      * sent successfully or not
+     * @throws RemoteException must be thrown in order to access this method
+     * remotely.
      */
     public boolean sendPrivateMessage(int userId, Message message) throws RemoteException;
 
@@ -214,6 +217,8 @@ public interface RMIChatInterface extends Remote {
      * stores the unread ones and returns them
      *
      * @param userId is the id of the user we wish to get unread messages for
+     * @throws RemoteException must be thrown in order to access this method
+     * remotely.
      * @return returns an ArrayList of Message objects
      */
     public ArrayList<Message> getUnreadMessages(int userId) throws RemoteException;
@@ -226,6 +231,8 @@ public interface RMIChatInterface extends Remote {
      * stores them in a list and then returns this list
      *
      * @param messages is the messages that the user has not read yet
+     * @throws RemoteException must be thrown in order to access this method
+     * remotely.
      * @return returns an ArrayList of User objects who sent said messages
      */
     public ArrayList<User> getAllMessageSenders(ArrayList<Message> messages) throws RemoteException;
@@ -236,9 +243,10 @@ public interface RMIChatInterface extends Remote {
      * forumMessages so that they can accurately be displayed beside the
      * username of the user that submitted the message
      *
-     * @return Return an ArrayList<String> thats stores the names of users as
+     * @return Return an ArrayList of strings thats stores the names of users as
      * they submit messages to the forum chat
-     * @throws RemoteException
+     * @throws RemoteException must be thrown in order to access this method
+     * remotely.
      */
     public ArrayList<String> getAllForumSenderNames() throws RemoteException;
 
