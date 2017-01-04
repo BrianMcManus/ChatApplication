@@ -212,6 +212,16 @@ public class Chatroom extends javax.swing.JFrame {
                             //make the chatroom visable to the user
                             //Chatroom.this.setVisible(false);
                             chatwindow.setVisible(true);
+                            int j= unreadMailList.getModel().getSize();
+                            for(int i = 0; i< j; i++)
+                                {
+                                    if(unreadMailList.getModel().getElementAt(i).equalsIgnoreCase(unreadMailList.getSelectedValue()))
+                                    {
+                                        unreadMailList.remove(i);
+                                        j--;
+                                    }
+                                }
+                            
                         } catch (RemoteException ex) {
                             Logger.getLogger(Chatroom.class.getName()).log(Level.SEVERE, null, ex);
                         }

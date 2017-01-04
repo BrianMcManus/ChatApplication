@@ -115,9 +115,5 @@ public class RMIChatClientImpl extends UnicastRemoteObject implements RMIChatCli
         {
         chatwindow.populateMessageList();
         }
-        else
-        {
-            System.out.println("chatwindow is null");
-        }
     }
 }
