@@ -414,9 +414,9 @@ public class RMIChatImpl extends UnicastRemoteObject implements RMIChatInterface
         //If the message is not empty and the users id is valid
         if(message != null || userId > 0)
         {
-            Calendar calendar = Calendar.getInstance();
-            java.sql.Timestamp timeSent = new java.sql.Timestamp(calendar.getTimeInMillis());
-            message.setTimeSent(timeSent);
+//            Calendar calendar = Calendar.getInstance();
+//            java.sql.Timestamp timeSent = new java.sql.Timestamp(calendar.getTimeInMillis());
+//            message.setTimeSent(timeSent);
             //Use the MessageDAO to send the private message
             sent = mDAO.sendPrivateMessage(userId, message);
             
