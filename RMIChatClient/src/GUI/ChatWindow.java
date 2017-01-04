@@ -27,7 +27,8 @@ public class ChatWindow extends javax.swing.JFrame {
     private static String recipient;
     private RMIChatClientInterface client;
     private Chatroom chatroom;
-    private ArrayList<Message> privateMessages = new ArrayList<Message>();
+    private ArrayList<Message> privateMessages;
+    
 
     /**
      * Creates a new ChatWindow form that 
@@ -60,11 +61,7 @@ public class ChatWindow extends javax.swing.JFrame {
        setColorsForUserMessages();
        
        
-        try {
-            chatService.setMessagesAsRead(privateMessages, user.getUserName());
-        } catch (RemoteException ex) {
-            Logger.getLogger(ChatWindow.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
 
     }
 
@@ -91,11 +88,7 @@ public class ChatWindow extends javax.swing.JFrame {
        
        
        
-        try {
-            chatService.setMessagesAsRead(privateMessages, user.getUserName());
-        } catch (RemoteException ex) {
-            Logger.getLogger(ChatWindow.class.getName()).log(Level.SEVERE, null, ex);
-        }
+       
     }
     
     /**
@@ -106,7 +99,7 @@ public class ChatWindow extends javax.swing.JFrame {
      * model to the private message list. 
      */
     public void populateMessageList(){
-
+        
         try{
             if(user != null && recipient != null)
             {
@@ -131,6 +124,9 @@ public class ChatWindow extends javax.swing.JFrame {
             privateMessageList.setModel(model);
             }
 
+             
+            chatService.setMessagesAsRead(privateMessages, user.getUserName());
+        
             
         } catch (RemoteException ex){
             Logger.getLogger(Chatroom.class.getName()).log(Level.SEVERE, null, ex);
