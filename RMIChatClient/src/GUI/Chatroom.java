@@ -175,7 +175,7 @@ public class Chatroom extends javax.swing.JFrame {
                             chatwindow.setClient(thisClient);
 
                             //make the chatroom visable to the user
-                            //Chatroom.this.setVisible(false);
+                            Chatroom.this.setVisible(false);
                             chatwindow.setVisible(true);
                         } catch (RemoteException ex) {
                             Logger.getLogger(Chatroom.class.getName()).log(Level.SEVERE, null, ex);
