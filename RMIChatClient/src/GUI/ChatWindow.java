@@ -318,6 +318,11 @@ public class ChatWindow extends javax.swing.JFrame {
      * @param evt is the event that happened on the back button  
      */
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
+        try {
+            chatService.unregisterForCallback(client);
+        } catch (RemoteException ex) {
+            Logger.getLogger(ChatWindow.class.getName()).log(Level.SEVERE, null, ex);
+        }
                 //Make the chatroom visable to the user
                 this.setVisible(false);
                 //chatroom.setVisible(true);
