@@ -363,11 +363,9 @@ public class ChatWindow extends javax.swing.JFrame {
         String messageContent = MessageTextArea.getText();
         //Get the receiver information from the appropriate text field
         String receiver = RecipientField.getText();
-        //Create a new date object to record when the message was sent
-        Calendar calendar = Calendar.getInstance();
-        java.sql.Timestamp timeSent = new java.sql.Timestamp(calendar.getTimeInMillis());
+        
         //Create a new message object
-        Message message = new Message(messageContent, receiver, false, timeSent, false);
+        Message message = new Message(messageContent, receiver, false, null, false);
         boolean valid = false;
         
         if(!message.equals("") && userId >0)
@@ -379,6 +377,10 @@ public class ChatWindow extends javax.swing.JFrame {
                 //If successful
                 if(valid)
                 {
+                    //Create a new date object to record when the message was sent
+                    Calendar calendar = Calendar.getInstance();
+                    java.sql.Timestamp timeSent = new java.sql.Timestamp(calendar.getTimeInMillis());
+                    message.setTimeSent(timeSent);
                     //Let the user know the message was sent to the intended recipient
                     System.out.println("You sent a message to: " + receiver);
                     //Add the message to the messsage list containing the mesages already sent
