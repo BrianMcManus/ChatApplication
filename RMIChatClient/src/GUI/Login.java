@@ -196,6 +196,15 @@ public class Login extends javax.swing.JFrame {
             }
         } catch (RemoteException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+                try {
+                    //Log the user out of the application
+                    chatService.logoff(user);
+                    //Unregister the user for callback services
+                    chatService.unregisterForCallback(thisClient);
+                } catch (RemoteException ex1) {
+                    Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex1);
+                }
+            
         }
             
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -240,11 +249,7 @@ public class Login extends javax.swing.JFrame {
             
             
             
-            } catch (NotBoundException ex) {
-            Logger.getLogger(RMIChatClient.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (MalformedURLException ex) {
-            Logger.getLogger(RMIChatClient.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (RemoteException ex) {
+            } catch (NotBoundException | MalformedURLException | RemoteException ex) {
             Logger.getLogger(RMIChatClient.class.getName()).log(Level.SEVERE, null, ex);
         }
 

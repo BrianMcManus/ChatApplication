@@ -130,6 +130,14 @@ public class ChatWindow extends javax.swing.JFrame {
             
         } catch (RemoteException ex){
             Logger.getLogger(Chatroom.class.getName()).log(Level.SEVERE, null, ex);
+            try {
+                    //Log the user out of the application
+                    chatService.logoff(user);
+                    //Unregister the user for callback services
+                    chatService.unregisterForCallback(client);
+                } catch (RemoteException ex1) {
+                    Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex1);
+                }
         }
 
     }
@@ -390,6 +398,14 @@ public class ChatWindow extends javax.swing.JFrame {
                 }
             } catch (RemoteException ex) {
                 Logger.getLogger(ChatWindow.class.getName()).log(Level.SEVERE, null, ex);
+                try {
+                    //Log the user out of the application
+                    chatService.logoff(user);
+                    //Unregister the user for callback services
+                    chatService.unregisterForCallback(client);
+                } catch (RemoteException ex1) {
+                    Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex1);
+                }
             }
         }
         
