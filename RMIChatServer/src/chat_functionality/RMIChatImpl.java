@@ -415,6 +415,7 @@ public class RMIChatImpl extends UnicastRemoteObject implements RMIChatInterface
             synchronized (clientList) {
             for (RMIChatClientInterface client : clientList) {
                 client.repopulateUnreadMessages();
+                client.repopulatePrivateMessages();
             }
         }
             

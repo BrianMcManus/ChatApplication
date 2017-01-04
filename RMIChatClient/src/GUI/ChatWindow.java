@@ -87,6 +87,8 @@ public class ChatWindow extends javax.swing.JFrame {
        setColorsForUserMessages();
        
        this.chatroom = chatroom;
+
+       
        
        
         try {
@@ -318,7 +320,7 @@ public class ChatWindow extends javax.swing.JFrame {
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
                 //Make the chatroom visable to the user
                 this.setVisible(false);
-                chatroom.setVisible(true);
+                //chatroom.setVisible(true);
     }//GEN-LAST:event_backButtonActionPerformed
 
     /**
@@ -376,6 +378,8 @@ public class ChatWindow extends javax.swing.JFrame {
                     populateMessageList();
                     //Clear the text area 
                     MessageTextArea.setText("");
+                    
+                    client.repopulatePrivateMessages();
 
                 }
                 else

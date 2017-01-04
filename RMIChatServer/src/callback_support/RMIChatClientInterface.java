@@ -47,4 +47,6 @@ public interface RMIChatClientInterface extends Remote
     public ArrayList<User> newUserLoggedIn(ArrayList<User> userList) throws RemoteException;
     
     public void repopulateUnreadMessages() throws RemoteException;
+    
+    public void repopulatePrivateMessages() throws RemoteException;
 }

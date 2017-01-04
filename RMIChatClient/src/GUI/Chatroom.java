@@ -5,10 +5,11 @@
  */
 package GUI;
 
+import static GUI.Login.chatService;
 import business.User;
 import java.util.ArrayList;
-import static GUI.Login.chatService;
 import business.Message;
+import callback_support.RMIChatClientImpl;
 import callback_support.RMIChatClientInterface;
 import java.awt.Color;
 import java.awt.Component;
@@ -35,6 +36,7 @@ public class Chatroom extends javax.swing.JFrame {
     private static ArrayList<Message> messages;
     private static ArrayList<String> messageSenderList;
     Chatroom chatroom = this;
+    RMIChatClientInterface thisClient;
 
     /**
      * Creates new chatRoom form with no parameters, it initalises the
@@ -157,16 +159,29 @@ public class Chatroom extends javax.swing.JFrame {
             public void valueChanged(ListSelectionEvent e) {
                 if (e.getValueIsAdjusting()) {
                     if (userList != null) {
-                        //Set the recipient of the private message as the one clicked by the user
-                        recipient = userList.getSelectedValue();
-                        //Create a new chatWindow form passing the user and intended recipient to it
-                        ChatWindow chatwindow = new ChatWindow(user, recipient, chatroom);
                         
-                        chatwindow.setClient(client);
+                        
+                //Set the recipient of the private message as the one clicked by the user
+                recipient = userList.getSelectedValue();
+                //Create a new chatWindow form passing the user and intended recipient to it
+                ChatWindow chatwindow = new ChatWindow(user, recipient, chatroom);
+                
+                        try {
+                            thisClient = new RMIChatClientImpl(chatwindow);
+                            
+                            //register the client for callback services
+                            chatService.registerForCallback(thisClient);
+                            //Set the chatroom client as the current client
+                            chatwindow.setClient(thisClient);
 
-                        //Make the chatWindow form visable to the user
-                        Chatroom.this.setVisible(false);
-                        chatwindow.setVisible(true);
+                            //make the chatroom visable to the user
+                            //Chatroom.this.setVisible(false);
+                            chatwindow.setVisible(true);
+                        } catch (RemoteException ex) {
+                            Logger.getLogger(Chatroom.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                
+ 
                     }
 
                 }

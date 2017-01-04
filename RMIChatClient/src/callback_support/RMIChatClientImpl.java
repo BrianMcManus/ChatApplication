@@ -79,7 +79,10 @@ public class RMIChatClientImpl extends UnicastRemoteObject implements RMIChatCli
     @Override
     public ArrayList<Message> newMessageSent(ArrayList<Message> messages) throws RemoteException
     {
+        if(chatroom != null)
+        {
         chatroom.setMessages(messages);
+        }
         
         return messages;
     }
@@ -88,7 +91,10 @@ public class RMIChatClientImpl extends UnicastRemoteObject implements RMIChatCli
     @Override
     public ArrayList<User> newUserLoggedIn(ArrayList<User> userList) throws RemoteException
     {
+        if(chatroom != null)
+        {
         chatroom.setUsers(userList);
+        }
         
         return userList;
     }
@@ -96,6 +102,22 @@ public class RMIChatClientImpl extends UnicastRemoteObject implements RMIChatCli
     @Override
     public void repopulateUnreadMessages() throws RemoteException
     {
+        if(chatroom != null)
+        {
         chatroom.setUnreadMessageSenders();
+        }
+    }
+    
+    @Override
+    public void repopulatePrivateMessages() throws RemoteException
+    {
+        if(chatwindow != null)
+        {
+        chatwindow.populateMessageList();
+        }
+        else
+        {
+            System.out.println("chatwindow is null");
+        }
     }
 }
