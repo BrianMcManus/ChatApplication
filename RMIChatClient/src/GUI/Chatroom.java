@@ -34,6 +34,7 @@ public class Chatroom extends javax.swing.JFrame {
     private static ArrayList<User> users;
     private static ArrayList<Message> messages;
     private static ArrayList<String> messageSenderList;
+    Chatroom chatroom = this;
 
     /**
      * Creates new chatRoom form with no parameters, it initalises the
@@ -148,6 +149,7 @@ public class Chatroom extends javax.swing.JFrame {
      * form the be visible.
      */
     private void setListener() {
+        
         //Add a listener to the list of users on the chatroom form
         userList.addListSelectionListener(new ListSelectionListener() {
             @Override
@@ -158,7 +160,7 @@ public class Chatroom extends javax.swing.JFrame {
                         //Set the recipient of the private message as the one clicked by the user
                         recipient = userList.getSelectedValue();
                         //Create a new chatWindow form passing the user and intended recipient to it
-                        ChatWindow chatwindow = new ChatWindow(user, recipient);
+                        ChatWindow chatwindow = new ChatWindow(user, recipient, chatroom);
                         
                         chatwindow.setClient(client);
 

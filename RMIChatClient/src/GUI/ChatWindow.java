@@ -67,6 +67,34 @@ public class ChatWindow extends javax.swing.JFrame {
         }
 
     }
+
+    ChatWindow(User user, String recipient, Chatroom chatroom) {
+        //Initalises the components to be placed on the chatWindow form
+        initComponents();
+        
+        //Stores the recipient passed into the class and places it into the recipient field on the GUI
+        this.recipient = recipient;
+        RecipientField.setText(recipient);
+        
+        //Stores the user passed into the class and places its username attribute in teh sender field on the GUI
+        this.user = user;
+        SenderField.setText(user.getUserName());
+        
+       //Populates the message area with all messages sent between the sender and receiver
+       populateMessageList();
+       
+       //Sets the colour of the mesages depending on who sent them
+       setColorsForUserMessages();
+       
+       this.chatroom = chatroom;
+       
+       
+        try {
+            chatService.setMessagesAsRead(privateMessages, user.getUserName());
+        } catch (RemoteException ex) {
+            Logger.getLogger(ChatWindow.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     
     /**
      * This method is used to populate the message list of a gui by calling on the chatService to 
@@ -288,11 +316,6 @@ public class ChatWindow extends javax.swing.JFrame {
      * @param evt is the event that happened on the back button  
      */
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
-                //Create a new chatroom form passing the user to it
-                chatroom = new Chatroom(user);
-                
-                chatroom.setClient(client);
-                
                 //Make the chatroom visable to the user
                 this.setVisible(false);
                 chatroom.setVisible(true);

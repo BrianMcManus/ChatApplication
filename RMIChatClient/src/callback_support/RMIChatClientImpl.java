@@ -1,5 +1,6 @@
 package callback_support;
 
+import GUI.ChatWindow;
 import GUI.Chatroom;
 import business.Message;
 import business.User;
@@ -17,6 +18,7 @@ public class RMIChatClientImpl extends UnicastRemoteObject implements RMIChatCli
 {
     //Define a new chatroom form
     private Chatroom chatroom;
+    private ChatWindow chatwindow;
     
     /**
      * Empty constructor
@@ -34,6 +36,11 @@ public class RMIChatClientImpl extends UnicastRemoteObject implements RMIChatCli
      */
     public RMIChatClientImpl(Chatroom chatroom)  throws RemoteException {
       this.chatroom = chatroom;
+    }
+
+    public RMIChatClientImpl(ChatWindow chatwindow) throws RemoteException
+    {
+        this.chatwindow = chatwindow;
     }
     
     /**
